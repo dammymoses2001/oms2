@@ -1,0 +1,24 @@
+Options -MultiViews
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f # RewriteRule ^ index.html [QSA,L]
+RewriteRule ^(.+)$ index.html?url=$1 [QSA,L]
+
+# RewriteCond %{HTTPS} off
+
+#RewriteRule (._) https://%{HTTP_HOST}%{REQUEST_URI}
+#RewriteCond %{HTTPS} !on
+#RewriteRule (._) https://%{HTTP_HOST}%{REQUEST_URI}
+#RewriteRule ^(.\*)$ https://www.ekolaundry.com/$1 [R,L]
+#ekolaundry.com/pricing
+
+<!-- <IfModule mod_rewrite.c>
+
+  RewriteEngine On
+  RewriteBase /
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-l
+  RewriteRule . /index.html [L]
+
+</IfModule> -->

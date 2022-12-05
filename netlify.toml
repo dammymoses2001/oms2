@@ -1,0 +1,17 @@
+# Production context:
+# All deploys from the main repository branch
+
+[build.environment]
+  NODE_VERSION = "12.16.1"
+  CI = "false"
+  REACT_APP_API_BASE_URL = "https://pharmaserv-api.herokuapp.com/api/v1"
+
+[context.master.environment]
+ 
+
+# Deploy Preview context:
+[context.deploy-preview.environment]
+  NODE_ENV = "development"
+
+[context.staging.environment]
+  NODE_ENV = "development"

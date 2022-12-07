@@ -27,20 +27,25 @@ const Style = styled.div`
     .rdt_TableHeadRow {
         font-size: 14px !important;
         // color:red;
-        color: #463C74;
-        background:#F0F2F8;
+        color: #463c74;
+        background: #f0f2f8;
     }
-    .rdt_TableRow{
-        padding:${props=>props?.RowPadding?props?.RowPadding:'10px 0'};
+    .rdt_TableRow {
+        padding: ${(props) =>
+            props?.RowPadding ? props?.RowPadding : "10px 0"};
     }
-    .rdt_TableBody{
-        margin-bottom:100px
+    .rdt_TableBody {
+        margin-bottom: 100px;
     }
 `;
 
-
-export const TableCompData = ({ title, data=[], pagination, columns,rowPadding }) => {
-    // console.log();
+export const TableCompData = ({
+    title,
+    data = [],
+    pagination,
+    columns,
+    rowPadding
+}) => {
     return (
         <Style RowPadding={rowPadding}>
             <Card>
@@ -48,11 +53,11 @@ export const TableCompData = ({ title, data=[], pagination, columns,rowPadding }
                     responsive={true}
                     title={title}
                     columns={columns}
-                    data={data?.length>0?data:[]}
+                    data={data?.length > 0 ? data : []}
                     // defaultSortFieldId={1}
                     sortIcon={<SortIcon />}
                     pagination={pagination ? true : false}
-                    
+
                     // paginationRowsPerPageOptions={[5,10,15]}
 
                     // selectableRows

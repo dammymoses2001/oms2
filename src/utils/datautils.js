@@ -199,8 +199,6 @@ export const OrderHeader = [
     // },
 ];
 
-
-
 export const customerColumns = [
     // {
     //     name: "#",
@@ -208,21 +206,18 @@ export const customerColumns = [
     // },
     {
         name: "No",
-        selector: (row,index) => <span>{index+1}</span>,
+        selector: (row, index) => <span>{index + 1}</span>,
         width: "80px"
-    
     },
     {
         name: "Business Name",
-        selector: (row) => <span>{`${row?.businessName}`}</span>,
-        
-       
+        selector: (row) => <span>{`${row?.businessName}`}</span>
     },
     {
         name: "Contact Name",
         selector: (row) => <span>{`${row?.contactPersonName}`}</span>
     },
-  
+
     {
         name: "LGA",
         selector: (row) => <span>{`${row?.lga}`}</span>
@@ -240,11 +235,6 @@ export const customerColumns = [
         selector: (row) => moment(row?.createdAt).format("MMM Do YY")
     },
 
-
-    
-    
-  
-    
     // {
     //     name: "Image ",
     //     selector: (row) => ""
@@ -266,19 +256,13 @@ export const customerColumns = [
                     >
                         Edit
                     </Dropdown.Item> */}
-                  
+
                     {/* <Dropdown.Item href="#/action-3">Something else</Dropdown.Item> */}
                 </Dropdown.Menu>
             </Dropdown>
         )
     }
 ];
-
-
-
-
-
-
 
 export const CustomerHeader = [
     {
@@ -450,145 +434,128 @@ export const handleSuplierlink = (state) => {
     toast.success("link copy successfully...");
 };
 
-
-export const OrderStatusColor = (status) =>{
-    switch(status) {
+export const OrderStatusColor = (status) => {
+    switch (status) {
         case "approved":
-          return 'text-success'
+            return "text-success";
         case "pending":
-            return 'text-primary'
-          case "declined":
-            return 'text-danger'
+            return "text-primary";
+        case "declined":
+            return "text-danger";
         default:
-          // code block
-      }
-}
+        // code block
+    }
+};
 
 export const SortOrder = (dataOrders) => {
     const sortOrder = dataOrders?.order.sort(
-        (a, b) =>
-            new Date(b?.order?.createdAt) - new Date(a?.order?.createdAt)
+        (a, b) => new Date(b?.order?.createdAt) - new Date(a?.order?.createdAt)
     );
     //  console.log(sortOrder, new Date("2015-03-25"),'c')
     return sortOrder;
-
-   
 };
 
 export const handleTotalQuantity = (productArray) => {
-    let sum = 0;
+    let sum = 1;
     productArray?.map((item) => (sum = sum + item?.quantity));
     return sum;
 };
 
-export const handleCustomerCSvData = (item) =>{
-    const newArray =[];
-    item?.map((row)=>
-    newArray.push({
-        "Business Name":row?.businessName,
-        "Contact Name": row?.contactPersonName,
-        "LGA":row?.lga,
-        "State" : row?.state,
-         "Phone Number" : row?.businessPhoneNumber,
-        "Added At": moment(row?.createdAt).format("MMM Do YY") ,
+export const handleCustomerCSvData = (item) => {
+    const newArray = [];
+    item?.map((row) =>
+        newArray.push({
+            "Business Name": row?.businessName,
+            "Contact Name": row?.contactPersonName,
+            LGA: row?.lga,
+            State: row?.state,
+            "Phone Number": row?.businessPhoneNumber,
+            "Added At": moment(row?.createdAt).format("MMM Do YY")
 
-        // "Status  ":OrderStatusColor(row?.status?.toLowerCase()),
-    }
-    )
-    )
+            // "Status  ":OrderStatusColor(row?.status?.toLowerCase()),
+        })
+    );
     // console.log(newArray,'newArray')
-     return newArray
-}
+    return newArray;
+};
 
+export const handleProductData = (item) => {
+    const newArray = [];
+    if (item?.length) {
+        item?.map((row) =>
+            newArray.push({
+                Product: `${row?.product?.productName || "-"}`,
+                Composition: row?.product?.composition || "-",
+                Quantity: row?.quantity,
+                "Unit price": formatMoney(row?.product?.costPerUnit),
 
-
-
-export const handleProductData = (item) =>{
-    const newArray =[];
-    if(item?.length){
-    item?.map((row)=>
-    newArray.push({
-        "Product":`${row?.product?.productName || "-"}`,
-        "Composition": row?.product?.composition || "-",
-        "Quantity" : row?.quantity,
-        "Unit price" : formatMoney(row?.product?.costPerUnit),
-       
-        "Total" : formatMoney(row?.price)
-        
+                Total: formatMoney(row?.price)
+            })
+        );
+        return newArray;
     }
-    )
-    )
-     return newArray
-}
-}
+};
 
-export const productCustomerCSvData = (item) =>{
-    const newArray =[];
-    item?.order?.map((row)=>
-    newArray.push({
-        "Composition" : row?.product?.composition,
-        // "Status  ":OrderStatusColor(row?.status?.toLowerCase()),
-    }
-    )
-    )
+export const productCustomerCSvData = (item) => {
+    const newArray = [];
+    item?.order?.map((row) =>
+        newArray.push({
+            Composition: row?.product?.composition
+            // "Status  ":OrderStatusColor(row?.status?.toLowerCase()),
+        })
+    );
     // console.log(newArray,'newArray')
-     return newArray
-}
+    return newArray;
+};
 
-
-
-
-
-export const handleCSvData = (item) =>{
-    const newArray =[];
-    item?.order?.map((row)=>
-    newArray.push({
-        "Field Staff":`${row?.user?.firstName} ${row?.user?.lastName}`,
-         "Customer": row?.order?.customer?.businessName,
-        "Prod. Qty": handleTotalQuantity(row?.products),
-        "Address":row?.order?.customer?.address || "-",
-        "Status":row?.status,
-        "Payment Method" : row?.order?.paymentMethod ,
-        "Payment Status" :row?.order?.paymentStatus ,
-        "Amount" : row.subTotal,
-        "Order Date" : moment(row?.createdAt).format("MMM Do YY")  ,
-         "Business Name" :row?.businessName,        
-    }
-    )
-    )
+export const handleCSvData = (item) => {
+    const newArray = [];
+    item?.order?.map((row) =>
+        newArray.push({
+            "Field Staff": `${row?.user?.firstName} ${row?.user?.lastName}`,
+            Customer: row?.customer?.businessName,
+            "Prod. Qty": handleTotalQuantity(row?.products),
+            Address: row?.customer?.address || "-",
+            Status: row?.status,
+            "Payment Method": row?.order?.paymentMethod,
+            "Payment Status": row?.paymentStatus,
+            Amount: row.total,
+            "Order Date": moment(row?.createdAt).format("MMM Do YY"),
+            "Business Name": row?.businessName
+        })
+    );
     // console.log(newArray,'newArray')
-     return newArray
-}
+    return newArray;
+};
 
-
-
-
-export const NumberTable = (item,name) =>{
-   
-// console.log(item,'result')
-    const index = item?.findIndex(object => {
-    // console.log(object._id, name,'result')
-      return object?._id === name;
+export const NumberTable = (item, name) => {
+    // console.log(item,'result')
+    const index = item?.findIndex((object) => {
+        // console.log(object._id, name,'result')
+        return object?.id === name;
     });
-    
+
     // console.log(index,item,'result'); // 👉️ 1
-    return index?index+1:1;
-}
+    return index ? index + 1 : 1;
+};
 
+export const HeaderOrder = (
+    setOrderData,
+    setShow,
+    setSupplierDetail,
+    dataOrders
+) => {
+    const { AcceptOrderFunc, RejectOrderFunc } = useAuth();
 
-export const HeaderOrder = (setOrderData,setShow,setSupplierDetail,dataOrders) =>{
-
-    const {AcceptOrderFunc,RejectOrderFunc} =useAuth()
- 
     const columns = [
         {
             name: "No",
-            selector: (row,index) => (
-                <span>{NumberTable(dataOrders?.order,row?._id)}</span>
+            selector: (row, index) => (
+                <span>{NumberTable(dataOrders?.order, row?.id)}</span>
             ),
             width: "70px"
         },
-        
+
         {
             name: "Field Staff ",
             selector: (row) => (
@@ -606,65 +573,70 @@ export const HeaderOrder = (setOrderData,setShow,setSupplierDetail,dataOrders) =
                         setShow(true);
                         setSupplierDetail(row);
                     }}
-                >{`${row?.order?.customer?.businessName || "-"}`}</span>
+                >{`${row?.customer?.businessName || "-"}`}</span>
             ),
-            width: "200px" ,
-           
+            width: "200px"
         },
-    
+
         {
             name: "Prod. Qty",
             selector: (row) => handleTotalQuantity(row?.products)
         },
         {
             name: "Address",
-            selector: (row) => <span>{`${row?.order?.customer?.address || "-"}`}</span>,
-            width:'200px'
+            selector: (row) => (
+                <span>{`${row?.customer?.address || "-"}`}</span>
+            ),
+            width: "200px"
         },
         {
             name: "Status  ",
-            selector: (row) => <span className={`fw-2 ${OrderStatusColor(row?.status?.toLowerCase())}`}>{row?.status}</span>,  width:'150px' 
-        },
-        
-         {
-            name: "Payment Method",
-            selector: (row) => <span>{`${row?.order?.paymentMethod || "-"}`}</span>,
-            width:'150px'
-        },
-
-        {
-            name: "Payment Status",
-            selector: (row) => <span>{`${row?.order?.paymentStatus || "-"}`}</span>,
-            width:'150px'
-        },
-
-
-
-       
-
-        {
-            name: "Due Date",
-            selector: (row) =>  moment(row?.order?.payLaterDate ).format("MMM Do YY"),
-            width:'150px'
-        },  
-
-        {
-            name: "Amount",
             selector: (row) => (
-                <span className="text-nowrap">
-                    N{formatMoney(row.subTotal)}
+                <span
+                    className={`fw-2 ${OrderStatusColor(
+                        row?.status?.toLowerCase()
+                    )}`}
+                >
+                    {row?.status}
                 </span>
             ),
             width: "150px"
         },
-    
+
+        {
+            name: "Payment Method",
+            selector: (row) => (
+                <span>{`${row?.order?.paymentMethod || "-"}`}</span>
+            ),
+            width: "150px"
+        },
+
+        {
+            name: "Payment Status",
+            selector: (row) => <span>{`${row?.paymentStatus || "-"}`}</span>,
+            width: "150px"
+        },
+
+        {
+            name: "Due Date",
+            selector: (row) =>
+                moment(row?.order?.payLaterDate).format("MMM Do YY"),
+            width: "150px"
+        },
+
+        {
+            name: "Amount",
+            selector: (row) => (
+                <span className="text-nowrap">N{formatMoney(row.total)}</span>
+            ),
+            width: "150px"
+        },
+
         {
             name: "Order Date",
             selector: (row) => moment(row?.createdAt).format("MMM Do YY")
         },
-        
-       
-    
+
         {
             name: "Actions",
             selector: (row) => row.authorized,
@@ -673,7 +645,7 @@ export const HeaderOrder = (setOrderData,setShow,setSupplierDetail,dataOrders) =
                     <Dropdown.Toggle className="dropdown-6 text-black border text-muted">
                         ...
                     </Dropdown.Toggle>
-    
+
                     <Dropdown.Menu>
                         <Dropdown.Item
                             onClick={() => {
@@ -689,7 +661,7 @@ export const HeaderOrder = (setOrderData,setShow,setSupplierDetail,dataOrders) =
                         </Dropdown.Item>
                         <Dropdown.Item
                             onClick={() => {
-                                AcceptOrderFunc(row?._id);
+                                AcceptOrderFunc(row?.id);
                                 console.log(row?.order?._id, "orderData");
                                 // setEditShow(true);
                                 // setEditProduct(row);
@@ -698,18 +670,18 @@ export const HeaderOrder = (setOrderData,setShow,setSupplierDetail,dataOrders) =
                         >
                             Approve Order
                         </Dropdown.Item>
-                        {row?.status === "PENDING" && (
-                            <Dropdown.Item
-                                onClick={() => {
-                                    RejectOrderFunc(row?._id);
-                                    // setDeleteProduct(true);
-                                    // setEditProduct(row);
-                                    // setEditShow(false);
-                                }}
-                            >
-                                Decline Order
-                            </Dropdown.Item>
-                        )}
+
+                        <Dropdown.Item
+                            onClick={() => {
+                                RejectOrderFunc(row?.id);
+                                // setDeleteProduct(true);
+                                // setEditProduct(row);
+                                // setEditShow(false);
+                            }}
+                        >
+                            Decline Order
+                        </Dropdown.Item>
+
                         {/* <Dropdown.Item href="#/action-3">Something else</Dropdown.Item> */}
                     </Dropdown.Menu>
                 </Dropdown>
@@ -717,33 +689,25 @@ export const HeaderOrder = (setOrderData,setShow,setSupplierDetail,dataOrders) =
         }
     ];
     return columns;
-}
+};
 
-export const SchedularHeader = (DropDownItems) =>{
-    
+export const SchedularHeader = (DropDownItems) => {
     const columns = [
         {
             name: "No",
-            selector: (row,index) => row?.id
-                // <span>{NumberTable(dataOrders?.order,row?._id)}</span>
-            ,
-         
+            selector: (row, index) => row?.id
+            // <span>{NumberTable(dataOrders?.order,row?._id)}</span>
         },
-        
+
         {
             name: "Date ",
-            selector: (row) => (
-                <span>{row?.date}</span>
-            ),
-           
+            selector: (row) => <span>{row?.date}</span>
         },
         {
             name: "Customer ",
-            selector: (row) =>row?.customer,
-           
-           
+            selector: (row) => row?.customer
         },
-    
+
         {
             name: "Reason For Visitation",
             selector: (row) => row?.reason
@@ -756,17 +720,17 @@ export const SchedularHeader = (DropDownItems) =>{
                     <Dropdown.Toggle className="dropdown-6 text-black border text-muted">
                         ...
                     </Dropdown.Toggle>
-    
+
                     <Dropdown.Menu>
-                        {DropDownItems?.map((item)=>
-                        <Dropdown.Item
-                        onClick={() => {
-                            item?.onClick(row)
-                        }}
-                    >
-                        {item?.name}
-                    </Dropdown.Item>
-                        )}
+                        {DropDownItems?.map((item) => (
+                            <Dropdown.Item
+                                onClick={() => {
+                                    item?.onClick(row);
+                                }}
+                            >
+                                {item?.name}
+                            </Dropdown.Item>
+                        ))}
                         {/* <Dropdown.Item
                             onClick={() => {
                                
@@ -774,56 +738,41 @@ export const SchedularHeader = (DropDownItems) =>{
                         >
                             Edit
                         </Dropdown.Item> */}
-                      
+
                         {/* <Dropdown.Item href="#/action-3">Something else</Dropdown.Item> */}
                     </Dropdown.Menu>
                 </Dropdown>
             )
         }
-
-        
-
     ];
 
-    return columns
-}
-export const DailyVisitHeader = (DropDownItems) =>{
-    
+    return columns;
+};
+export const DailyVisitHeader = (DropDownItems) => {
     const columns = [
         {
             name: "No",
-            selector: (row,index) => row?.id
-                // <span>{NumberTable(dataOrders?.order,row?._id)}</span>
-            ,
-         
+            selector: (row, index) => row?.id
+            // <span>{NumberTable(dataOrders?.order,row?._id)}</span>
         },
-        
+
         {
             name: "Field Staff ",
-            selector: (row) => (
-                <span>{row?.field}</span>
-            ),
-           
+            selector: (row) => <span>{row?.field}</span>
         },
         {
             name: "First Visit At ",
-            selector: (row) =>row?.firstVisitDate,
-           
-           
+            selector: (row) => row?.firstVisitDate
         },
         {
             name: "Last Visit At",
-            selector: (row) =>row?.LastVisitDate,
-           
-           
+            selector: (row) => row?.LastVisitDate
         },
         {
             name: "Battery Level",
-            selector: (row) =>row?.batteryLevel,
-           
-           
+            selector: (row) => row?.batteryLevel
         },
-    
+
         {
             name: "Refresh At?",
             selector: (row) => row?.refreshAt
@@ -836,17 +785,17 @@ export const DailyVisitHeader = (DropDownItems) =>{
                     <Dropdown.Toggle className="dropdown-6 text-black border text-muted">
                         ...
                     </Dropdown.Toggle>
-    
+
                     <Dropdown.Menu>
-                        {DropDownItems?.map((item)=>
-                        <Dropdown.Item
-                        onClick={() => {
-                            item?.onClick(row)
-                        }}
-                    >
-                        {item?.name}
-                    </Dropdown.Item>
-                        )}
+                        {DropDownItems?.map((item) => (
+                            <Dropdown.Item
+                                onClick={() => {
+                                    item?.onClick(row);
+                                }}
+                            >
+                                {item?.name}
+                            </Dropdown.Item>
+                        ))}
                         {/* <Dropdown.Item
                             onClick={() => {
                                
@@ -854,60 +803,45 @@ export const DailyVisitHeader = (DropDownItems) =>{
                         >
                             Edit
                         </Dropdown.Item> */}
-                      
+
                         {/* <Dropdown.Item href="#/action-3">Something else</Dropdown.Item> */}
                     </Dropdown.Menu>
                 </Dropdown>
             )
         }
-
-        
-
     ];
 
-    return columns
-}
-export const DailyVisitHeaderFull = (DropDownItems) =>{
-    
+    return columns;
+};
+export const DailyVisitHeaderFull = (DropDownItems) => {
     const columns = [
         {
             name: "Customer",
-            selector: (row,index) => row?.customer
-                // <span>{NumberTable(dataOrders?.order,row?._id)}</span>
-            ,
-         
+            selector: (row, index) => row?.customer
+            // <span>{NumberTable(dataOrders?.order,row?._id)}</span>
         },
-        
+
         {
             name: "Date",
-            selector: (row) => (
-                <span>{row?.date}</span>
-            ),
-           
+            selector: (row) => <span>{row?.date}</span>
         },
         {
             name: "Check-In Time",
-            selector: (row) =>row?.checkIn,
-           
-           
+            selector: (row) => row?.checkIn
         },
         {
             name: "Check-Out Time",
-            selector: (row) =>row?.checkOut,
-           
-           
+            selector: (row) => row?.checkOut
         },
         {
             name: "Duration",
-            selector: (row) =>row?.duration,
-           
-           
+            selector: (row) => row?.duration
         },
-    
+
         {
             name: "Reason For Visitation",
             selector: (row) => row?.refreshAt
-        },
+        }
         // {
         //     name: "Actions",
         //     selector: (row) => row.authorized,
@@ -916,7 +850,7 @@ export const DailyVisitHeaderFull = (DropDownItems) =>{
         //             <Dropdown.Toggle className="dropdown-6 text-black border text-muted">
         //                 ...
         //             </Dropdown.Toggle>
-    
+
         //             <Dropdown.Menu>
         //                 {DropDownItems?.map((item)=>
         //                 <Dropdown.Item
@@ -929,147 +863,144 @@ export const DailyVisitHeaderFull = (DropDownItems) =>{
         //                 )}
         //                 {/* <Dropdown.Item
         //                     onClick={() => {
-                               
+
         //                     }}
         //                 >
         //                     Edit
         //                 </Dropdown.Item> */}
-                      
+
         //                 {/* <Dropdown.Item href="#/action-3">Something else</Dropdown.Item> */}
         //             </Dropdown.Menu>
         //         </Dropdown>
         //     )
         // }
-
-        
-
     ];
 
-    return columns
-}
-export const SchedularData = () =>{
-  return  [
+    return columns;
+};
+export const SchedularData = () => {
+    return [
         {
-            id:1,
-            date:'3rd of may, 2022',
-            customer:'ABC Pharmacy',
-            reason:'Expiration date',
-            dailyVist:[
+            id: 1,
+            date: "3rd of may, 2022",
+            customer: "ABC Pharmacy",
+            reason: "Expiration date",
+            dailyVist: [
                 {
-                    id:1,
-                    field:'Gideon Olasupo',
-                    totalVisit:3,
-                    firstVisitDate:'3rd of may, 2022',
-                    LastVisitDate:'3rd of Sept, 2022',
-                    batteryLevel:'13%',
-                    refreshAt:'5 mins ago',
-                    customer:'ABC Pharmacy',
-                    date:'27th of May 2022',
-                    checkIn:'2:20PM',
-                    checkOut:'2:30PM',
-                    duration:'10 Minutes',
-                    reason:'Expiration Date'
+                    id: 1,
+                    field: "Gideon Olasupo",
+                    totalVisit: 3,
+                    firstVisitDate: "3rd of may, 2022",
+                    LastVisitDate: "3rd of Sept, 2022",
+                    batteryLevel: "13%",
+                    refreshAt: "5 mins ago",
+                    customer: "ABC Pharmacy",
+                    date: "27th of May 2022",
+                    checkIn: "2:20PM",
+                    checkOut: "2:30PM",
+                    duration: "10 Minutes",
+                    reason: "Expiration Date"
                 },
                 {
-                    id:2,
-                    field:'Ade Wale',
-                    totalVist:3,
-                    firstVisitDate:'3rd of Apr, 2022',
-                    LastVisitDate:'3rd of Nov, 2022',
-                    batteryLevel:'13%',
-                    refreshAt:'5 mins ago',
-                    customer:'ABC Pharmacy',
-                    date:'27th of May 2022',
-                    checkIn:'2:20PM',
-                    checkOut:'2:30PM',
-                    duration:'10 Minutes',
-                    reason:'Expiration Date'
+                    id: 2,
+                    field: "Ade Wale",
+                    totalVist: 3,
+                    firstVisitDate: "3rd of Apr, 2022",
+                    LastVisitDate: "3rd of Nov, 2022",
+                    batteryLevel: "13%",
+                    refreshAt: "5 mins ago",
+                    customer: "ABC Pharmacy",
+                    date: "27th of May 2022",
+                    checkIn: "2:20PM",
+                    checkOut: "2:30PM",
+                    duration: "10 Minutes",
+                    reason: "Expiration Date"
                 },
                 {
-                    id:3,
-                    field:'Emeka ',
-                    totalVist:3,
-                    firstVisitDate:'12th of may, 2022',
-                    LastVisitDate:'2nd of Aug, 2022',
-                    batteryLevel:'13%',
-                    refreshAt:'5 mins ago',
-                    customer:'ABC Pharmacy',
-                    date:'27th of May 2022',
-                    checkIn:'2:20PM',
-                    checkOut:'2:30PM',
-                    duration:'10 Minutes',
-                    reason:'Expiration Date'
-                },
+                    id: 3,
+                    field: "Emeka ",
+                    totalVist: 3,
+                    firstVisitDate: "12th of may, 2022",
+                    LastVisitDate: "2nd of Aug, 2022",
+                    batteryLevel: "13%",
+                    refreshAt: "5 mins ago",
+                    customer: "ABC Pharmacy",
+                    date: "27th of May 2022",
+                    checkIn: "2:20PM",
+                    checkOut: "2:30PM",
+                    duration: "10 Minutes",
+                    reason: "Expiration Date"
+                }
             ]
         },
         {
-            id:2,
-            date:'3rd of may, 2022',
-            customer:'ABC Pharmacy',
-            reason:'Expiration date',
-            dailyVist:[
+            id: 2,
+            date: "3rd of may, 2022",
+            customer: "ABC Pharmacy",
+            reason: "Expiration date",
+            dailyVist: [
                 {
-                    id:1,
-                    field:'Emeka ',
-                    totalVist:3,
-                    firstVisitDate:'12th of may, 2022',
-                    LastVisitDate:'2nd of Aug, 2022',
-                    batteryLevel:'13%',
-                    refreshAt:'5 mins ago',
-                    customer:'ABC Pharmacy',
-                    date:'27th of May 2022',
-                    checkIn:'2:20PM',
-                    checkOut:'2:30PM',
-                    duration:'10 Minutes',
-                    reason:'Expiration Date'
+                    id: 1,
+                    field: "Emeka ",
+                    totalVist: 3,
+                    firstVisitDate: "12th of may, 2022",
+                    LastVisitDate: "2nd of Aug, 2022",
+                    batteryLevel: "13%",
+                    refreshAt: "5 mins ago",
+                    customer: "ABC Pharmacy",
+                    date: "27th of May 2022",
+                    checkIn: "2:20PM",
+                    checkOut: "2:30PM",
+                    duration: "10 Minutes",
+                    reason: "Expiration Date"
                 },
                 {
-                    id:2,
-                    field:'Ade Wale',
-                    totalVist:3,
-                    firstVisitDate:'3rd of Apr, 2022',
-                    LastVisitDate:'3rd of Nov, 2022',
-                    batteryLevel:'13%',
-                    refreshAt:'5 mins ago',
-                    customer:'ABC Pharmacy',
-                    date:'27th of May 2022',
-                    checkIn:'2:20PM',
-                    checkOut:'2:30PM',
-                    duration:'10 Minutes',
-                    reason:'Expiration Date'
+                    id: 2,
+                    field: "Ade Wale",
+                    totalVist: 3,
+                    firstVisitDate: "3rd of Apr, 2022",
+                    LastVisitDate: "3rd of Nov, 2022",
+                    batteryLevel: "13%",
+                    refreshAt: "5 mins ago",
+                    customer: "ABC Pharmacy",
+                    date: "27th of May 2022",
+                    checkIn: "2:20PM",
+                    checkOut: "2:30PM",
+                    duration: "10 Minutes",
+                    reason: "Expiration Date"
                 },
                 {
-                    id:3,
-                 
-                    field:'Gideon Olasupo',
-                    totalVist:3,
-                    firstVisitDate:'3rd of may, 2022',
-                    LastVisitDate:'3rd of Sept, 2022',
-                    batteryLevel:'13%',
-                    refreshAt:'5 mins ago',
-                    customer:'ABC Pharmacy',
-                    date:'27th of May 2022',
-                    checkIn:'2:20PM',
-                    checkOut:'2:30PM',
-                    duration:'10 Minutes',
-                    reason:'Expiration Date'
-                },
+                    id: 3,
+
+                    field: "Gideon Olasupo",
+                    totalVist: 3,
+                    firstVisitDate: "3rd of may, 2022",
+                    LastVisitDate: "3rd of Sept, 2022",
+                    batteryLevel: "13%",
+                    refreshAt: "5 mins ago",
+                    customer: "ABC Pharmacy",
+                    date: "27th of May 2022",
+                    checkIn: "2:20PM",
+                    checkOut: "2:30PM",
+                    duration: "10 Minutes",
+                    reason: "Expiration Date"
+                }
             ]
         },
         {
-            id:3,
-            date:'3rd of may, 2022',
-            customer:'ABC Pharmacy',
-            reason:'Expiration date'
+            id: 3,
+            date: "3rd of may, 2022",
+            customer: "ABC Pharmacy",
+            reason: "Expiration date"
         },
         {
-            id:4,
-            date:'3rd of may, 2022',
-            customer:'ABC Pharmacy',
-            reason:'Expiration date'
-        },
-    ]
-}
+            id: 4,
+            date: "3rd of may, 2022",
+            customer: "ABC Pharmacy",
+            reason: "Expiration date"
+        }
+    ];
+};
 
 export const ProductColumn = [
     // {
@@ -1081,9 +1012,6 @@ export const ProductColumn = [
         selector: (row, index) => <span>{index + 1}</span>,
         width: "80px"
     },
-   
-
-   
 
     {
         name: "Product",

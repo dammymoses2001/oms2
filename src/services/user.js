@@ -62,8 +62,6 @@ export const getAllProduct = async () => {
         const err = error?.response?.data?.message || error?.message;
         throw new Error(err);
     }
-
-  
 };
 
 // kkk
@@ -77,8 +75,6 @@ export const getAllUserProduct = async () => {
         throw new Error(err);
     }
 };
-
-
 
 export const getSuppliers = async () => {
     try {
@@ -125,9 +121,7 @@ export const getOrder = async () => {
 
 export const getInvoice = async (orderid) => {
     try {
-        const res = await request.get(
-            `/supplier/order/${orderid}/set-status`
-        );
+        const res = await request.get(`/supplier/order/${orderid}/set-status`);
 
         return res?.data?.data;
     } catch (error) {
@@ -244,9 +238,12 @@ export const AcceptOrder = async (orderId) => {
         throw new Error(err);
     }
 };
-export const RejectOrder = async (orderId,reason) => {
+export const RejectOrder = async (orderId, reason) => {
     try {
-        const res = await request.post(`supplier/order/${orderId}/decline`,reason);
+        const res = await request.post(
+            `supplier/order/${orderId}/decline`,
+            reason
+        );
         // supplier/order/:orderId/reject-order
         //  console.log(res?.data, "product all");
         return res?.data;
@@ -279,7 +276,7 @@ export const getOrderInvoice = async (orderId) => {
 };
 export const forgetPassword = async (value) => {
     try {
-        const res = await request.post(`/auth/forgot-password`,value);
+        const res = await request.post(`/auth/forgot-password`, value);
         // supplier/order/:orderId/reject-order
         //  console.log(res?.data, "product all");
         return res?.data;
@@ -290,7 +287,7 @@ export const forgetPassword = async (value) => {
 };
 export const resetPassword = async (value) => {
     try {
-        const res = await request.post(`/auth/reset-password`,value);
+        const res = await request.post(`/auth/reset-password`, value);
         // supplier/order/:orderId/reject-order
         //  console.log(res?.data, "product all");
         return res?.data;
@@ -323,10 +320,9 @@ export const getAllRepresentatives = async (value) => {
     }
 };
 
-
 export const addRepresentatives = async (value) => {
     try {
-        const res = await request.post(`/auth/sales-rep/create`,value);
+        const res = await request.post(`/auth/sales-rep/create`, value);
         // supplier/order/:orderId/reject-order
         //  console.log(res?.data, "product all");
         return res?.data;
@@ -335,7 +331,6 @@ export const addRepresentatives = async (value) => {
         throw new Error(err);
     }
 };
-
 
 export const getAllCustomer = async (value) => {
     try {
@@ -351,7 +346,7 @@ export const getAllCustomer = async (value) => {
 
 export const addCustomer = async (value) => {
     try {
-        const res = await request.post(`/customer/create`,value);
+        const res = await request.post(`/customer/create`, value);
         return res?.data;
     } catch (error) {
         const err = error?.response?.data?.message || error?.message;

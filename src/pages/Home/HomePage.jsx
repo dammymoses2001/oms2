@@ -21,16 +21,11 @@ import {
     // mainreferenceData,
     // topProductHeader,
     checkStock,
-   
     ProductColumn
 } from "../../utils/datautils";
 
 import { DashboardMetrics, getAllUserProduct, getOrder } from "../../services";
 import { useState } from "react";
-
-
-
-
 
 const HomePage = () => {
     const {
@@ -38,49 +33,37 @@ const HomePage = () => {
         AcceptOrderFunc,
         RejectOrderFunc
         // state: { data,dashboardMertics,MapMertics },
-       
-       
     } = useAuth();
     const [show, setShow] = useState(false);
 
     const [orderData, setOrderData] = useState(false);
     const [declineModal, setDeclineModal] = useState(false);
     const [supplierDetail, setSupplierDetail] = useState();
-    const [rejectReason,setRejectReason] =useState("")
+    const [rejectReason, setRejectReason] = useState("");
     const { data: dataOrders } = useQuery("get-orders", getOrder, {
         // refetchOnWindowFocus: true,
-        refetchInterval: 2000
+        // refetchInterval: 2000
         // refetchIntervalInBackground: true,
     });
     //console.log(dataOrders,'dataOrders')
 
-   
-    
-    
-
-    const { data } = useQuery(
-        "get-products",
-        getAllUserProduct,
-        {
-            // refetchOnWindowFocus: true,
-            refetchInterval: 2000
-            // refetchIntervalInBackground: true,
-        }
-    );
-    const { data:DashboardData } = useQuery(
+    const { data } = useQuery("get-products", getAllUserProduct, {
+        // refetchOnWindowFocus: true,
+        // refetchInterval: 2000
+        // refetchIntervalInBackground: true,
+    });
+    const { data: DashboardData } = useQuery(
         "dashboard-metric",
         DashboardMetrics,
         {
             // refetchOnWindowFocus: true,
-            refetchInterval: 2000
+            // refetchInterval: 2000
             // refetchIntervalInBackground: true,
         }
     );
-     //console.log(DashboardData,'data')
+    //console.log(DashboardData,'data')
 
-  
-
-     //console.log(getUserProductList?.products,'MapMertics')
+    //console.log(getUserProductList?.products,'MapMertics')
     const bodyData = () => {
         return data?.products?.slice(0, 3)?.map((item, index) => {
             return (
@@ -156,65 +139,56 @@ const HomePage = () => {
                         </div>
                     </div>
                     {/* Chart Module */}
-                  <div>
-                  
-                  <DashboardDataComp DashboardData={DashboardData}/>
-                  </div>
-                   {/*  */}
-                  <div>
-                    <Chart/>
-               
-                  </div>
-                 <div>
-          
-                 <MapandTopAreas/>
-                 </div>
-                <div>
-               
-                <TopCustomerAndTopProduct
-                id = {2}
-                bodyData={bodyData}
-                data={data}
-                />
-                </div>
-                 <div>
-                 
-                 <OrderComp 
-                 dataOrders={dataOrders}
-                 setOrderData={setOrderData}
-                 setShow={setShow}
-                 setSupplierDetail={setSupplierDetail}
-                 />
-                 </div>
-                   
-               
-                   
+                    <div>
+                        <DashboardDataComp DashboardData={DashboardData} />
+                    </div>
+                    {/*  */}
+                    <div>
+                        <Chart />
+                    </div>
+                    <div>
+                        <MapandTopAreas />
+                    </div>
+                    <div>
+                        <TopCustomerAndTopProduct
+                            id={2}
+                            bodyData={bodyData}
+                            data={data}
+                        />
+                    </div>
+                    <div>
+                        <OrderComp
+                            dataOrders={dataOrders}
+                            setOrderData={setOrderData}
+                            setShow={setShow}
+                            setSupplierDetail={setSupplierDetail}
+                        />
+                    </div>
                 </div>
             </Style>
             {/* Modal for Order  */}
             <OrderModal
-show={show}
-orderData={orderData}
-setShow={setShow}
-ProductColumn={ProductColumn}
-setDeclineModal={setDeclineModal}
-supplierDetail={supplierDetail}
-AcceptOrderFunc={AcceptOrderFunc}
+                show={show}
+                orderData={orderData}
+                setShow={setShow}
+                ProductColumn={ProductColumn}
+                setDeclineModal={setDeclineModal}
+                supplierDetail={supplierDetail}
+                AcceptOrderFunc={AcceptOrderFunc}
             />
-              {/* Modal for OrderProduct  */}
+            {/* Modal for OrderProduct  */}
             <OrderProductModal
-            declineModal={declineModal}
-            setDeclineModal={setDeclineModal}
-            setRejectReasonv={setRejectReason}
-            setShow={setShow}
-            RejectOrderFunc={RejectOrderFunc}
-            supplierDetail={supplierDetail}
-            rejectReason={rejectReason}
+                declineModal={declineModal}
+                setDeclineModal={setDeclineModal}
+                setRejectReasonv={setRejectReason}
+                setShow={setShow}
+                RejectOrderFunc={RejectOrderFunc}
+                supplierDetail={supplierDetail}
+                rejectReason={rejectReason}
             />
         </AppLayout>
     );
 };
-
 
 const Style = styled.div`
     .homepage {

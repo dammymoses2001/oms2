@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import {
     AppLayout,
     Loading,
-
     OrderModal,
     OrderProductModal,
     TableCompData,
@@ -15,75 +14,91 @@ import moment from "moment";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../../hooks";
-import { BiConversation,BiSearchAlt } from "react-icons/bi";
+import { BiConversation, BiSearchAlt } from "react-icons/bi";
 
 import { getOrder } from "../../../services";
 
-import { handleCSvData, HeaderOrder, ProductColumn, SortOrder } from "../../../utils/datautils";
-
-
-
-
+import {
+    handleCSvData,
+    HeaderOrder,
+    ProductColumn,
+    SortOrder
+} from "../../../utils/datautils";
 
 export const OrderShowAll = () => {
     const [show, setShow] = useState(false);
     const [orderData, setOrderData] = useState(false);
     const [declineModal, setDeclineModal] = useState(false);
     const [supplierDetail, setSupplierDetail] = useState();
-    const [rejectReason,setRejectReason] =useState("")
-    const { state, getAllUserProductFunc, AcceptOrderFunc, RejectOrderFunc,state:{check} } =
-        useAuth();
-
-   
+    const [rejectReason, setRejectReason] = useState("");
+    const {
+        state,
+        getAllUserProductFunc,
+        AcceptOrderFunc,
+        RejectOrderFunc,
+        state: { check }
+    } = useAuth();
 
     useEffect(() => {
-      if(check){
-        setOrderData(false)
-        setDeclineModal(false)
-      }
-    }, [check])
-    
-    const { data: dataOrders,isLoading, } = useQuery("get-orders", getOrder, {
+        if (check) {
+            setOrderData(false);
+            setDeclineModal(false);
+        }
+    }, [check]);
+
+    const { data: dataOrders, isLoading } = useQuery("get-orders", getOrder, {
         // refetchOnWindowFocus: true,
-        refetchInterval: 2000
+        // refetchInterval: 2000
         // refetchIntervalInBackground: true,
     });
-    // console.log(dataOrders,'dataOrders')
+    console.log(isLoading);
+    // console.log(search(SortOrder(dataOrders)), "dataOrders");
 
     const [query, setQuery] = useState("");
-   
- const search = (orderData) => {
-        return orderData?.filter((row)=>row?.order?.customer?.businessName.toLowerCase().includes(query)||row?.user?.firstName.toLowerCase().includes(query)|| moment(row?.order?.payLaterDate ).format("MMM Do YY").toLowerCase().includes(query));
-    }
 
-    console.log(isLoading, "isLoading")
-  
+    const search = (orderData) => {
+        console.log(orderData);
+
+        return orderData?.filter(
+            (row) =>
+                row?.order?.customer?.businessName
+                    .toLowerCase()
+                    .includes(query) ||
+                row?.user?.firstName.toLowerCase().includes(query) ||
+                moment(row?.order?.payLaterDate)
+                    .format("MMM Do YY")
+                    .toLowerCase()
+                    .includes(query)
+        );
+    };
+
+    // console.log(search(dataOrders));
+
+    console.log(isLoading, "isLoading");
+
     useEffect(() => {
         getAllUserProductFunc(state?.data?._id);
     }, [getAllUserProductFunc, state?.data?._id]);
 
     const headers = [
-        { label: "Field Staff", key:'Field Staff' },
-         { label: "", key:'' },
-         { label: "Customer", key:'Customer' },
-          { label: "", key:'' },
+        { label: "Field Staff", key: "Field Staff" },
+        { label: "", key: "" },
+        { label: "Customer", key: "Customer" },
+        { label: "", key: "" },
         { label: "Prod. Qty", key: "Prod. Qty" },
         { label: "Address", key: "Address" },
-         { label: "", key:'' },
-          { label: "", key:'' },
+        { label: "", key: "" },
+        { label: "", key: "" },
         { label: "Status", key: "Status" },
-        { label: "", key:'' },
+        { label: "", key: "" },
         { label: "Payment Method", key: "Payment Method" },
-        { label: "", key:'' },
+        { label: "", key: "" },
         { label: "Payment Status", key: "Payment Status" },
-        { label: "", key:'' },
+        { label: "", key: "" },
         { label: "Amount", key: "Amount" },
-        { label: "", key:'' },
+        { label: "", key: "" },
         { label: "Order Date", key: "Order Date" }
-        
-        
-        
-      ];
+    ];
 
     // useEffect(() => {
     //     getAllUserOrderFunc();
@@ -93,14 +108,18 @@ export const OrderShowAll = () => {
 
     return (
         <AppLayout mode="light">
-            
             <Style>
                 {/* {console.log(SortOrder())} */}
 
-                 <div className="d-flex align-items-center search px-1 ">
-                <BiSearchAlt size={20} className="me-2"/>
-                 <input id="search" placeholder="Search FieldStaff, Customer, & Due Dates" className="px-1 py-2 text-black"
-                 onChange={(e)=>setQuery(e.target.value)}/></div> 
+                <div className="d-flex align-items-center search px-1 ">
+                    <BiSearchAlt size={20} className="me-2" />
+                    <input
+                        id="search"
+                        placeholder="Search FieldStaff, Customer, & Due Dates"
+                        className="px-1 py-2 text-black"
+                        onChange={(e) => setQuery(e.target.value)}
+                    />
+                </div>
 
                 <div className="mb-3 mt-2">
                     <TopNav
@@ -111,11 +130,15 @@ export const OrderShowAll = () => {
                             <div className="color-2">
                                 {/* <button className="mr-2 bg bg-1 h6" >View All Products</button> */}
                                 {/* <CSVLink data={SortOrder(dataOrders)}>Download me</CSVLink>; */}
-                                <CSVLink  filename={"Management Orders"}
-                               
-                                data={handleCSvData(dataOrders)} headers={headers}>
-                                   
-                               <button  className=" px-3 pl-4  py-1 bg bg-1 h-6 ml-4 btn1" >  Export </button>
+                                <CSVLink
+                                    filename={"Management Orders"}
+                                    data={handleCSvData(dataOrders)}
+                                    headers={headers}
+                                >
+                                    <button className=" px-3 pl-4  py-1 bg bg-1 h-6 ml-4 btn1">
+                                        {" "}
+                                        Export{" "}
+                                    </button>
                                 </CSVLink>
                                 {/* <Link to="#" className="mr-2 btn bg-1 h6">
                                     Export
@@ -127,40 +150,40 @@ export const OrderShowAll = () => {
 
                 <div className="px-3 px-md-5 shadow bg-white pt-4 height-80">
                     {isLoading ? (
+                        <Loading height={"50vh"} />
+                    ) : (
                         <TableCompData
-                            columns={HeaderOrder(setOrderData,setShow,setSupplierDetail,dataOrders)}
+                            columns={HeaderOrder(
+                                setOrderData,
+                                setShow,
+                                setSupplierDetail,
+                                dataOrders
+                            )}
                             data={search(SortOrder(dataOrders))}
                             pagination
-
                         />
-                       
-                    ) : (
-                       
-                        <Loading height={"50vh"} /> 
                     )}
-                    
                 </div>
-                
             </Style>
-            
+
             <OrderModal
-show={show}
-orderData={orderData}
-setShow={setShow}
-ProductColumn={ProductColumn}
-setDeclineModal={setDeclineModal}
-supplierDetail={supplierDetail}
-AcceptOrderFunc={AcceptOrderFunc}
+                show={show}
+                orderData={orderData}
+                setShow={setShow}
+                ProductColumn={ProductColumn}
+                setDeclineModal={setDeclineModal}
+                supplierDetail={supplierDetail}
+                AcceptOrderFunc={AcceptOrderFunc}
             />
-              {/* Modal for OrderProduct  */}
+            {/* Modal for OrderProduct  */}
             <OrderProductModal
-            declineModal={declineModal}
-            setDeclineModal={setDeclineModal}
-            setRejectReasonv={setRejectReason}
-            setShow={setShow}
-            RejectOrderFunc={RejectOrderFunc}
-            supplierDetail={supplierDetail}
-            rejectReason={rejectReason}
+                declineModal={declineModal}
+                setDeclineModal={setDeclineModal}
+                setRejectReasonv={setRejectReason}
+                setShow={setShow}
+                RejectOrderFunc={RejectOrderFunc}
+                supplierDetail={supplierDetail}
+                rejectReason={rejectReason}
             />
         </AppLayout>
     );
@@ -206,25 +229,24 @@ const Style = styled.div`
         display: none !important;
     }
 
-      input{
-    border:none;
-    outline:none;
-    background:transparent;
-    color:black;
-    text: center;
-    width: 90%;
-}
+    input {
+        border: none;
+        outline: none;
+        background: transparent;
+        color: black;
+        text: center;
+        width: 90%;
+    }
 
-
-    .search{
-   border-style: solid;
-   background-color:white;
-    margin: auto;
-  width: 50%;
-   border-width: 0.5px;
-   border-radius: 15px;
-   border-color: #F0F2F8;
-}
+    .search {
+        border-style: solid;
+        background-color: white;
+        margin: auto;
+        width: 50%;
+        border-width: 0.5px;
+        border-radius: 15px;
+        border-color: #f0f2f8;
+    }
 
     @media (max-width: 767px) {
         .homepage {
@@ -241,7 +263,5 @@ const Style = styled.div`
         .start-by-registering {
             padding: 12em 5em;
         }
-
-       
     }
 `;

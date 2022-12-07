@@ -8,7 +8,7 @@ import {
     TopNav
 } from "../../../components";
 import { CSVLink, CSVDownload } from "react-csv";
-import { BiConversation,BiSearchAlt } from "react-icons/bi";
+import { BiConversation, BiSearchAlt } from "react-icons/bi";
 
 import moment from "moment";
 import { customerColumns, handleSuplierlink } from "../../../utils/datautils";
@@ -19,7 +19,6 @@ import { Dropdown, Form } from "react-bootstrap";
 import { Input2 } from "../../../components/form/Input/input";
 import { getAllUserProduct } from "../../../services";
 import toast from "react-hot-toast";
-
 
 const Style = styled.div`
     .homepage {
@@ -61,25 +60,24 @@ const Style = styled.div`
         display: none !important;
     }
 
-      input{
-    border:none;
-    outline:none;
-    background:transparent;
-    color:black;
-    width: 90%;
-    text: center;
-}
+    input {
+        border: none;
+        outline: none;
+        background: transparent;
+        color: black;
+        width: 90%;
+        text: center;
+    }
 
-
-    .search{
-   border-style: solid;
-   background-color:white;
-    margin: auto;
-  width: 50%;
-   border-width: 0.5px;
-   border-radius: 15px;
-   border-color: #F0F2F8;
-}
+    .search {
+        border-style: solid;
+        background-color: white;
+        margin: auto;
+        width: 50%;
+        border-width: 0.5px;
+        border-radius: 15px;
+        border-color: #f0f2f8;
+    }
 
     @media (max-width: 767px) {
         .homepage {
@@ -108,28 +106,21 @@ export const ProductShowAll = () => {
         getCategoriesFunc
     } = useAuth();
 
-   
-
-    const { data, error,isLoading } = useQuery(
+    const { data, error, isLoading } = useQuery(
         "get-products",
         getAllUserProduct,
         {
             // refetchOnWindowFocus: true,
-            refetchInterval: 2000
+            // refetchInterval: 2000
             // refetchIntervalInBackground: true,
         }
     );
 
-    
-
     useEffect(() => {
-     if(state?.updateProduct){
-        setEditShow(false)
-     }
-    }, [state?.updateProduct])
-    
-   
-
+        if (state?.updateProduct) {
+            setEditShow(false);
+        }
+    }, [state?.updateProduct]);
 
     const initialState = {};
     const [editShow, setEditShow] = useState(false);
@@ -137,7 +128,6 @@ export const ProductShowAll = () => {
     const [editProduct, setEditProduct] = useState(initialState);
     const [picture, setPicture] = useState();
 
-   
     useEffect(
         () => {
             getCategoriesFunc();
@@ -157,7 +147,6 @@ export const ProductShowAll = () => {
 
         const confirmDate = `${newdate[2]}-${newdate[0]}-${newdate[1]}`;
         return confirmDate;
-       
     };
 
     const handleOnchange = (e) => {
@@ -185,15 +174,13 @@ export const ProductShowAll = () => {
         form.append("productSku", editProduct?.productSku);
         form.append("composition", editProduct?.composition);
         form.append("costPerUnit", editProduct?.costPerUnit);
-         form.append("productImage", picture);
+        form.append("productImage", picture);
 
         // console.log(form);
         UpdateProductFunc(editProduct?._id, form);
     };
 
     //console.log(state, "getUserProductList");
-
-  
 
     const columns = [
         // {
@@ -224,7 +211,7 @@ export const ProductShowAll = () => {
         //     name: "Image ",
         //     selector: (row) => ""
         // },
-        
+
         {
             name: "Status",
             selector: (row) => row.authorized,
@@ -260,34 +247,34 @@ export const ProductShowAll = () => {
         }
     ];
 
-      const headers= [
-        { label:'Product name', key: 'Product name'}
-    ]
-    
+    const headers = [{ label: "Product name", key: "Product name" }];
 
     const csvr = {
         headers: headers,
         data: columns
-    }
-    
+    };
 
-     const [query, setQuery] = useState("");
-   
- const search = (getAllUserProduct) => {
-        return getAllUserProduct?.filter((row)=> row.productName.toLowerCase().includes(query));
-    }
- 
+    const [query, setQuery] = useState("");
 
-  // console.log(state,'state')
+    const search = (getAllUserProduct) => {
+        return getAllUserProduct?.filter((row) =>
+            row.productName.toLowerCase().includes(query)
+        );
+    };
+
+    // console.log(state,'state')
     // console.log(editProduct, "getUserProductList");
     return (
         <AppLayout mode="light">
-           
             <Style>
                 <div className="d-flex align-items-center search px-1 ">
-                <BiSearchAlt size={20} className="me-2"/>
-                 <input placeholder="Search Product" className="px-1 py-2 text-black"
-                 onChange={(e)=>setQuery(e.target.value)}/></div> 
+                    <BiSearchAlt size={20} className="me-2" />
+                    <input
+                        placeholder="Search Product"
+                        className="px-1 py-2 text-black"
+                        onChange={(e) => setQuery(e.target.value)}
+                    />
+                </div>
                 <div className="mb-3 mt-2">
                     <TopNav
                         RightComp={
@@ -298,7 +285,7 @@ export const ProductShowAll = () => {
                                 >
                                     click to copy your Link
                                 </button> */}
-                                  {/* <CSVLink
+                                {/* <CSVLink
                                 
                              className="mr-2 bg px-2 py-1 bg-1 h6"
                                {...csvr}>
@@ -321,15 +308,18 @@ export const ProductShowAll = () => {
                     ) : (
                         <Loading />
                     )} */}
-                    {isLoading ?    <Loading height={"40vh"} /> : <TableCompData
-                        columns={columns}
-                        data={search(data)}
-                        pagination
-                    />}
-                    
+                    {isLoading ? (
+                        <Loading height={"40vh"} />
+                    ) : (
+                        <TableCompData
+                            columns={columns}
+                            data={search(data)}
+                            pagination
+                        />
+                    )}
                 </div>
             </Style>
-            
+
             <div className="mb-3">
                 {/* {console.log(!state?.deletemessage,deleteProduct)} */}
                 <ModalComp
@@ -353,12 +343,10 @@ export const ProductShowAll = () => {
                                     Cancel
                                 </button>
                                 <button
-                                    onClick={() =>
-                                        {
-                                            deleteProductFunc(editProduct?._id)
-                                            setDeleteProduct(false)
-                                        }
-                                    }
+                                    onClick={() => {
+                                        deleteProductFunc(editProduct?._id);
+                                        setDeleteProduct(false);
+                                    }}
                                     className="btn btn-danger text-white h3"
                                 >
                                     Delete
@@ -367,7 +355,7 @@ export const ProductShowAll = () => {
                         </div>
                     }
                 />
-                
+
                 <ModalComp
                     show={editShow && editProduct}
                     handleClose={() => setEditShow(false)}
@@ -484,12 +472,18 @@ export const ProductShowAll = () => {
                                     </Form.Group>
                                 </div>
                                 <div className="col-lg-6">
-                                    <div className=""  style={{
+                                    <div
+                                        className=""
+                                        style={{
                                             height: "200px",
                                             maxWidth: "200px",
                                             objectFit: "contain"
-                                        }}>
-                                    <img src={editProduct?.productPhotoUrl} alt=""/>
+                                        }}
+                                    >
+                                        <img
+                                            src={editProduct?.productPhotoUrl}
+                                            alt=""
+                                        />
                                     </div>
                                 </div>
                             </div>

@@ -29,7 +29,6 @@ import {
     LOGOUT_SUCCESS,
     REGISTER_FAIL,
     REGISTER_SUCCESS,
-    
     GET_PRODUCTCATEGORIES_SUCCESS,
     GET_PRODUCTCATEGORIES_FAIL,
     GET_ORDER_SUCCESS,
@@ -60,7 +59,7 @@ import {
     // GET_DELIVERYCHANNELS_FAIL,
     // GET_DELIVERYCHANNELS_SUCCESS
 } from "./reducer";
-import {  withRouter,MainLoading } from "../../components";
+import { withRouter, MainLoading } from "../../components";
 import {
     // getAccountTypes,
     getAllProduct,
@@ -117,9 +116,9 @@ export const AuthProvider = withRouter(({ children, navigate }) => {
         error: null,
         isLoading: false,
         isLoggedIn: false,
-        isLoggingIn:false,
-        allCompanies:[],
-        allCustomer:[]
+        isLoggingIn: false,
+        allCompanies: [],
+        allCustomer: []
     });
 
     const [supplier, setSuppiler] = useReducer(authReducer, {
@@ -207,7 +206,7 @@ export const AuthProvider = withRouter(({ children, navigate }) => {
             });
 
             // navigate("/");
-            console.log(data)
+            console.log(data);
             toast.success("Registration successful");
             return navigate("/verify-account");
 
@@ -227,7 +226,7 @@ export const AuthProvider = withRouter(({ children, navigate }) => {
         try {
             dispatch({ type: AUTH_START });
             const data = await loginUser(values);
-            console.log(data,'logindetails')
+            console.log(data, values, "logindetails");
 
             if (data) {
                 if (data?.data?.user?.userRole !== "company_admin") {
@@ -254,15 +253,17 @@ export const AuthProvider = withRouter(({ children, navigate }) => {
             const errorMessage =
                 error?.response?.data?.message || error.message;
 
-                dispatch({
-                    payload: error,
-                    type: LOGIN_FAIL
-                });
-              if(errorMessage ==='You have to verify your account before you can login. Check your email for verification code.'){
+            dispatch({
+                payload: error,
+                type: LOGIN_FAIL
+            });
+            if (
+                errorMessage ===
+                "You have to verify your account before you can login. Check your email for verification code."
+            ) {
                 return navigate("/verify-account");
-              }
-           
-            
+            }
+
             // if (errorMessage === "Incorrect email and password combination") {
             //     toast.error(errorMessage);
             //     return navigate("/login");
@@ -294,14 +295,14 @@ export const AuthProvider = withRouter(({ children, navigate }) => {
         try {
             setGetProfileData({ type: AUTH_START });
             const data = await getCurrentUser();
-            //console.log(data,"getProfile");
+            console.log(data, "getProfile");
             setGetProfileData({
                 payload: data?.user,
                 type: GET_PROFILE_SUCESS
             });
 
             dispatch({
-                payload: data.user,
+                payload: data,
                 type: LOGIN_SUCCESS
             });
             // setGetProfileData(data?.user);
@@ -355,7 +356,7 @@ export const AuthProvider = withRouter(({ children, navigate }) => {
             setProductList({ type: AUTH_START });
             const data = await getAllUserProduct();
             // setProductList(data);
-            console.log(data, "getAllProductFunc");
+            // console.log(data, "getAllProductFunc");
             setUserProductList({
                 payload: data,
                 type: GET_ALL_PRODUCT_SUCCESS
@@ -387,7 +388,7 @@ export const AuthProvider = withRouter(({ children, navigate }) => {
             // const newdate=data?.order.sort((a, b) => {
             //     return b?.createdAt - a?.createdAt;
             // });
-            // console.log(data, "getAllUserOrderFunc");
+            console.log(data, "getAllUserOrderFunc");
             dispatch({
                 payload: data,
                 type: GET_ORDER_SUCCESS
@@ -506,8 +507,7 @@ export const AuthProvider = withRouter(({ children, navigate }) => {
             });
 
             toast.success(data?.message);
-            navigate('/confirm-new-password')
-            
+            navigate("/confirm-new-password");
         } catch (error) {
             const errorMessage =
                 error?.response?.data?.message || error.message;
@@ -529,8 +529,7 @@ export const AuthProvider = withRouter(({ children, navigate }) => {
             });
 
             toast.success(data?.message);
-            navigate('/login')
-            
+            navigate("/login");
         } catch (error) {
             const errorMessage =
                 error?.response?.data?.message || error.message;
@@ -638,10 +637,10 @@ export const AuthProvider = withRouter(({ children, navigate }) => {
                 dispatch({
                     payload: false,
                     type: DEFAULT_FAIL
-                });  
+                });
             }, 3000);
-          
-            navigate(`product/all`)
+
+            navigate(`product/all`);
             return data;
         } catch (error) {
             const errorMessage =
@@ -754,26 +753,23 @@ export const AuthProvider = withRouter(({ children, navigate }) => {
             //toast.error("Page not found");
         }
     }, []);
- 
+
     const AcceptOrderFunc = async (orderId) => {
         // console.log(orderId,'orderId')
         try {
             dispatch({ type: AUTH_START });
-            if(orderId){
+            if (orderId) {
+                const data = await AcceptOrder(orderId);
 
-            
-            const data = await AcceptOrder(orderId);
+                toast.success(data.message);
+                // console.log(data,'order')
+                dispatch({
+                    payload: data,
+                    type: DEFAULT_FAIL
+                });
 
-            toast.success(data.message);
-            // console.log(data,'order')
-            dispatch({
-                payload: data,
-                type: DEFAULT_FAIL
-            });
-            
-            // navigate(`/invoice/${data?.data?.order?._id}`)
-        }
-        
+                // navigate(`/invoice/${data?.data?.order?._id}`)
+            }
         } catch (error) {
             const errorMessage =
                 error?.response?.data?.message || error.message;
@@ -785,19 +781,19 @@ export const AuthProvider = withRouter(({ children, navigate }) => {
         }
     };
 
-    const RejectOrderFunc = async (orderId,reason) => {
+    const RejectOrderFunc = async (orderId, reason) => {
         try {
             dispatch({ type: AUTH_START });
-            const data = await RejectOrder(orderId,reason);
+            const data = await RejectOrder(orderId, reason);
 
             toast.success(data.message);
             dispatch({
-                payload:true ,
+                payload: true,
                 type: DEFAULT_FAIL
             });
             setTimeout(() => {
                 dispatch({
-                    payload:false ,
+                    payload: false,
                     type: DEFAULT_FAIL
                 });
             }, 3000);
@@ -872,8 +868,6 @@ export const AuthProvider = withRouter(({ children, navigate }) => {
                 payload: errorMessage,
                 type: DEFAULT_FAIL
             });
-
-            
         }
     }, []);
     const GetAllCustomer = useCallback(async (id) => {
@@ -896,8 +890,6 @@ export const AuthProvider = withRouter(({ children, navigate }) => {
                 payload: errorMessage,
                 type: DEFAULT_FAIL
             });
-
-            
         }
     }, []);
 
@@ -906,10 +898,10 @@ export const AuthProvider = withRouter(({ children, navigate }) => {
             dispatch({ type: AUTH_START });
             const data = await addRepresentatives(values);
             // console.log(data);
-             toast.success(data.message,{
-                duration:6000
-             });
-             GetAllRepresentatives()
+            toast.success(data.message, {
+                duration: 6000
+            });
+            GetAllRepresentatives();
             dispatch({
                 payload: true,
                 type: DEFAULT_FAIL
@@ -931,15 +923,15 @@ export const AuthProvider = withRouter(({ children, navigate }) => {
         }
     };
 
-     const AddCustomer = async (values) => {
+    const AddCustomer = async (values) => {
         try {
             dispatch({ type: AUTH_START });
             const data = await addCustomer(values);
             // console.log(data);
-             toast.success(data.message,{
-                duration:6000
-             });
-             GetAllCustomer()
+            toast.success(data.message, {
+                duration: 6000
+            });
+            GetAllCustomer();
             dispatch({
                 payload: true,
                 type: DEFAULT_FAIL
@@ -970,7 +962,7 @@ export const AuthProvider = withRouter(({ children, navigate }) => {
             // setAuthToken(data.token);
             dispatch({
                 payload: "",
-                type:DEFAULT_FAIL
+                type: DEFAULT_FAIL
             });
             toast.success("Account Verify, Login...");
             setTimeout(() => {
@@ -1076,7 +1068,7 @@ export const AuthProvider = withRouter(({ children, navigate }) => {
                 AddRepresentatives,
                 GetAllRepresentatives,
                 GetAllCustomer,
-                 AddCustomer,
+                AddCustomer
             }}
         >
             {children}

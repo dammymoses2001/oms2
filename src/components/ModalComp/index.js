@@ -8,6 +8,7 @@ export const ModalComp = ({
     bodyText,
     title
 }) => {
+    console.log("show", show);
     return (
         <div>
             <Modal
@@ -29,13 +30,12 @@ export const ModalComp = ({
     );
 };
 
-
-export const GetPage = ({arrayComp=[],setPageNo=0}) =>{
-return <div>
-    
-    <div>
-        {arrayComp.length>0?arrayComp[setPageNo]?.component:null}
-    </div>
-    </div>
-
-}
+export const GetPage = ({ arrayComp = [], setPageNo = 0 }) => {
+    return (
+        <div>
+            <div>
+                {arrayComp.length > 0 ? arrayComp[setPageNo]?.component : null}
+            </div>
+        </div>
+    );
+};

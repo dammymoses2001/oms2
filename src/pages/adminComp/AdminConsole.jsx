@@ -36,16 +36,23 @@ export const AdminConsole = () => {
             lgas: [""]
         },
         userRole: "sales_rep",
-        company: ""
+        company: "",
+        companyId: "",
+        allCompanies: []
     };
     const {
         AddRepresentatives,
         GetAllRepresentatives,
         GetAllCompanies,
-        state: { allReps, allCompanies, isLoading, check }
+        state: { allReps, isLoading, check, data }
     } = useAuth();
     const [showModal, setModal] = useState(false);
-    const [userData, setUserData] = useState(initialState);
+    const [userData, setUserData] = useState({
+        ...initialState,
+        company: data?.company?.name,
+        companyId: data?.company?.id,
+        allCompanies: [data?.company?.name]
+    });
     const [selectedOption, setSelectedOption] = useState(null);
 
     const [query, setQuery] = useState("");
@@ -55,6 +62,8 @@ export const AdminConsole = () => {
             setModal(false);
         }
     }, [check]);
+
+    console.log("state", data);
 
     const columns = [
         // {
@@ -152,7 +161,7 @@ export const AdminConsole = () => {
     };
 
     const search = (allReps) => {
-       return allReps?.filter((row) =>
+        return allReps?.filter((row) =>
             row?.firstName.toLowerCase().includes(query)
         );
         // console.log(data,'data')
@@ -200,8 +209,12 @@ export const AdminConsole = () => {
         email,
         state,
 
-        company
+        company,
+        companyId,
+        allCompanies
     } = userData;
+
+    console.log("state", company, allCompanies);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -228,7 +241,8 @@ export const AdminConsole = () => {
                 lgas: newlgsarray
             },
             userRole: "sales_rep",
-            company: company
+            company: company,
+            companyId: companyId
         };
         // console.log(value)
         AddRepresentatives(value);
@@ -288,7 +302,7 @@ export const AdminConsole = () => {
                     }
                 />
             </div>
-            
+
             <div>
                 {isLoading ? (
                     <Loading height={"40vh"} />
@@ -347,7 +361,7 @@ export const AdminConsole = () => {
                                             onChange={handleOnChange}
                                             selectOption="Select Company"
                                             options={allCompanies}
-                                            input="supplierName"
+                                            // input="supplierName"
                                             value={company}
                                         />
                                     </div>

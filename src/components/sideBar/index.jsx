@@ -40,21 +40,22 @@ export const SideBar = () => {
 
     return (
         <Style>
-            {true ? (
-                <div className="mb-5 ">
-                    <img
-                        alt="Logo"
-                        style={{ width: "100%" }}
-                        src={companyLogo}
-                    />
-                </div>
-            ) : (
-                <div className="mb-5 text-center me-5 me-md-0">
+            <div className="mb-5">
+                <div className="text-center me-5 me-md-0">
                     <Link to="/">
                         <img alt="Logo" src={Logo} />
                     </Link>
                 </div>
-            )}
+                {companyLogo && (
+                    <div>
+                        <img
+                            alt="Logo"
+                            style={{ width: "100%" }}
+                            src={companyLogo}
+                        />
+                    </div>
+                )}
+            </div>
 
             <div className="text-center">
                 <Link to="/">

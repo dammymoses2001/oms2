@@ -448,11 +448,18 @@ export const OrderStatusColor = (status) => {
 };
 
 export const SortOrder = (dataOrders) => {
-    const sortOrder = dataOrders?.order.sort(
-        (a, b) => new Date(b?.order?.createdAt) - new Date(a?.order?.createdAt)
-    );
-    //  console.log(sortOrder, new Date("2015-03-25"),'c')
-    return sortOrder;
+    return dataOrders?.order.sort((a, b) => {
+        let bDate = new Date(b.createdAt);
+        let aDate = new Date(a.createdAt);
+
+        if (bDate > aDate) {
+            return 1;
+        } else if (bDate > aDate) {
+            return -1;
+        } else {
+            return 0;
+        }
+    });
 };
 
 export const handleTotalQuantity = (productArray) => {

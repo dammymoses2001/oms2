@@ -51,30 +51,20 @@ export const OrderShowAll = () => {
         // refetchInterval: 2000
         // refetchIntervalInBackground: true,
     });
-    console.log(isLoading);
-    // console.log(search(SortOrder(dataOrders)), "dataOrders");
 
     const [query, setQuery] = useState("");
 
     const search = (orderData) => {
-        console.log(orderData);
-
         return orderData?.filter(
             (row) =>
-                row?.order?.customer?.businessName
-                    .toLowerCase()
-                    .includes(query) ||
+                row?.customer?.businessName.toLowerCase().includes(query) ||
                 row?.user?.firstName.toLowerCase().includes(query) ||
-                moment(row?.order?.payLaterDate)
+                moment(row?.createdAt)
                     .format("MMM Do YY")
                     .toLowerCase()
                     .includes(query)
         );
     };
-
-    // console.log(search(dataOrders));
-
-    console.log(isLoading, "isLoading");
 
     useEffect(() => {
         getAllUserProductFunc(state?.data?._id);
@@ -103,8 +93,6 @@ export const OrderShowAll = () => {
     // useEffect(() => {
     //     getAllUserOrderFunc();
     // }, [getAllUserOrderFunc]);
-
-    //   console.log(handleCSvData(dataOrders),'SortOrder(dataOrders)')
 
     return (
         <AppLayout mode="light">

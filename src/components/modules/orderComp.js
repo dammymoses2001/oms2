@@ -11,12 +11,12 @@ export const OrderModal = ({
     show,
     orderData,
     setShow,
+    HeaderOrder,
     ProductColumn,
     setDeclineModal,
     supplierDetail,
     AcceptOrderFunc
 }) => {
-    console.log("Opended Modal", show);
     const headers = [
         { label: "Product", key: "Product" },
         { label: "", key: "" },
@@ -34,11 +34,11 @@ export const OrderModal = ({
         <ModalComp
             size={"xl"}
             title={<h5>Order List</h5>}
-            show={show && orderData}
+            show={show}
             handleClose={setShow}
             bodyText={
                 <div>
-                    <div className="mb-3 px-3 ">
+                    {/* <div className="mb-3 px-3 ">
                         <CSVLink
                             filename={"Order List"}
                             data={handleProductData(orderData)}
@@ -49,12 +49,13 @@ export const OrderModal = ({
                                 Export{" "}
                             </button>
                         </CSVLink>
-                    </div>
+                    </div> */}
 
                     <div className="px-3 mb-3">
                         <TableCompData
+                            columns={HeaderOrder(setShow)}
                             data={orderData}
-                            columns={ProductColumn}
+                            // columns={ProductColumn}
                         />
                     </div>
 

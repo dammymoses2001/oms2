@@ -111,7 +111,6 @@ export const getProduct = async (id) => {
 export const getOrder = async () => {
     try {
         const res = await request.get(`/supplier/order/all`);
-        // console.log(res, "product all");
         return res?.data?.data;
     } catch (error) {
         const err = error?.response?.data?.message || error?.message;
@@ -154,7 +153,7 @@ export const addNewproductFun = async (value) => {
 
 export const getCategories = async () => {
     try {
-        const res = await request.get("/product/categories");
+        const res = await request.get("supplier/product/categories");
         // console.log(res, "product all");
         return res?.data?.data;
     } catch (error) {

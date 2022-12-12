@@ -97,6 +97,8 @@ const Style = styled.div`
     }
 `;
 
+const categories = [{ categoryId: 1, categoryName: "Anti Malaria" }];
+
 export const ProductShowAll = () => {
     const {
         state,
@@ -127,6 +129,12 @@ export const ProductShowAll = () => {
     const [deleteProduct, setDeleteProduct] = useState(false);
     const [editProduct, setEditProduct] = useState(initialState);
     const [picture, setPicture] = useState();
+
+    const [productCategory, setProductCategory] = useState("");
+
+    const handleChangeProductCategory = (e) => {
+        setProductCategory(e.target.value);
+    };
 
     useEffect(
         () => {
@@ -174,10 +182,14 @@ export const ProductShowAll = () => {
         form.append("productSku", editProduct?.productSku);
         form.append("composition", editProduct?.composition);
         form.append("costPerUnit", editProduct?.costPerUnit);
+        form.append("nafdacNo", editProduct?.nafdacNo);
+        form.append("shelfLife", editProduct?.shelfLife);
+        form.append("categoryId", editProduct?.categoryId);
         form.append("productImage", picture);
+        form.append("status", editProduct?.status);
 
         // console.log(form);
-        UpdateProductFunc(editProduct?._id, form);
+        UpdateProductFunc(editProduct?.id, form);
     };
 
     //console.log(state, "getUserProductList");
@@ -193,7 +205,9 @@ export const ProductShowAll = () => {
         },
         {
             name: "Category",
-            selector: (row) => row.category?.category
+            selector: (row) =>
+                categories.filter((c) => c.categoryId === row.categoryId)[0]
+                    .categoryName
         },
         {
             name: "Product SKU",
@@ -379,6 +393,37 @@ export const ProductShowAll = () => {
                                     />
                                 </div>
                                 <div className="col-md-6">
+                                    <label
+                                        className="form-label"
+                                        htmlFor="form3Example1cg"
+                                    >
+                                        Product Category{" "}
+                                        <span className="text-danger">*</span>
+                                    </label>
+                                    <select
+                                        name="category"
+                                        className="form-control form-control-md"
+                                        value={editProduct?.categoryId}
+                                        onChange={handleOnchange}
+                                    >
+                                        {/* {console.log(
+                                            editProduct,
+                                            "UpdateProductCat"
+                                        )} */}
+                                        <option>Select Category</option>
+                                        {getProductCat?.data?.map(
+                                            (item, index) => (
+                                                <option
+                                                    key={index}
+                                                    value={item?.id}
+                                                >
+                                                    {item?.category}
+                                                </option>
+                                            )
+                                        )}
+                                    </select>
+                                </div>
+                                <div className="col-md-6">
                                     <Input2
                                         inputclassname={
                                             "border-1 py-1 text-black px-2"
@@ -394,57 +439,35 @@ export const ProductShowAll = () => {
                                         inputclassname={
                                             "border-1 py-1 text-black px-2"
                                         }
-                                        label={"Product Composition"}
-                                        value={editProduct?.composition}
-                                        name="composition"
+                                        label={"NAFDAC Number"}
+                                        value={editProduct?.nafdacNo}
+                                        name="nafdacNo"
                                         onChange={handleOnchange}
                                     />
-                                </div>
-                                <div className="col-md-6">
-                                    <label
-                                        className="form-label"
-                                        htmlFor="form3Example1cg"
-                                    >
-                                        Product Category{" "}
-                                        <span className="text-danger">*</span>
-                                    </label>
-                                    <select
-                                        name="category"
-                                        className="form-control form-control-md"
-                                        value={editProduct?.category?.category}
-                                        onChange={handleOnchange}
-                                    >
-                                        {/* {console.log(
-                                            editProduct,
-                                            "UpdateProductCat"
-                                        )} */}
-                                        <option>Select Category</option>
-                                        {getProductCat?.data?.map(
-                                            (item, index) => (
-                                                <option
-                                                    key={index}
-                                                    value={item?.category}
-                                                >
-                                                    {item?.category}
-                                                </option>
-                                            )
-                                        )}
-                                    </select>
                                 </div>
                                 <div className="col-md-6">
                                     <Input2
                                         inputclassname={
                                             "border-1 py-1 text-black px-2"
                                         }
-                                        type="date"
-                                        label={"Expiring Date"}
-                                        value={handleDate(
-                                            editProduct?.expirationDate
-                                        )}
-                                        name="expirationDate"
+                                        label={"Shelf Life (Years)"}
+                                        value={editProduct?.shelfLife}
+                                        name="shelfLife"
                                         onChange={handleOnchange}
                                     />
                                 </div>
+                                <div className="col-md-6">
+                                    <Input2
+                                        inputclassname={
+                                            "border-1 py-1 text-black px-2"
+                                        }
+                                        label={"Product Composition"}
+                                        value={editProduct?.composition}
+                                        name="composition"
+                                        onChange={handleOnchange}
+                                    />
+                                </div>
+
                                 <div className="col-md-6">
                                     <Input2
                                         inputclassname={
@@ -455,6 +478,36 @@ export const ProductShowAll = () => {
                                         name="costPerUnit"
                                         onChange={handleOnchange}
                                     />
+                                </div>
+
+                                <div className="col-lg-4 mb-2">
+                                    <label
+                                        className="form-label"
+                                        htmlFor="form3Example1cg"
+                                    >
+                                        Availability Status{" "}
+                                        <span className="text-danger">*</span>
+                                    </label>
+                                    <select
+                                        id="country"
+                                        name="status"
+                                        className="form-control form-control-md"
+                                        value={editProduct?.status}
+                                        onChange={handleOnchange}
+                                    >
+                                        <option>
+                                            Select Availability Status
+                                        </option>
+                                        <option value="Available">
+                                            Available
+                                        </option>
+                                        <option value="Discontinued">
+                                            Discontinued
+                                        </option>
+                                        <option value="Out of stock">
+                                            Out of stock
+                                        </option>
+                                    </select>
                                 </div>
 
                                 <div className="col-md-6">

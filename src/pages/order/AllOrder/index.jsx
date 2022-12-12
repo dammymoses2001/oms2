@@ -154,25 +154,30 @@ export const OrderShowAll = () => {
                 </div>
             </Style>
 
-            <OrderModal
-                show={show}
-                orderData={orderData}
-                setShow={setShow}
-                ProductColumn={ProductColumn}
-                setDeclineModal={setDeclineModal}
-                supplierDetail={supplierDetail}
-                AcceptOrderFunc={AcceptOrderFunc}
-            />
-            {/* Modal for OrderProduct  */}
-            <OrderProductModal
-                declineModal={declineModal}
-                setDeclineModal={setDeclineModal}
-                setRejectReasonv={setRejectReason}
-                setShow={setShow}
-                RejectOrderFunc={RejectOrderFunc}
-                supplierDetail={supplierDetail}
-                rejectReason={rejectReason}
-            />
+            {show && (
+                <>
+                    <OrderModal
+                        show={show}
+                        orderData={orderData}
+                        setShow={setShow}
+                        HeaderOrder={HeaderOrder}
+                        ProductColumn={ProductColumn}
+                        setDeclineModal={setDeclineModal}
+                        supplierDetail={supplierDetail}
+                        AcceptOrderFunc={AcceptOrderFunc}
+                    />
+                    {/* Modal for OrderProduct  */}
+                    <OrderProductModal
+                        declineModal={declineModal}
+                        setDeclineModal={setDeclineModal}
+                        setRejectReasonv={setRejectReason}
+                        setShow={setShow}
+                        RejectOrderFunc={RejectOrderFunc}
+                        supplierDetail={supplierDetail}
+                        rejectReason={rejectReason}
+                    />
+                </>
+            )}
         </AppLayout>
     );
 };

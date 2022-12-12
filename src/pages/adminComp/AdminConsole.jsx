@@ -242,7 +242,8 @@ export const AdminConsole = () => {
             },
             userRole: "sales_rep",
             company: company,
-            companyId: companyId
+            companyId: companyId,
+            managerId: 1
         };
         // console.log(value)
         AddRepresentatives(value);

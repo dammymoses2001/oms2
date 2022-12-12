@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BiBarcode } from "react-icons/bi";
 import { BsBarChartFill } from "react-icons/bs";
 import { HiOutlineUser } from "react-icons/hi";
@@ -25,9 +25,13 @@ export const SideBar = () => {
     const [settings, setSetting] = useState(false);
     const [admin, setAdmin] = useState(false);
     const [schedule, setSchedule] = useState(false);
-    const { state, logout } = useAuth();
+    const { state, logout, getProfile } = useAuth();
 
     const { data } = state;
+
+    useEffect(() => {
+        getProfile();
+    }, [getProfile]);
 
     let companyLogo = null;
 

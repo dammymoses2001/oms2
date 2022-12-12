@@ -295,7 +295,7 @@ export const AuthProvider = withRouter(({ children, navigate }) => {
         try {
             setGetProfileData({ type: AUTH_START });
             const data = await getCurrentUser();
-            console.log(data, "getProfile");
+            // console.log(data, "getProfile");
             setGetProfileData({
                 payload: data?.user,
                 type: GET_PROFILE_SUCESS
@@ -601,7 +601,7 @@ export const AuthProvider = withRouter(({ children, navigate }) => {
             setgetProductCat({ type: AUTH_START });
             const data = await getCategories();
             // setProductList(data);
-            //console.log(data, "getCategoriesFunc");
+            // console.log(data, "getCategoriesFunc");
             setgetProductCat({
                 payload: data?.categories,
                 type: GET_PRODUCTCATEGORIES_SUCCESS

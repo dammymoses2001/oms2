@@ -524,7 +524,7 @@ export const handleCSvData = (item) => {
             "Prod. Qty": handleTotalQuantity(row?.products),
             Address: row?.customer?.address || "-",
             Status: row?.status,
-            "Payment Method": row?.order?.paymentMethod,
+            "Payment Method": row?.payments[0]?.paymentMethod,
             "Payment Status": row?.paymentStatus,
             Amount: row.total,
             "Order Date": moment(row?.createdAt).format("MMM Do YY"),
@@ -576,7 +576,13 @@ export const HeaderOrder = (
                 <span
                     className="video px-2 bg-secondary text-white "
                     onClick={() => {
-                        setOrderData(row?.products);
+                        setOrderData(
+                            dataOrders.order.filter(
+                                (r) =>
+                                    r.customer.businessName ===
+                                    row?.customer?.businessName
+                            )
+                        );
                         setShow(true);
                         setSupplierDetail(row);
                     }}
@@ -613,7 +619,7 @@ export const HeaderOrder = (
         {
             name: "Payment Method",
             selector: (row) => (
-                <span>{`${row?.order?.paymentMethod || "-"}`}</span>
+                <span>{`${row?.payments[0]?.paymentMethod || "-"}`}</span>
             ),
             width: "150px"
         },
@@ -657,7 +663,7 @@ export const HeaderOrder = (
                         <Dropdown.Item
                             onClick={() => {
                                 setShow(true);
-                                setOrderData(row?.products);
+                                setOrderData([row]);
                                 setSupplierDetail(row);
                                 // setEditShow(true);
                                 // setEditProduct(row);

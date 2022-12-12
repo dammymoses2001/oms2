@@ -8,7 +8,6 @@ export const ModalComp = ({
     bodyText,
     title
 }) => {
-    console.log("show", show);
     return (
         <div>
             <Modal

@@ -21,6 +21,7 @@ import {
     // mainreferenceData,
     // topProductHeader,
     checkStock,
+    HeaderOrder,
     ProductColumn
 } from "../../utils/datautils";
 
@@ -171,6 +172,7 @@ const HomePage = () => {
                 show={show}
                 orderData={orderData}
                 setShow={setShow}
+                HeaderOrder={HeaderOrder}
                 ProductColumn={ProductColumn}
                 setDeclineModal={setDeclineModal}
                 supplierDetail={supplierDetail}

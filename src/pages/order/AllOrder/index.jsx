@@ -175,15 +175,15 @@ export const OrderShowAll = () => {
                     />
 
                     {/* Modal for OrderProduct  */}
-                    {/* <OrderProductModal
+                    <OrderProductModal
                         declineModal={declineModal}
                         setDeclineModal={setDeclineModal}
-                        setRejectReasonv={setRejectReason}
+                        setRejectReason={setRejectReason}
                         setShow={setShow}
                         RejectOrderFunc={RejectOrderFunc}
                         supplierDetail={supplierDetail}
                         rejectReason={rejectReason}
-                    /> */}
+                    />
                 </>
             )}
 

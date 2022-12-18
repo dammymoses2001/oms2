@@ -82,7 +82,6 @@ export const OrderModal = ({
                                 onClick={() => {
                                     // RejectOrderFunc(supplierDetail?._id);
                                     setDeclineModal(true);
-                                    setShow(false);
                                 }}
                             >
                                 Decline
@@ -158,7 +157,7 @@ export const OrderProductModal = ({
                                 <button
                                     className="btn bg-6 text-white me-4 px-4"
                                     onClick={() => {
-                                        RejectOrderFunc(supplierDetail?._id, {
+                                        RejectOrderFunc(supplierDetail?.id, {
                                             reasonDeclined: rejectReason
                                         });
                                     }}

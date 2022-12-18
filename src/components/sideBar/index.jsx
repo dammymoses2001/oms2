@@ -167,18 +167,16 @@ export const SideBar = () => {
                     )}
                 </div>
 
-                <Link to="/help-center">
+                {/* <Link to="/help-center">
                     <div className="d-flex align-items-center  pl-3  text-muted mb-5">
                         <div className="col-md-3">
-                            {" "}
                             <IoIosHelpBuoy size={20} className="me-3" />
                         </div>
                         <div>
-                            {" "}
                             <h6 className="mb-0 ">Help Center </h6>
                         </div>
                     </div>
-                </Link>
+                </Link> */}
 
                 <div className=" mb-7">
                     <div className="d-flex align-items-center  pl-3  text-muted mb-3 ">

@@ -24,10 +24,13 @@ import {
     ProductColumn,
     SortOrder
 } from "../../../utils/datautils";
+import { ProductModal } from "../../../components/modules/productComp";
 
 export const OrderShowAll = () => {
     const [show, setShow] = useState(false);
+    const [showProduct, setShowProduct] = useState(false);
     const [orderData, setOrderData] = useState(false);
+    const [productData, setProductData] = useState(false);
     const [declineModal, setDeclineModal] = useState(false);
     const [supplierDetail, setSupplierDetail] = useState();
     const [rejectReason, setRejectReason] = useState("");
@@ -65,6 +68,8 @@ export const OrderShowAll = () => {
                     .includes(query)
         );
     };
+
+    console.log(dataOrders);
 
     useEffect(() => {
         getAllUserProductFunc(state?.data?._id);
@@ -145,7 +150,9 @@ export const OrderShowAll = () => {
                                 setOrderData,
                                 setShow,
                                 setSupplierDetail,
-                                dataOrders
+                                dataOrders,
+                                setProductData,
+                                setShowProduct
                             )}
                             data={search(SortOrder(dataOrders))}
                             pagination
@@ -166,8 +173,9 @@ export const OrderShowAll = () => {
                         supplierDetail={supplierDetail}
                         AcceptOrderFunc={AcceptOrderFunc}
                     />
+
                     {/* Modal for OrderProduct  */}
-                    <OrderProductModal
+                    {/* <OrderProductModal
                         declineModal={declineModal}
                         setDeclineModal={setDeclineModal}
                         setRejectReasonv={setRejectReason}
@@ -175,8 +183,21 @@ export const OrderShowAll = () => {
                         RejectOrderFunc={RejectOrderFunc}
                         supplierDetail={supplierDetail}
                         rejectReason={rejectReason}
-                    />
+                    /> */}
                 </>
+            )}
+
+            {showProduct && (
+                <ProductModal
+                    show={showProduct}
+                    productData={productData}
+                    setShow={setShowProduct}
+                    HeaderOrder={HeaderOrder}
+                    ProductColumn={ProductColumn}
+                    setDeclineModal={setDeclineModal}
+                    supplierDetail={supplierDetail}
+                    AcceptOrderFunc={AcceptOrderFunc}
+                />
             )}
         </AppLayout>
     );

@@ -22,7 +22,7 @@ import { Search } from "@material-ui/icons";
 
 export const ProductDetails = () => {
     const { state, getAllUserProductFunc, getUserProductList } = useAuth();
-    console.log(getUserProductList,'state')
+    console.log(getUserProductList, "state");
     useEffect(() => {
         getAllUserProductFunc(state?.data?._id);
     }, [getAllUserProductFunc, state?.data?._id]);
@@ -93,7 +93,6 @@ export const ProductDetails = () => {
     return (
         <AppLayout mode="light">
             <Style>
-                 
                 <div className="mb-3">
                     <TopNav
                         TextComp={<span className="color-1 h4">Products</span>}

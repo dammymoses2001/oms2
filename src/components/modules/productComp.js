@@ -1,34 +1,74 @@
 import { Link } from "react-router-dom";
 import { formatMoney } from "../../utils";
-import { handleProductData } from "../../utils/datautils";
+import { checkStock } from "../../utils/datautils";
 import { ModalComp } from "../ModalComp";
 import { TableCompData } from "../Table";
 import { CSVLink, CSVDownload } from "react-csv";
+import { TableComp } from "../TableComp";
 
 // add dataorder
 
-export const OrderModal = ({
-    show,
-    orderData,
-    setShow,
-    HeaderOrder,
-    ProductColumn,
-    setDeclineModal,
-    supplierDetail,
-    AcceptOrderFunc
-}) => {
-    const headers = [
-        { label: "Product", key: "Product" },
-        { label: "", key: "" },
-        { label: "Composition", key: "Composition" },
-        { label: "", key: "" },
-        { label: "Quantity ", key: "Quantity" },
-        { label: "Unit price ", key: "Unit price" },
-        { label: "Sample Qty ", key: " Sample Qty" },
-        { label: "Return Qty", key: " Return Qty" },
-        { label: "Replace Qty ", key: " Replace Qty" },
-        { label: "Total ", key: "Total" }
-    ];
+export const topProductHeader = [
+    { name: "PRODUCT NAME" },
+    { name: "Product SKU" },
+    { name: "AVAILABILITY" },
+    { name: "TOTAL" },
+    { name: "QUANTITY" }
+];
+
+export const ProductModal = ({ show, productData, setShow }) => {
+    const bodyData = () => {
+        return productData.map((item, index) => {
+            // if(index<=4){
+            return (
+                <tr key={index}>
+                    <td>
+                        <div className="row align-items-center">
+                            {/* <div className="col-sm-3">
+                                <div className="productWrapper ">
+                                    <img src={Product1} alt="" />{" "}
+                                </div>
+                            </div> */}
+                            <div className="col-sm-6">
+                                <span>{item?.product.productName}</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <span className="d-flex align-items-center h-100">
+                            {item?.product.productSku}
+                        </span>
+                    </td>
+                    <td>
+                        {" "}
+                        <div className="d-flex  align-items-center h-100">
+                            <span
+                                className={`border px-2 py-1 rounded small  text-white text-center ${checkStock(
+                                    200
+                                )}`}
+                            >
+                                {200} In Stock
+                            </span>
+                        </div>
+                    </td>
+                    <td>
+                        <div className="d-flex align-items-center h-100">
+                            <span className="">
+                                NGN {formatMoney(item?.product.costPerUnit)}
+                            </span>
+                        </div>
+                    </td>
+                    <td>
+                        <div className="d-flex align-items-center h-100">
+                            <span className="">{item?.quantity}</span>
+                        </div>
+                    </td>
+                </tr>
+            );
+            // }
+            // return null
+        });
+    };
 
     return (
         <ModalComp
@@ -52,10 +92,15 @@ export const OrderModal = ({
                     </div> */}
 
                     <div className="px-3 mb-3">
-                        <TableCompData
+                        {/* <TableCompData
                             columns={HeaderOrder(setShow)}
                             data={orderData}
                             // columns={ProductColumn}
+                        /> */}
+                        <TableComp
+                            TableHeader={topProductHeader}
+                            TableBodyData={bodyData}
+                            data={productData}
                         />
                     </div>
 
@@ -65,49 +110,11 @@ export const OrderModal = ({
                             {" "}
                             N
                             {formatMoney(
-                                parseFloat(
-                                    orderData[0]?.orderItems[0].product
-                                        .costPerUnit
-                                ) *
-                                    parseInt(
-                                        orderData[0]?.orderItems[0].quantity
-                                    )
+                                parseFloat(productData[0].product.costPerUnit) *
+                                    parseFloat(productData[0].quantity)
                             )}
                         </h5>
                     </div>
-                    {orderData?.status !== "ACCEPTED" ? (
-                        <div className="text-end">
-                            <button
-                                className="btn bg-8 me-4 px-4"
-                                onClick={() => {
-                                    // RejectOrderFunc(supplierDetail?._id);
-                                    setDeclineModal(true);
-                                    setShow(false);
-                                }}
-                            >
-                                Decline
-                            </button>
-                            <button
-                                className="btn bg-6 text-white me-4 px-4"
-                                onClick={() => {
-                                    console.log(orderData, "orderData");
-                                    AcceptOrderFunc(supplierDetail?._id);
-                                    setShow(false);
-                                }}
-                            >
-                                Approve
-                            </button>
-                        </div>
-                    ) : (
-                        <div className="text-end">
-                            <Link
-                                to={`/invoice/${orderData?._id}`}
-                                className="px-4 btn bg-6 text-white"
-                            >
-                                View Invoice
-                            </Link>
-                        </div>
-                    )}
                 </div>
             }
         />

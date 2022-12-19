@@ -449,12 +449,12 @@ export const OrderStatusColor = (status) => {
 
 export const SortOrder = (dataOrders) => {
     return dataOrders?.order.sort((a, b) => {
-        let bDate = new Date(b.createdAt);
-        let aDate = new Date(a.createdAt);
+        let bDate = new Date(b.createdAt).getTime();
+        let aDate = new Date(a.createdAt).getTime();
 
         if (bDate > aDate) {
             return 1;
-        } else if (bDate > aDate) {
+        } else if (bDate < aDate) {
             return -1;
         } else {
             return 0;
@@ -550,7 +550,9 @@ export const HeaderOrder = (
     setOrderData,
     setShow,
     setSupplierDetail,
-    dataOrders
+    dataOrders,
+    setProductData,
+    setShowProduct
 ) => {
     const { AcceptOrderFunc, RejectOrderFunc } = useAuth();
 
@@ -576,14 +578,8 @@ export const HeaderOrder = (
                 <span
                     className="video px-2 bg-secondary text-white "
                     onClick={() => {
-                        setOrderData(
-                            dataOrders.order.filter(
-                                (r) =>
-                                    r.customer.businessName ===
-                                    row?.customer?.businessName
-                            )
-                        );
-                        setShow(true);
+                        setProductData(row?.orderItems);
+                        setShowProduct(true);
                         setSupplierDetail(row);
                     }}
                 >{`${row?.customer?.businessName || "-"}`}</span>
@@ -593,7 +589,7 @@ export const HeaderOrder = (
 
         {
             name: "Prod. Qty",
-            selector: (row) => handleTotalQuantity(row?.products)
+            selector: (row) => row?.orderItems[0].quantity
         },
         {
             name: "Address",

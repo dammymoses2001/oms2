@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import Logo from "../../assets/images/logo-01.svg";
+import Logo2 from "../../assets/images/image1.jpg";
 
 import { useAuth } from "../../hooks";
 import { defaultLogo } from "../../utils/datautils";
@@ -42,6 +43,8 @@ export const SideBar = () => {
         companyLogo = "logo" in data.company ? data.company.logo : null;
     }
 
+    console.log(data,'data')
+
     return (
         <Style>
             <div className="mb-5">
@@ -55,7 +58,7 @@ export const SideBar = () => {
                         <img
                             alt="Logo"
                             style={{ width: "100%" }}
-                            src={companyLogo}
+                            src={Logo2}
                         />
                     </div>
                 )}

@@ -6,6 +6,7 @@ export * from "./Customers";
 export * from "./settings";
 export * from "./Helpcenter";
 export * from "./adminComp";
-export * from "./Schedule"
+export * from "./Schedule";
+export * from "./order/AllOrder/SalesReport";
 
 // export * from "./product/SupplierProduct";

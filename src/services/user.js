@@ -352,3 +352,15 @@ export const addCustomer = async (value) => {
         throw new Error(err);
     }
 };
+
+export const getVisitationSchedules = async (value) => {
+    try {
+        const res = await request.get(
+            `/visitation?startDate=${value.startDate}&endDate=${value.endDate}`
+        );
+        return res?.data;
+    } catch (error) {
+        const err = error?.response?.data?.message || error?.message;
+        throw new Error(err);
+    }
+};

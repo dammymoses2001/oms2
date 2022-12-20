@@ -37,6 +37,10 @@ export const GET_PROFILE_FAIL = "GET_PROFILE_FAIL";
 export const GET_DELIVERYCHANNELS_FAIL = "GET_DELIVERYCHANNELS_FAIL";
 export const GET_DELIVERYCHANNELS_SUCCESS = "GET_DELIVERYCHANNELS_SUCCESS";
 
+export const GET_VISITATIONSCHEDULES_SUCCESS =
+    "GET_VISITATIONSCHEDULES_SUCCESS";
+export const GET_VISITATIONSCHEDULES_FAIL = "GET_VISITATIONSCHEDULES_FAIL";
+
 //
 export const GET_PRODUCTCATEGORIES_SUCCESS = "GET_PRODUCTCATEGORIES_SUCCESS";
 export const GET_PRODUCTCATEGORIES_FAIL = "GET_PRODUCTCATEGORIES_FAIL";
@@ -68,17 +72,16 @@ export const ACCEPT_ORDER__SUCCESS = "ACCEPT_ORDER__SUCCESS";
 export const GET_ORDER_INVOICE = "GET_ORDER_INVOICE";
 export const DEFAULT_FAIL = "DEFAULT_FAIL";
 
-const handleSort = (orders=[]) => {
+const handleSort = (orders = []) => {
     //  console.log(orders, "order");
     const newdate = orders.sort((a, b) => {
-        console.log(a?.order?.createdAt,'order')
+        console.log(a?.order?.createdAt, "order");
         const aDate = new Date(b?.order?.createdAt);
         const bDate = new Date(a?.order?.createdAt);
         return aDate - bDate;
     });
     //console.log(newdate, "order1");
-    return newdate
-   
+    return newdate;
 };
 
 export const authReducer = (state, action) => {
@@ -88,7 +91,7 @@ export const authReducer = (state, action) => {
             return {
                 ...state,
                 isLoading: true,
-                isLoggingIn:true
+                isLoggingIn: true
             };
 
         case REGISTER_SUCCESS:
@@ -98,13 +101,13 @@ export const authReducer = (state, action) => {
                 error: null,
                 isLoading: false,
                 isLoggedIn: false,
-                isLoggingIn:false
+                isLoggingIn: false
             };
 
         case REGISTER_FAIL:
             return {
                 ...state,
-               
+
                 error: action.payload,
                 isLoading: false,
                 isLoggedIn: false
@@ -121,10 +124,9 @@ export const authReducer = (state, action) => {
         case ADD_NEW_PRODUCT_FAIL:
             return {
                 ...state,
-               
+
                 error: action.payload,
-                isLoading: false,
-               
+                isLoading: false
             };
         case PRODUCT_UPLOADCV_SUCCESS:
             return {
@@ -138,7 +140,7 @@ export const authReducer = (state, action) => {
         case PRODUCT_UPLOADCV_FAIL:
             return {
                 ...state,
-               
+
                 error: action.payload,
                 isLoading: false,
                 isLoggedIn: false
@@ -169,7 +171,7 @@ export const authReducer = (state, action) => {
         case GET_PRODUCTCATEGORIES_FAIL:
             return {
                 ...state,
-               
+
                 error: action.payload,
                 isLoading: false,
                 isLoggedIn: false
@@ -186,7 +188,7 @@ export const authReducer = (state, action) => {
         case LOGIN_FAIL:
             return {
                 ...state,
-               
+
                 error: action.payload,
                 isLoading: false,
                 isLoggedIn: false
@@ -217,7 +219,7 @@ export const authReducer = (state, action) => {
         case LOGOUT_SUCCESS:
             return {
                 ...state,
-               
+
                 error: null,
                 isLoading: false,
                 isLoggedIn: false
@@ -270,7 +272,7 @@ export const authReducer = (state, action) => {
         case GET_ALL_SUPPLIERS_FAIL:
             return {
                 ...state,
-               
+
                 error: action.payload,
                 isLoading: false
             };
@@ -290,7 +292,7 @@ export const authReducer = (state, action) => {
         case GET_ALL_SUPPLIERS_PRODUCT_FAIL:
             return {
                 ...state,
-               
+
                 error: action.payload,
                 isLoading: false
             };
@@ -304,7 +306,7 @@ export const authReducer = (state, action) => {
         case GET_PRODUCT_FAIL:
             return {
                 ...state,
-               
+
                 error: action.payload,
 
                 isLoading: false
@@ -318,7 +320,7 @@ export const authReducer = (state, action) => {
         case DELETE_PRODUCT_FAIL:
             return {
                 ...state,
-               
+
                 error: action.payload,
 
                 isLoading: false
@@ -365,7 +367,7 @@ export const authReducer = (state, action) => {
         case GET_PACKAGES_FAIL:
             return {
                 ...state,
-               
+
                 error: action.payload,
                 isLoading: false
             };
@@ -406,7 +408,7 @@ export const authReducer = (state, action) => {
         case GET_CART_FAIL:
             return {
                 ...state,
-               
+
                 error: action.payload,
                 isLoading: false
             };
@@ -455,7 +457,7 @@ export const authReducer = (state, action) => {
         case DEFAULT_FAIL:
             return {
                 ...state,
-                check:action.payload,
+                check: action.payload,
                 error: action.payload,
                 isLoading: false
             };

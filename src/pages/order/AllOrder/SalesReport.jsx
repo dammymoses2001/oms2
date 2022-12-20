@@ -12,8 +12,11 @@ import { CSVLink, CSVDownload } from "react-csv";
 import moment from "moment";
 
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import { useAuth } from "../../../hooks";
 import { BiConversation, BiSearchAlt } from "react-icons/bi";
+
+import { formatMoney } from "../../../utils";
 
 import { getOrder } from "../../../services";
 
@@ -24,8 +27,9 @@ import {
     SortOrder
 } from "../../../utils/datautils";
 import { ProductModal } from "../../../components/modules/productComp";
+import ExportExcel from "./excelexport";
 
-export const OrderShowAll = () => {
+export const SalesReport = () => {
     const [show, setShow] = useState(false);
     const [showProduct, setShowProduct] = useState(false);
     const [orderData, setOrderData] = useState(false);
@@ -40,6 +44,9 @@ export const OrderShowAll = () => {
         RejectOrderFunc,
         state: { check }
     } = useAuth();
+
+    const [total, setTotal] = useState(0);
+    const [orderReport, setOrderReport] = useState([]);
 
     useEffect(() => {
         if (check) {
@@ -68,7 +75,37 @@ export const OrderShowAll = () => {
         );
     };
 
-    console.log(dataOrders);
+    useEffect(() => {
+        if (dataOrders?.order?.length > 0) {
+            let totalAmount = dataOrders.order
+                .map((o) => o.total)
+                .reduce((a, b) => parseFloat(a) + parseFloat(b), 0);
+
+            setTotal(totalAmount);
+
+            const _orderReport = SortOrder(dataOrders).map((o, idx) => {
+                return {
+                    "No.": idx + 1,
+                    "Order Date": moment(o.createdAt).format("MMM Do, YY"),
+                    "Field Staff": `${o.user?.firstName} ${o?.user?.lastName}`,
+                    Customer: `${o?.customer?.businessName || "-"}`,
+                    "Prod Qty": o.orderItems[0]?.quantity,
+                    "Amount (₦)": formatMoney(o.total)
+                };
+            });
+
+            _orderReport.push({
+                "No.": "",
+                "Order Date": "",
+                "Field Staff": "",
+                Customer: "",
+                "Prod Qty": "",
+                "Amount (₦)": formatMoney(totalAmount)
+            });
+
+            setOrderReport(_orderReport);
+        }
+    }, [dataOrders]);
 
     useEffect(() => {
         getAllUserProductFunc(state?.data?._id);
@@ -116,22 +153,18 @@ export const OrderShowAll = () => {
                 <div className="mb-3 mt-2">
                     <TopNav
                         TextComp={
-                            <h5 className="color-1 fw-2">Order Management</h5>
+                            <h5 className="color-1 fw-2">Sales Report</h5>
                         }
                         RightComp={
                             <div className="color-2">
                                 {/* <button className="mr-2 bg bg-1 h6" >View All Products</button> */}
                                 {/* <CSVLink data={SortOrder(dataOrders)}>Download me</CSVLink>; */}
 
-                                <CSVLink
-                                    filename={"Management Orders"}
-                                    data={handleCSvData(dataOrders)}
-                                    headers={headers}
-                                >
-                                    <button className="px-3 pl-4 py-1 bg bg-1 h-6 ml-4 btn1">
-                                        Export
-                                    </button>
-                                </CSVLink>
+                                <ExportExcel
+                                    excelData={orderReport}
+                                    fileName={"Sales_Report"}
+                                />
+
                                 {/* <Link to="#" className="mr-2 btn bg-1 h6">
                                     Export
                                 </Link> */}
@@ -144,18 +177,34 @@ export const OrderShowAll = () => {
                     {isLoading ? (
                         <Loading height={"50vh"} />
                     ) : (
-                        <TableCompData
-                            columns={HeaderOrder(
-                                setOrderData,
-                                setShow,
-                                setSupplierDetail,
-                                dataOrders,
-                                setProductData,
-                                setShowProduct
-                            )}
-                            data={search(SortOrder(dataOrders))}
-                            pagination
-                        />
+                        <>
+                            <TableCompData
+                                columns={HeaderOrder(
+                                    setOrderData,
+                                    setShow,
+                                    setSupplierDetail,
+                                    dataOrders,
+                                    setProductData,
+                                    setShowProduct,
+                                    true
+                                )}
+                                data={search(SortOrder(dataOrders))}
+                                pagination
+                            />
+                            <div
+                                className="text-end"
+                                style={{
+                                    marginTop: "20px",
+                                    marginRight: "150px",
+                                    paddingBottom: "40px"
+                                }}
+                            >
+                                <span className="px-2">Total: </span>
+                                <span className="bg-8 me-4 px-2">
+                                    ₦{formatMoney(total)}
+                                </span>
+                            </div>
+                        </>
                     )}
                 </div>
             </Style>

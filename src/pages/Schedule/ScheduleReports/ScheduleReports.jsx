@@ -10,15 +10,41 @@ import {
     DailyVisitHeader,
     DailyVisitHeaderFull,
     SchedularData,
-    SchedularHeader
+    SchedularHeader,
+    SortOrder
 } from "../../../utils/datautils";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../hooks";
+import { useEffect } from "react";
+import { getVisitationSchedules } from "../../../services";
+import styled from "styled-components";
 
 export const ScheduleReports = () => {
     const navigate = useNavigate();
     const [page, setPage] = useState(0);
     const [dailyVists, setDailyVisit] = useState([]);
     const [showModal, setShowModal] = useState(false);
+
+    const [visitationSchedules, setVisitationSchedules] = useState([]);
+
+    useEffect(async () => {
+        let now = new Date();
+        let monthBegin = `${now.getFullYear()}-${now.getMonth() + 1}-01`;
+
+        let future = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+        let monthEnd = `${future.getFullYear()}-${
+            future.getMonth() + 1
+        }-${future.getDate()}`;
+
+        const { data } = await getVisitationSchedules({
+            startDate: monthBegin,
+            endDate: monthEnd
+        });
+
+        console.log(data);
+
+        setVisitationSchedules(data);
+    }, []);
 
     const DropDownItems = [
         {
@@ -38,6 +64,7 @@ export const ScheduleReports = () => {
             }
         }
     ];
+
     const DropDownItems2 = [
         {
             name: "Gideon Customer Visit List",
@@ -74,8 +101,12 @@ export const ScheduleReports = () => {
                     </div>
                     <div>
                         <TableCompData
-                            columns={SchedularHeader(DropDownItems)}
-                            data={SchedularData()}
+                            columns={SchedularHeader(
+                                DropDownItems,
+                                visitationSchedules
+                            )}
+                            data={SortOrder(visitationSchedules)}
+                            pagination
                         />
                     </div>
                 </div>
@@ -113,25 +144,70 @@ export const ScheduleReports = () => {
         }
     ];
 
-    console.log(dailyVists, "dailyVists");
     return (
         <AppLayout mode="light">
-            <div>
-                <GetPage arrayComp={setPages} setPageNo={page} />
-                <ModalComp
-                    title={"Gideon Customer Visit List"}
-                    show={showModal}
-                    bodyText={
-                        <div>
-                            <TableCompData
-                                columns={DailyVisitHeaderFull(DropDownItems)}
-                                data={dailyVists}
-                            />
-                        </div>
-                    }
-                    handleClose={() => setShowModal(false)}
-                />
-            </div>
+            <Style>
+                <div>
+                    <GetPage arrayComp={setPages} setPageNo={page} />
+                    <ModalComp
+                        title={"Gideon Customer Visit List"}
+                        show={showModal}
+                        bodyText={
+                            <div>
+                                <TableCompData
+                                    columns={DailyVisitHeaderFull(
+                                        DropDownItems
+                                    )}
+                                    data={dailyVists}
+                                />
+                            </div>
+                        }
+                        handleClose={() => setShowModal(false)}
+                    />
+                </div>
+            </Style>
         </AppLayout>
     );
 };
+
+const Style = styled.div`
+    .dropbtn {
+        background-color: #3498db;
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .dropbtn:hover,
+    .dropbtn:focus {
+        background-color: #2980b9;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f1f1f1;
+        min-width: 160px;
+        overflow: auto;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown a:hover {
+        background-color: #ddd;
+    }
+`;

@@ -4,13 +4,13 @@ import {
     Home,
     Login,
     OrderShowAll,
+    SalesReport,
     ProductDetails,
     ProductLayout,
     Invoice,
     AddProduct,
     Register,
     SelectAccountType,
-   
     VerifyAccount,
     VerifyPayment,
     ProductShowAll,
@@ -195,7 +195,6 @@ export const routeList = [
     },
     {
         children: [
-            
             {
                 component: AdminConsole,
                 name: "Add User ",
@@ -210,49 +209,61 @@ export const routeList = [
 
     {
         children: [
-            
             {
                 component: IndividualActivityReport,
                 exact: true,
                 name: "ScheduleReports",
                 path: "/individual/:id",
-                protected:true
+                protected: true
             },
             {
                 component: ScheduleReports,
                 exact: true,
                 name: "ScheduleReports",
                 path: "/reports",
-                protected:true
-            },
+                protected: true
+            }
         ],
         component: ScheduleReports,
         exact: true,
         name: "ScheduleReports",
-         path: "/",
+        path: "/",
         protected: true
     },
 
-     {
+    {
         children: [
-            
             {
                 component: VisitTargets,
                 exact: true,
                 name: "VisitTargets",
                 path: "/Visit-Targets",
-                protected:true
+                protected: true
             }
         ],
         component: VisitTargets,
         exact: true,
         name: "VisitTargets",
-         path: "/",
+        path: "/",
         protected: true
     },
-    
-    
 
+    {
+        children: [
+            {
+                component: SalesReport,
+                exact: true,
+                name: "Sales Report",
+                path: "/sales-report",
+                protected: true
+            }
+        ],
+
+        exact: true,
+        name: "Sales Report",
+        // path: "/summary",
+        protected: true
+    },
     {
         children: [
             {

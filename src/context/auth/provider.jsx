@@ -51,7 +51,9 @@ import {
     GET_ORDER_INVOICE,
     GET_ALL_COMPANIES_SUCCESS,
     GET_ALL_REPS_SUCCESS,
-    GET_ALL_CUSTOMER_SUCCESS
+    GET_ALL_CUSTOMER_SUCCESS,
+    GET_VISITATIONSCHEDULES_SUCCESS,
+    GET_VISITATIONSCHEDULES_FAIL
     // GET_PACKAGES_FAIL,
     // GET_PACKAGES_SUCCESS,
     // GET_CART_SUCCESS,
@@ -92,7 +94,8 @@ import {
     addRepresentatives,
     addCustomer,
     getAllRepresentatives,
-    getAllCustomer
+    getAllCustomer,
+    getVisitationSchedules
     // getPackages,
     // subscription,
     // completeSubscription,
@@ -162,6 +165,12 @@ export const AuthProvider = withRouter(({ children, navigate }) => {
             product: []
         }
     );
+
+    const [getVisitSchedules, setVisitSchedules] = useReducer(authReducer, {
+        error: null,
+        isLoading: true,
+        product: []
+    });
     // const [getPackagesData, setGetPackagesData] = useReducer(authReducer, {
     //     error: null,
     //     isLoading: true,
@@ -987,6 +996,35 @@ export const AuthProvider = withRouter(({ children, navigate }) => {
         }
     };
 
+    const getVisitationSchedulesFunc = useCallback(
+        async (dates) => {
+            // console.log(id,"igettheid");
+
+            try {
+                setVisitSchedules({ type: AUTH_START });
+                const data = await getVisitationSchedules(dates);
+                console.log(data);
+                setVisitSchedules({
+                    payload: data?.data,
+                    type: GET_VISITATIONSCHEDULES_SUCCESS
+                });
+                //toast.success("Login successful");
+                // navigate("/");
+            } catch (error) {
+                navigate("/");
+                const errorMessage =
+                    error?.response?.data?.message || error.message;
+                setVisitSchedules({
+                    payload: errorMessage,
+                    type: GET_VISITATIONSCHEDULES_FAIL
+                });
+
+                //toast.error("Page not found");
+            }
+        },
+        [navigate]
+    );
+
     useEffect(() => {
         const loadApp = async () => {
             setLoadingApp(true);
@@ -1068,7 +1106,8 @@ export const AuthProvider = withRouter(({ children, navigate }) => {
                 AddRepresentatives,
                 GetAllRepresentatives,
                 GetAllCustomer,
-                AddCustomer
+                AddCustomer,
+                getVisitationSchedulesFunc
             }}
         >
             {children}

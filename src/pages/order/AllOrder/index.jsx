@@ -153,7 +153,7 @@ export const OrderShowAll = () => {
                                 setProductData,
                                 setShowProduct
                             )}
-                            data={search(SortOrder(dataOrders))}
+                            data={search(SortOrder(dataOrders?.order|| []))}
                             pagination
                         />
                     )}

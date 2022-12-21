@@ -83,16 +83,18 @@ export const SalesReport = () => {
 
             setTotal(totalAmount);
 
-            const _orderReport = SortOrder(dataOrders).map((o, idx) => {
-                return {
-                    "No.": idx + 1,
-                    "Order Date": moment(o.createdAt).format("MMM Do, YY"),
-                    "Field Staff": `${o.user?.firstName} ${o?.user?.lastName}`,
-                    Customer: `${o?.customer?.businessName || "-"}`,
-                    "Prod Qty": o.orderItems[0]?.quantity,
-                    "Amount (₦)": formatMoney(o.total)
-                };
-            });
+            const _orderReport = SortOrder(dataOrders?.order || []).map(
+                (o, idx) => {
+                    return {
+                        "No.": idx + 1,
+                        "Order Date": moment(o.createdAt).format("MMM Do, YY"),
+                        "Field Staff": `${o.user?.firstName} ${o?.user?.lastName}`,
+                        Customer: `${o?.customer?.businessName || "-"}`,
+                        "Prod Qty": o.orderItems[0]?.quantity,
+                        "Amount (₦)": formatMoney(o.total)
+                    };
+                }
+            );
 
             _orderReport.push({
                 "No.": "",
@@ -188,7 +190,9 @@ export const SalesReport = () => {
                                     setShowProduct,
                                     true
                                 )}
-                                data={search(SortOrder(dataOrders))}
+                                data={search(
+                                    SortOrder(dataOrders?.order || [])
+                                )}
                                 pagination
                             />
                             <div

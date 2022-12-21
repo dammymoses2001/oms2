@@ -26,6 +26,7 @@ export const SideBar = () => {
     const [settings, setSetting] = useState(false);
     const [admin, setAdmin] = useState(false);
     const [schedule, setSchedule] = useState(false);
+    const [orders, setOrders] = useState(false);
     const { state, logout, getProfile } = useAuth();
 
     const { data } = state;
@@ -89,18 +90,56 @@ export const SideBar = () => {
                         </div>
                     </div>
                 </Link>
-                <Link to="/order/all">
+                {/* <Link to="/order/all">
                     <div className="d-flex align-items-center  pl-3  text-muted mb-5">
                         <div className="col-md-3">
-                            {" "}
                             <RiFileList3Fill size={20} className="me-3" />
                         </div>
                         <div>
-                            {" "}
                             <h6 className="mb-0 ">Manage Orders</h6>
                         </div>
                     </div>
-                </Link>
+                </Link> */}
+
+                <div className=" mb-5">
+                    <div className="d-flex align-items-center  pl-3  text-muted mb-3 ">
+                        <div className="col-md-3">
+                            <RiFileList3Fill size={20} className="me-3" />
+                        </div>
+                        <div
+                            onClick={() => setOrders(!orders)}
+                            className="d-flex justify-content-between w-100 video"
+                        >
+                            <h6 className="mb-0 text-nowrap">Manage Orders </h6>
+                            {!orders ? (
+                                <MdKeyboardArrowUp />
+                            ) : (
+                                <MdKeyboardArrowDown />
+                            )}
+                        </div>
+                    </div>
+                    {orders && (
+                        <>
+                            <div className="text-start ps-4 ps-lg-5 mb-4">
+                                <Link
+                                    className="text-black text-muted "
+                                    to={"/order/all"}
+                                >
+                                    <h6>Orders </h6>
+                                </Link>
+                            </div>
+
+                            <div className="text-start ps-4 ps-lg-5 mb-4">
+                                <Link
+                                    className="text-black text-muted "
+                                    to={"/sales-report"}
+                                >
+                                    <h6>Sales Report</h6>
+                                </Link>
+                            </div>
+                        </>
+                    )}
+                </div>
 
                 <Link to="/customer">
                     <div className="d-flex align-items-center  pl-3  text-muted mb-5">

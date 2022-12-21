@@ -90,7 +90,7 @@ export const OrderModal = ({
                                 className="btn bg-6 text-white me-4 px-4"
                                 onClick={() => {
                                     console.log(orderData, "orderData");
-                                    AcceptOrderFunc(supplierDetail?._id);
+                                    AcceptOrderFunc(supplierDetail?.id);
                                     setShow(false);
                                 }}
                             >
@@ -100,7 +100,7 @@ export const OrderModal = ({
                     ) : (
                         <div className="text-end">
                             <Link
-                                to={`/invoice/${orderData?._id}`}
+                                to={`/invoice/${orderData?.id}`}
                                 className="px-4 btn bg-6 text-white"
                             >
                                 View Invoice

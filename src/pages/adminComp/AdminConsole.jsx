@@ -71,7 +71,7 @@ export const AdminConsole = () => {
         //     selector: (row) => console.log(row.length, "row")
         // },
         {
-            name: "No",
+            name: "No.",
             selector: (row, index) => <span>{index + 1}</span>,
             width: "80px"
         },

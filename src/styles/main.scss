@@ -16,7 +16,8 @@ body p {
     font-family: "Poppins", sans-serif;
     font-size: 14px !important;
 }
-span,td{
+span,
+td {
     font-size: 14px !important;
 }
 
@@ -30,46 +31,45 @@ h6 {
 }
 h6 {
     font-size: 15px !important;
-    
 }
-.h3{
+.h3 {
     font-size: 24px !important;
 }
-.h50{
+.h50 {
     font-size: 17px !important;
 }
-.h10{
+.h10 {
     font-size: 80px !important;
 }
 a {
     text-decoration: none !important;
 }
-.fw-1{
+.fw-1 {
     font-weight: 400 !important;
 }
-.fw-2{
+.fw-2 {
     font-weight: 500 !important;
 }
-.fw-3{
+.fw-3 {
     font-weight: 600 !important;
 }
 
 .font-helvetica {
     font-family: "Helvetica Neue", sans-serif;
 }
-.css-46gm80-control{
+.css-46gm80-control {
     border-radius: 0 !important;
     padding: 1px !important;
 }
-.table thead>tr>th {
+.table thead > tr > th {
     vertical-align: bottom !important;
     border-bottom: 2px solid hsl(0, 0%, 87%) !important;
- }
+}
 
 a:hover {
     text-decoration: none;
 }
-.br-1{
+.br-1 {
     border-radius: 50px !important;
 }
 img {
@@ -86,22 +86,22 @@ img {
     box-shadow: 0 3px 26px 0 rgba(0, 0, 0, 0.11) !important;
     background-color: #1d5cc3 !important;
 }
-.text-1{
+.text-1 {
     color: #3b86ff !important;
 }
-.text-2{
-    color: #43425D !important;
+.text-2 {
+    color: #43425d !important;
 }
-.text-3{
-    color:  rgba(68, 68, 68, 0.7) !important;
+.text-3 {
+    color: rgba(68, 68, 68, 0.7) !important;
 }
-.text-4{
-    color:  #7c7e7c !important;
+.text-4 {
+    color: #7c7e7c !important;
 }
-.height-80{
-   min-height: 80vh !important;
+.height-80 {
+    min-height: 80vh !important;
 }
-.iconWrapper{
+.iconWrapper {
     width: 40px;
     height: 40px;
     border: 1px solid;
@@ -111,7 +111,7 @@ img {
     justify-content: center;
     align-items: center;
 }
-thead{
+thead {
     background: #f5f6fa;
 }
 .color-1 {
@@ -120,61 +120,60 @@ thead{
 .color-2 {
     color: #463c74 !important;
 }
-.color-3
-{
+.color-3 {
     color: #444444 !important;
 }
-.bg-4{
+.bg-4 {
     background-color: #69e4a6 !important;
 }
-.bg-2{
+.bg-2 {
     background-color: #ff7285 !important;
 }
-.bg-5{
+.bg-5 {
     background-color: #fff5e6 !important;
 }
-.bg-6{
+.bg-6 {
     background-color: #43425d !important;
     border: 1px solid #43425d !important;
 }
-.bg-61{
-    background-color:  #ACA844  !important;
-    border: 1px solid  #ACA844 !important;
+.bg-61 {
+    background-color: #aca844 !important;
+    border: 1px solid #aca844 !important;
 }
-.bg-7{
+.bg-7 {
     background-color: #1d5cc3 !important;
 }
-.bg-8{
-    background-color: #F0F2F8 !important;
+.bg-8 {
+    background-color: #f0f2f8 !important;
 }
 
-.bg-3{
+.bg-3 {
     background-color: #d6e5f852;
 }
-.bg-9{
+.bg-9 {
     background-color: white !important;
-    border:1px solid #43425D !important;
+    border: 1px solid #43425d !important;
 }
-.mb-7{
+.mb-7 {
     margin-bottom: 15rem;
 }
 .h-100 {
-    min-height: 100%!important;
+    min-height: 100% !important;
 }
 ::-webkit-scrollbar {
     width: 20px !important;
 }
 
-.bg-1{
+.bg-1 {
     border-radius: 9px;
     box-shadow: 0 3px 26px 0 rgba(0, 0, 0, 0.11);
     background-color: #e2e1e7;
 }
-.border22{
+.border22 {
     border-style: dotted !important;
 }
 .Login input::-webkit-input-placeholder {
-     color: #fff;
+    color: #fff;
     font-size: 15px !important;
 }
 .Login input:-moz-placeholder {
@@ -242,11 +241,12 @@ input:autofill {
 input:focus-visible {
     // border-color: white !important;
 }
-.bzejeY div:first-child,.dHybYO div:first-child{
-      white-space: break-spaces !important;
+.bzejeY div:first-child,
+.dHybYO div:first-child {
+    white-space: break-spaces !important;
 }
 
-.select{
+.select {
     background: transparent !important;
     border-top: none !important;
     border-left: none !important;
@@ -257,7 +257,7 @@ input:focus-visible {
     box-shadow: none !important;
     border-radius: 0 !important;
 }
-.css-1s2u09g-control{
+.css-1s2u09g-control {
     background: transparent !important;
     border: none !important;
     border-bottom: 1px solid #444444 !important;
@@ -270,18 +270,18 @@ input:focus-visible {
 //     color: #444444;
 //     opacity: 1; /* Firefox */
 //   }
-  
+
 //   :-ms-input-placeholder { /* Internet Explorer 10-11 */
 //     color: #444444;
 //   }
-  
+
 //   ::-ms-input-placeholder { /* Microsoft Edge */
 //     color: #444444;
 //   }
-  .background{
-      right: 0;
-      top:10%;
-  }
+.background {
+    right: 0;
+    top: 10%;
+}
 //   .side1{
 //      background-image: url("../assets/images/signupdesign.png") !important;
 //     //  background-position: center;
@@ -487,9 +487,7 @@ input:focus-visible {
 //     /* IE 10+ */
 //     color: #444444 ;
 // }
-.Login
-
-.heading-title h3 {
+.Login .heading-title h3 {
     overflow: hidden;
     text-align: center;
 }
@@ -764,42 +762,40 @@ select {
 .add-product-number {
     position: relative;
 }
-.dropdown-toggle{
+.dropdown-toggle {
     font-size: 15px !important;
 }
 
-ul{
+ul {
     list-style-type: circle;
-    li{
-font-size: 14px;
-margin-bottom: 1rem;
+    li {
+        font-size: 14px;
+        margin-bottom: 1rem;
     }
 }
 
-.hover{
+.hover {
     transition: 0.5s all;
 }
-.hover:hover{
+.hover:hover {
     transform: scale(1.1);
     transition: 1s all;
 }
 
 .offcanvas-start {
- 
     width: 304px !important;
-    
 }
-@media (min-width: 576px){
-.modal-sm {
-    max-width: 350px !important;
-}
+@media (min-width: 576px) {
+    .modal-sm {
+        max-width: 350px !important;
+    }
 }
 
 /*--------- Media Queries -------*/
 
 @media (max-width: 992px) {
     .h-40 {
-        min-height: 40vh!important;
+        min-height: 40vh !important;
     }
 }
 
@@ -811,7 +807,7 @@ margin-bottom: 1rem;
     .mb-7 {
         margin-bottom: 5rem;
     }
-     .table thead th {
+    .table thead th {
         font-size: 12px !important;
     }
 }
@@ -863,12 +859,12 @@ margin-bottom: 1rem;
     // border: 10px solid red;
 }
 
-.confirmpassword{
+.confirmpassword {
     input,
-        input::placeholder {
-            font: 14px sans-serif;
-        }
+    input::placeholder {
+        font: 14px sans-serif;
+    }
 }
-.css-1s2u09g-control{
+.css-1s2u09g-control {
     border: none !important;
 }

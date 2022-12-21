@@ -205,7 +205,7 @@ export const customerColumns = [
     //     selector: (row) => console.log(row.length, "row")
     // },
     {
-        name: "No",
+        name: "No.",
         selector: (row, index) => <span>{index + 1}</span>,
         width: "80px"
     },
@@ -447,8 +447,16 @@ export const OrderStatusColor = (status) => {
     }
 };
 
-export const SortOrder = (dataOrders) => {
-    return dataOrders?.order.sort((a, b) => {
+export const SortOrder = (dataset) => {
+    let datasetToSort;
+
+    if ("order" in dataset) {
+        datasetToSort = dataset.order;
+    } else {
+        datasetToSort = dataset;
+    }
+
+    return datasetToSort.sort((a, b) => {
         let bDate = new Date(b.createdAt).getTime();
         let aDate = new Date(a.createdAt).getTime();
 
@@ -477,7 +485,7 @@ export const handleCustomerCSvData = (item) => {
             LGA: row?.lga,
             State: row?.state,
             "Phone Number": row?.businessPhoneNumber,
-            "Added At": moment(row?.createdAt).format("MMM Do YY")
+            "Added At": moment(row?.createdAt).format("MMM Do, YY")
 
             // "Status  ":OrderStatusColor(row?.status?.toLowerCase()),
         })
@@ -552,174 +560,233 @@ export const HeaderOrder = (
     setSupplierDetail,
     dataOrders,
     setProductData,
-    setShowProduct
+    setShowProduct,
+    isSalesReport = false
 ) => {
     const { AcceptOrderFunc, RejectOrderFunc } = useAuth();
 
-    const columns = [
-        {
-            name: "No",
-            selector: (row, index) => (
-                <span>{NumberTable(dataOrders?.order, row?.id)}</span>
-            ),
-            width: "70px"
-        },
+    let columns = [];
 
-        {
-            name: "Field Staff ",
-            selector: (row) => (
-                <span>{`${row?.user?.firstName} ${row?.user?.lastName}`}</span>
-            ),
-            width: "160px"
-        },
-        {
-            name: "Customer ",
-            selector: (row) => (
-                <span
-                    className="video px-2 bg-secondary text-white "
-                    onClick={() => {
-                        setProductData(row?.orderItems);
-                        setShowProduct(true);
-                        setSupplierDetail(row);
-                    }}
-                >{`${row?.customer?.businessName || "-"}`}</span>
-            ),
-            width: "200px"
-        },
+    if (isSalesReport) {
+        columns = [
+            {
+                name: "No.",
+                selector: (row, index) => (
+                    <span>{NumberTable(dataOrders?.order, row?.id)}</span>
+                ),
+                width: "70px"
+            },
+            {
+                name: "Order Date",
+                selector: (row) => (
+                    <span>{moment(row?.createdAt).format("MMM Do, YY")}</span>
+                ),
+                width: "150px"
+            },
+            {
+                name: "Field Staff ",
+                selector: (row) => (
+                    <span>{`${row?.user?.firstName} ${row?.user?.lastName}`}</span>
+                ),
+                width: "160px"
+            },
+            {
+                name: "Customer ",
+                selector: (row) => (
+                    <span>{`${row?.customer?.businessName || "-"}`}</span>
+                ),
+                width: "200px"
+            },
 
-        {
-            name: "Prod. Qty",
-            selector: (row) => row?.orderItems[0].quantity
-        },
-        {
-            name: "Address",
-            selector: (row) => (
-                <span>{`${row?.customer?.address || "-"}`}</span>
-            ),
-            width: "200px"
-        },
-        {
-            name: "Status  ",
-            selector: (row) => (
-                <span
-                    className={`fw-2 ${OrderStatusColor(
-                        row?.status?.toLowerCase()
-                    )}`}
-                >
-                    {row?.status}
-                </span>
-            ),
-            width: "150px"
-        },
+            {
+                name: "Prod. Qty",
+                selector: (row) => <span>{row?.orderItems[0].quantity}</span>,
+                width: "100px"
+            },
 
-        {
-            name: "Payment Method",
-            selector: (row) => (
-                <span>{`${row?.payments[0]?.paymentMethod || "-"}`}</span>
-            ),
-            width: "150px"
-        },
+            {
+                name: "Amount (₦)",
+                selector: (row) => <span>{formatMoney(row.total)}</span>,
+                width: "200px"
+            }
+        ];
+    } else {
+        columns = [
+            {
+                name: "No.",
+                selector: (row, index) => (
+                    <span>{NumberTable(dataOrders?.order, row?.id)}</span>
+                ),
+                width: "70px"
+            },
 
-        {
-            name: "Payment Status",
-            selector: (row) => <span>{`${row?.paymentStatus || "-"}`}</span>,
-            width: "150px"
-        },
+            {
+                name: "Field Staff ",
+                selector: (row) => (
+                    <span>{`${row?.user?.firstName} ${row?.user?.lastName}`}</span>
+                ),
+                width: "160px"
+            },
+            {
+                name: "Customer ",
+                selector: (row) => (
+                    <span
+                        className="video px-2 bg-secondary text-white "
+                        onClick={() => {
+                            setProductData(row?.orderItems);
+                            setShowProduct(true);
+                            setSupplierDetail(row);
+                        }}
+                    >{`${row?.customer?.businessName || "-"}`}</span>
+                ),
+                width: "200px"
+            },
 
-        {
-            name: "Due Date",
-            selector: (row) =>
-                moment(row?.order?.payLaterDate).format("MMM Do YY"),
-            width: "150px"
-        },
+            {
+                name: "Prod. Qty",
+                selector: (row) => row?.orderItems[0].quantity
+            },
+            {
+                name: "Address",
+                selector: (row) => (
+                    <span>{`${row?.customer?.address || "-"}`}</span>
+                ),
+                width: "200px"
+            },
+            {
+                name: "Status  ",
+                selector: (row) => (
+                    <span
+                        className={`fw-2 ${OrderStatusColor(
+                            row?.status?.toLowerCase()
+                        )}`}
+                    >
+                        {row?.status}
+                    </span>
+                ),
+                width: "150px"
+            },
 
-        {
-            name: "Amount",
-            selector: (row) => (
-                <span className="text-nowrap">N{formatMoney(row.total)}</span>
-            ),
-            width: "150px"
-        },
+            {
+                name: "Payment Method",
+                selector: (row) => (
+                    <span>{`${row?.payments[0]?.paymentMethod || "-"}`}</span>
+                ),
+                width: "150px"
+            },
 
-        {
-            name: "Order Date",
-            selector: (row) => moment(row?.createdAt).format("MMM Do YY")
-        },
+            {
+                name: "Payment Status",
+                selector: (row) => (
+                    <span>{`${row?.paymentStatus || "-"}`}</span>
+                ),
+                width: "150px"
+            },
 
-        {
-            name: "Actions",
-            selector: (row) => row.authorized,
-            cell: (row) => (
-                <Dropdown>
-                    <Dropdown.Toggle className="dropdown-6 text-black border text-muted">
-                        ...
-                    </Dropdown.Toggle>
+            {
+                name: "Due Date",
+                selector: (row) =>
+                    moment(row?.order?.payLaterDate).format("MMM Do, YY"),
+                width: "150px"
+            },
 
-                    <Dropdown.Menu>
-                        <Dropdown.Item
-                            onClick={() => {
-                                setShow(true);
-                                setOrderData([row]);
-                                setSupplierDetail(row);
-                                // setEditShow(true);
-                                // setEditProduct(row);
-                                // setDeleteProduct(false);
-                            }}
-                        >
-                            View Order
-                        </Dropdown.Item>
-                        <Dropdown.Item
-                            onClick={() => {
-                                AcceptOrderFunc(row?.id);
-                                console.log(row?.order?._id, "orderData");
-                                // setEditShow(true);
-                                // setEditProduct(row);
-                                // setDeleteProduct(false);
-                            }}
-                        >
-                            Approve Order
-                        </Dropdown.Item>
+            {
+                name: "Amount (₦)",
+                selector: (row) => (
+                    <span className="text-nowrap">
+                        {formatMoney(row.total)}
+                    </span>
+                ),
+                width: "150px"
+            },
 
-                        <Dropdown.Item
-                            onClick={() => {
-                                RejectOrderFunc(row?.id);
-                                // setDeleteProduct(true);
-                                // setEditProduct(row);
-                                // setEditShow(false);
-                            }}
-                        >
-                            Decline Order
-                        </Dropdown.Item>
+            {
+                name: "Order Date",
+                selector: (row) => moment(row?.createdAt).format("MMM Do YY")
+            },
 
-                        {/* <Dropdown.Item href="#/action-3">Something else</Dropdown.Item> */}
-                    </Dropdown.Menu>
-                </Dropdown>
-            )
-        }
-    ];
+            {
+                name: "Actions",
+                selector: (row) => row.authorized,
+                cell: (row) => (
+                    <Dropdown>
+                        <Dropdown.Toggle className="dropdown-6 text-black border text-muted">
+                            ...
+                        </Dropdown.Toggle>
+
+                        <Dropdown.Menu>
+                            <Dropdown.Item
+                                onClick={() => {
+                                    setProductData(row?.orderItems);
+                                    setShowProduct(true);
+                                    setSupplierDetail(row);
+                                    // setShow(true);
+                                    // setOrderData([row]);
+                                    // setSupplierDetail(row);
+                                    // setEditShow(true);
+                                    // setEditProduct(row);
+                                    // setDeleteProduct(false);
+                                }}
+                            >
+                                View Order
+                            </Dropdown.Item>
+                            <Dropdown.Item
+                                onClick={() => {
+                                    AcceptOrderFunc(row?.id);
+                                    console.log(row?.order?._id, "orderData");
+                                    // setEditShow(true);
+                                    // setEditProduct(row);
+                                    // setDeleteProduct(false);
+                                }}
+                            >
+                                Approve Order
+                            </Dropdown.Item>
+
+                            <Dropdown.Item
+                                onClick={() => {
+                                    RejectOrderFunc(row?.id);
+                                    // setDeleteProduct(true);
+                                    // setEditProduct(row);
+                                    // setEditShow(false);
+                                }}
+                            >
+                                Decline Order
+                            </Dropdown.Item>
+
+                            {/* <Dropdown.Item href="#/action-3">Something else</Dropdown.Item> */}
+                        </Dropdown.Menu>
+                    </Dropdown>
+                )
+            }
+        ];
+    }
+
     return columns;
 };
 
-export const SchedularHeader = (DropDownItems) => {
+export const SchedularHeader = (DropDownItems, visitationSchedules) => {
     const columns = [
         {
-            name: "No",
-            selector: (row, index) => row?.id
-            // <span>{NumberTable(dataOrders?.order,row?._id)}</span>
+            name: "No.",
+            selector: (row, index) => (
+                <span>{NumberTable(visitationSchedules, row?.id)}</span>
+            )
         },
 
         {
-            name: "Date ",
-            selector: (row) => <span>{row?.date}</span>
+            name: "Scheduled Date ",
+            selector: (row) => (
+                <span>{moment(row?.scheduleDate).format("MMM Do, YY")}</span>
+            )
         },
         {
             name: "Customer ",
-            selector: (row) => row?.customer
+            selector: (row) => row?.customer?.businessName
         },
 
         {
             name: "Reason For Visitation",
-            selector: (row) => row?.reason
+            selector: (row) => row?.visitationReason
         },
         {
             name: "Actions",
@@ -760,7 +827,7 @@ export const SchedularHeader = (DropDownItems) => {
 export const DailyVisitHeader = (DropDownItems) => {
     const columns = [
         {
-            name: "No",
+            name: "No.",
             selector: (row, index) => row?.id
             // <span>{NumberTable(dataOrders?.order,row?._id)}</span>
         },
@@ -1017,7 +1084,7 @@ export const ProductColumn = [
     //     selector: (row) => console.log(row.length, "row")
     // },
     {
-        name: "No",
+        name: "No.",
         selector: (row, index) => <span>{index + 1}</span>,
         width: "80px"
     },
@@ -1044,10 +1111,8 @@ export const ProductColumn = [
         selector: (row) => row?.quantity
     },
     {
-        name: "Unit Price",
-        selector: (row) => (
-            <span>N{formatMoney(row?.product?.costPerUnit)}</span>
-        )
+        name: "Unit Price (₦)",
+        selector: (row) => <span>{formatMoney(row?.product?.costPerUnit)}</span>
     },
     {
         name: "Sample Qty",
@@ -1064,7 +1129,7 @@ export const ProductColumn = [
     },
 
     {
-        name: "Total",
-        selector: (row) => <span>N{formatMoney(row?.price)}</span>
+        name: "Total (₦)",
+        selector: (row) => <span>{formatMoney(row?.price)}</span>
     }
 ];

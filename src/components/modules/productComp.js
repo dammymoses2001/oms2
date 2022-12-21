@@ -17,6 +17,8 @@ export const topProductHeader = [
 ];
 
 export const ProductModal = ({ show, productData, setShow }) => {
+    console.log(productData);
+
     const bodyData = () => {
         return productData.map((item, index) => {
             // if(index<=4){
@@ -115,6 +117,39 @@ export const ProductModal = ({ show, productData, setShow }) => {
                             )}
                         </h5>
                     </div>
+
+                    {/* {orderData?.status !== "ACCEPTED" ? (
+                        <div className="text-end">
+                            <button
+                                className="btn bg-8 me-4 px-4"
+                                onClick={() => {
+                                    // RejectOrderFunc(supplierDetail?._id);
+                                    setDeclineModal(true);
+                                }}
+                            >
+                                Decline
+                            </button>
+                            <button
+                                className="btn bg-6 text-white me-4 px-4"
+                                onClick={() => {
+                                    console.log(orderData, "orderData");
+                                    AcceptOrderFunc(supplierDetail?.id);
+                                    setShow(false);
+                                }}
+                            >
+                                Approve
+                            </button>
+                        </div>
+                    ) : (
+                        <div className="text-end">
+                            <Link
+                                to={`/invoice/${orderData?.id}`}
+                                className="px-4 btn bg-6 text-white"
+                            >
+                                View Invoice
+                            </Link>
+                        </div>
+                    )} */}
                 </div>
             }
         />

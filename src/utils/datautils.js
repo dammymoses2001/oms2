@@ -447,16 +447,20 @@ export const OrderStatusColor = (status) => {
     }
 };
 
-export const SortOrder = (dataset) => {
-    let datasetToSort;
+export const SortOrder = (dataset = []) => {
+    // let datasetToSort;
 
-    if ("order" in dataset) {
-        datasetToSort = dataset.order;
-    } else {
-        datasetToSort = dataset;
-    }
+    // console.log(dataset);
 
-    return datasetToSort.sort((a, b) => {
+    //     datasetToSort = dataset.order;
+
+    // // if ("order" in dataset) {
+    // //     datasetToSort = dataset.order;
+    // // } else {
+    // //     datasetToSort = dataset;
+    // // }
+
+    return dataset.sort((a, b) => {
         let bDate = new Date(b.createdAt).getTime();
         let aDate = new Date(a.createdAt).getTime();
 

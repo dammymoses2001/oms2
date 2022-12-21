@@ -511,7 +511,10 @@ export const OrderComp = ({
                                     setSupplierDetail,
                                     dataOrders
                                 )}
-                                data={SortOrder(dataOrders)?.slice(0, 4)}
+                                data={SortOrder(dataOrders?.order || [])?.slice(
+                                    0,
+                                    4
+                                )}
                                 pagination
                             />
                         </div>

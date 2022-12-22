@@ -123,7 +123,20 @@ export const ProductDetails = () => {
                             <div key={index} className="col-md-6 col-lg-4">
                                 <CardComp
                                     bodyText={
-                                        <div className="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <TopNav
+                                                TextComp={
+                                                    <span className="fw-1">
+                                                        Top View
+                                                    </span>
+                                                }
+                                                DropDownText={
+                                                    <span>
+                                                        <span className=""></span>
+                                                        Month
+                                                    </span>
+                                                }
+                                            />
                                             <div>
                                                 <div className="d-flex align-items-center">
                                                     <div className="me-3">
@@ -141,11 +154,11 @@ export const ProductDetails = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div>
+                                            {/* <div>
                                                 <i className="h5">
                                                     <BsThreeDots />
                                                 </i>
-                                            </div>
+                                            </div> */}
                                         </div>
                                     }
                                 />

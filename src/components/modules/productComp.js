@@ -2,8 +2,6 @@ import { Link } from "react-router-dom";
 import { formatMoney } from "../../utils";
 import { checkStock } from "../../utils/datautils";
 import { ModalComp } from "../ModalComp";
-import { TableCompData } from "../Table";
-import { CSVLink, CSVDownload } from "react-csv";
 import { TableComp } from "../TableComp";
 
 // add dataorder
@@ -16,12 +14,16 @@ export const topProductHeader = [
     { name: "QUANTITY" }
 ];
 
-export const ProductModal = ({ show, productData, setShow }) => {
-    console.log(productData);
-
+export const ProductModal = ({
+    show,
+    productData,
+    setShow,
+    setDeclineModal,
+    supplierDetail,
+    AcceptOrderFunc
+}) => {
     const bodyData = () => {
         return productData.map((item, index) => {
-            // if(index<=4){
             return (
                 <tr key={index}>
                     <td>
@@ -67,8 +69,6 @@ export const ProductModal = ({ show, productData, setShow }) => {
                     </td>
                 </tr>
             );
-            // }
-            // return null
         });
     };
 
@@ -80,25 +80,7 @@ export const ProductModal = ({ show, productData, setShow }) => {
             handleClose={setShow}
             bodyText={
                 <div>
-                    {/* <div className="mb-3 px-3 ">
-                        <CSVLink
-                            filename={"Order List"}
-                            data={handleProductData(orderData)}
-                            headers={headers}
-                        >
-                            <button className=" px-3 pl-4  py-1 bg bg-1 h-6 ml-4 btn1">
-                                {" "}
-                                Export{" "}
-                            </button>
-                        </CSVLink>
-                    </div> */}
-
                     <div className="px-3 mb-3">
-                        {/* <TableCompData
-                            columns={HeaderOrder(setShow)}
-                            data={orderData}
-                            // columns={ProductColumn}
-                        /> */}
                         <TableComp
                             TableHeader={topProductHeader}
                             TableBodyData={bodyData}
@@ -107,10 +89,9 @@ export const ProductModal = ({ show, productData, setShow }) => {
                     </div>
 
                     <div className="mb-5 text-end me-3 d-flex justify-content-end">
-                        Total:{" "}
+                        Total:
                         <h5 className="text-decoration-underline fw-bolder ms-1">
-                            {" "}
-                            N
+                            N{" "}
                             {formatMoney(
                                 parseFloat(productData[0].product.costPerUnit) *
                                     parseFloat(productData[0].quantity)
@@ -118,12 +99,14 @@ export const ProductModal = ({ show, productData, setShow }) => {
                         </h5>
                     </div>
 
-                    {/* {orderData?.status !== "ACCEPTED" ? (
+                    {productData?.status !== "ACCEPTED" ? (
                         <div className="text-end">
                             <button
                                 className="btn bg-8 me-4 px-4"
                                 onClick={() => {
-                                    // RejectOrderFunc(supplierDetail?._id);
+                                    // RejectOrderFunc(supplierDetail?.id);
+
+                                    console.log("ldf");
                                     setDeclineModal(true);
                                 }}
                             >
@@ -132,7 +115,6 @@ export const ProductModal = ({ show, productData, setShow }) => {
                             <button
                                 className="btn bg-6 text-white me-4 px-4"
                                 onClick={() => {
-                                    console.log(orderData, "orderData");
                                     AcceptOrderFunc(supplierDetail?.id);
                                     setShow(false);
                                 }}
@@ -143,13 +125,13 @@ export const ProductModal = ({ show, productData, setShow }) => {
                     ) : (
                         <div className="text-end">
                             <Link
-                                to={`/invoice/${orderData?.id}`}
+                                to={`/invoice/${productData?.id}`}
                                 className="px-4 btn bg-6 text-white"
                             >
                                 View Invoice
                             </Link>
                         </div>
-                    )} */}
+                    )}
                 </div>
             }
         />

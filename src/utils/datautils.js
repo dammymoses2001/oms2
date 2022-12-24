@@ -78,6 +78,25 @@ export const ProductData = [
     }
 ];
 
+export const DashboardSummaryData = [
+    {
+        icon: <GiSwapBag className="h5 color-2 mb-0" />,
+        sales: "100,000",
+        title: "Total Sales Order"
+    },
+    {
+        icon: <BsCart3 className="h5 color-2 mb-0" />,
+        sales: "3,000",
+        title: "Total Collected Sales"
+    },
+    {
+        icon: <FiTrendingUp className="h5 text-success  mb-0" />,
+        sales: "+2.0%",
+        title: "Growth",
+        gain: true
+    }
+];
+
 export const topProductHeader = [
     {
         name: "PRODUCT NAME"
@@ -601,6 +620,20 @@ export const HeaderOrder = (
                 ),
                 width: "200px"
             },
+            {
+                name: "Payment Method ",
+                selector: (row) => (
+                    <span>{`${row?.payments[0]?.paymentMethod || "-"}`}</span>
+                ),
+                width: "200px"
+            },
+            {
+                name: "Product ",
+                selector: (row) => (
+                    <span>{`${row?.orderItems[0]?.product?.productName}`}</span>
+                ),
+                width: "200px"
+            },
 
             {
                 name: "Prod. Qty",
@@ -768,7 +801,14 @@ export const HeaderOrder = (
     return columns;
 };
 
-export const SchedularHeader = (DropDownItems, visitationSchedules) => {
+export const SchedularHeader = (
+    DropDownItems,
+    visitationSchedules,
+    setShowVisitModal,
+    setVisitData,
+    setShowVisitCoords,
+    setVisitCoords
+) => {
     const columns = [
         {
             name: "No.",
@@ -802,7 +842,25 @@ export const SchedularHeader = (DropDownItems, visitationSchedules) => {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                        {DropDownItems?.map((item) => (
+                        <Dropdown.Item
+                            onClick={() => {
+                                setVisitData(row);
+                                setShowVisitModal(true);
+                            }}
+                        >
+                            Visit Schedule
+                        </Dropdown.Item>
+
+                        <Dropdown.Item
+                            onClick={() => {
+                                setVisitCoords(row?.customer?.gps);
+                                setShowVisitCoords(true);
+                            }}
+                        >
+                            Visit Route
+                        </Dropdown.Item>
+
+                        {/* {DropDownItems?.map((item) => (
                             <Dropdown.Item
                                 onClick={() => {
                                     item?.onClick(row);
@@ -810,7 +868,8 @@ export const SchedularHeader = (DropDownItems, visitationSchedules) => {
                             >
                                 {item?.name}
                             </Dropdown.Item>
-                        ))}
+                        ))} */}
+
                         {/* <Dropdown.Item
                             onClick={() => {
                                

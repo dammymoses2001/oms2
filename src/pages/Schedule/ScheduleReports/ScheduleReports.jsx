@@ -18,12 +18,20 @@ import { useAuth } from "../../../hooks";
 import { useEffect } from "react";
 import { getVisitationSchedules } from "../../../services";
 import styled from "styled-components";
+import { VisitationModal } from "../../../components/modules/visitationComp";
+import { VisitationMapModal } from "../../../components/modules/visitationMapComp";
 
 export const ScheduleReports = () => {
     const navigate = useNavigate();
     const [page, setPage] = useState(0);
     const [dailyVists, setDailyVisit] = useState([]);
     const [showModal, setShowModal] = useState(false);
+
+    const [showVisitModal, setShowVisitModal] = useState(false);
+    const [visitData, setVisitData] = useState({});
+
+    const [showVisitCoords, setShowVisitCoords] = useState(null);
+    const [visitCoords, setVisitCoords] = useState({});
 
     const [visitationSchedules, setVisitationSchedules] = useState([]);
 
@@ -41,14 +49,12 @@ export const ScheduleReports = () => {
             endDate: monthEnd
         });
 
-        console.log(data);
-
         setVisitationSchedules(data);
     }, []);
 
     const DropDownItems = [
         {
-            name: "Visit Schedules",
+            name: "Visit Schedule",
             onClick: (row) => {
                 setPage(1);
                 setDailyVisit(row?.dailyVist);
@@ -103,7 +109,11 @@ export const ScheduleReports = () => {
                         <TableCompData
                             columns={SchedularHeader(
                                 DropDownItems,
-                                visitationSchedules
+                                visitationSchedules,
+                                setShowVisitModal,
+                                setVisitData,
+                                setShowVisitCoords,
+                                setVisitCoords
                             )}
                             data={SortOrder(visitationSchedules)}
                             pagination
@@ -166,6 +176,22 @@ export const ScheduleReports = () => {
                     />
                 </div>
             </Style>
+
+            {showVisitModal && (
+                <VisitationModal
+                    show={showVisitModal}
+                    visitData={visitData}
+                    setShow={setShowVisitModal}
+                />
+            )}
+
+            {showVisitCoords && (
+                <VisitationMapModal
+                    show={showVisitCoords}
+                    visitCoords={visitCoords}
+                    setShow={setShowVisitCoords}
+                />
+            )}
         </AppLayout>
     );
 };

@@ -90,7 +90,11 @@ export const SalesReport = () => {
                         "Order Date": moment(o.createdAt).format("MMM Do, YY"),
                         "Field Staff": `${o.user?.firstName} ${o?.user?.lastName}`,
                         Customer: `${o?.customer?.businessName || "-"}`,
-                        "Prod Qty": o.orderItems[0]?.quantity,
+                        "Payment Method": `${
+                            o?.payments[0]?.paymentMethod || "N/A"
+                        }`,
+                        Product: `${o?.orderItems[0]?.product?.productName}`,
+                        "Prod Qty": o?.orderItems[0]?.quantity,
                         "Amount (₦)": formatMoney(o.total)
                     };
                 }

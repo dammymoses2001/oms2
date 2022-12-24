@@ -41,12 +41,12 @@ export const OrderShowAll = () => {
         state: { check }
     } = useAuth();
 
-    useEffect(() => {
-        if (check) {
-            setOrderData(false);
-            setDeclineModal(false);
-        }
-    }, [check]);
+    // useEffect(() => {
+    //     if (check) {
+    //         setOrderData(false);
+    //         setDeclineModal(false);
+    //     }
+    // }, [check]);
 
     const { data: dataOrders, isLoading } = useQuery("get-orders", getOrder, {
         // refetchOnWindowFocus: true,
@@ -153,14 +153,14 @@ export const OrderShowAll = () => {
                                 setProductData,
                                 setShowProduct
                             )}
-                            data={search(SortOrder(dataOrders?.order|| []))}
+                            data={search(SortOrder(dataOrders?.order || []))}
                             pagination
                         />
                     )}
                 </div>
             </Style>
 
-            {show && (
+            {showProduct && (
                 <>
                     <OrderModal
                         show={show}

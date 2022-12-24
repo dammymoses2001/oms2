@@ -12,7 +12,9 @@ import {
     OrderComp,
     OrderModal,
     OrderProductModal,
-    DashboardDataComp
+    DashboardDataComp,
+    CardComp,
+    TopNav
 } from "../../components";
 import { useAuth } from "../../hooks";
 import Product1 from "../../assets/images/product-1.png";
@@ -22,11 +24,13 @@ import {
     // topProductHeader,
     checkStock,
     HeaderOrder,
-    ProductColumn
+    ProductColumn,
+    DashboardSummaryData
 } from "../../utils/datautils";
 
 import { DashboardMetrics, getAllUserProduct, getOrder } from "../../services";
 import { useState } from "react";
+import { BsThreeDots } from "react-icons/bs";
 
 const HomePage = () => {
     const {
@@ -131,6 +135,7 @@ const HomePage = () => {
                             <h5 className="color-2 text-capitalize">
                                 Welcome back, {state?.data?.firstName}
                             </h5>
+
                             {/* <button
                                 onClick={() => handleSuplierlink(state)}
                                 className="btn bg-6 text-white font-weight-light  "
@@ -141,7 +146,59 @@ const HomePage = () => {
                     </div>
                     {/* Chart Module */}
                     <div>
-                        <DashboardDataComp DashboardData={DashboardData} />
+                        <div className="mb-5">
+                            <div className="row">
+                                {DashboardSummaryData.map((item, index) => (
+                                    <div
+                                        key={index}
+                                        className="col-md-6 col-lg-4"
+                                    >
+                                        <CardComp
+                                            bodyText={
+                                                <div>
+                                                    <TopNav
+                                                        TextComp={
+                                                            <span className="fw-1">
+                                                                Top View
+                                                            </span>
+                                                        }
+                                                        DropDownText={
+                                                            <span>
+                                                                <span className=""></span>
+                                                                Month
+                                                            </span>
+                                                        }
+                                                    />
+                                                    <div>
+                                                        <div className="d-flex align-items-center">
+                                                            <div className="me-3">
+                                                                <i className="iconWrapper">
+                                                                    {item?.icon}
+                                                                </i>
+                                                            </div>
+                                                            <div>
+                                                                <h6 className="mb-1">
+                                                                    NGN{" "}
+                                                                    {
+                                                                        item?.sales
+                                                                    }
+                                                                </h6>
+                                                                <p className="mb-0 text-muted">
+                                                                    {
+                                                                        item?.title
+                                                                    }
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        {/* <DashboardDataComp DashboardData={DashboardData} /> */}
                     </div>
                     {/*  */}
                     <div>

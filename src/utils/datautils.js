@@ -851,17 +851,14 @@ export const SchedularHeader = (
                             Visit Schedule
                         </Dropdown.Item>
 
-                        {/* <Dropdown.Item
+                        <Dropdown.Item
                             onClick={() => {
-                                AcceptOrderFunc(row?.id);
-                                console.log(row?.order?._id, "orderData");
-                                // setEditShow(true);
-                                // setEditProduct(row);
-                                // setDeleteProduct(false);
+                                setVisitCoords(row?.customer?.gps);
+                                setShowVisitCoords(true);
                             }}
                         >
                             Visit Route
-                        </Dropdown.Item> */}
+                        </Dropdown.Item>
 
                         {/* {DropDownItems?.map((item) => (
                             <Dropdown.Item

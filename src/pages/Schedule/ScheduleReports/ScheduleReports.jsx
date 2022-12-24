@@ -19,6 +19,7 @@ import { useEffect } from "react";
 import { getVisitationSchedules } from "../../../services";
 import styled from "styled-components";
 import { VisitationModal } from "../../../components/modules/visitationComp";
+import { VisitationMapModal } from "../../../components/modules/visitationMapComp";
 
 export const ScheduleReports = () => {
     const navigate = useNavigate();
@@ -181,6 +182,14 @@ export const ScheduleReports = () => {
                     show={showVisitModal}
                     visitData={visitData}
                     setShow={setShowVisitModal}
+                />
+            )}
+
+            {showVisitCoords && (
+                <VisitationMapModal
+                    show={showVisitCoords}
+                    visitCoords={visitCoords}
+                    setShow={setShowVisitCoords}
                 />
             )}
         </AppLayout>

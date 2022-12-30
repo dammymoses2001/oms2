@@ -221,13 +221,17 @@ export const ProductShowAll = () => {
             name: "Price",
             selector: (row) => row.costPerUnit
         },
+        {
+            name: "Status",
+            selector: (row) => row?.status
+        },
         // {
         //     name: "Image ",
         //     selector: (row) => ""
         // },
 
         {
-            name: "Status",
+            name: "Actions",
             selector: (row) => row.authorized,
             cell: (row) => (
                 <Dropdown>

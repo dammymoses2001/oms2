@@ -607,25 +607,32 @@ export const HeaderOrder = (
                 width: "150px"
             },
             {
-                name: "Field Staff ",
+                name: "Field Staff",
                 selector: (row) => (
                     <span>{`${row?.user?.firstName} ${row?.user?.lastName}`}</span>
                 ),
                 width: "160px"
             },
             {
-                name: "Customer ",
+                name: "Customer",
                 selector: (row) => (
                     <span>{`${row?.customer?.businessName || "-"}`}</span>
                 ),
                 width: "200px"
             },
             {
-                name: "Payment Method ",
+                name: "Payment Method",
                 selector: (row) => (
                     <span>{`${row?.payments[0]?.paymentMethod || "-"}`}</span>
                 ),
                 width: "200px"
+            },
+            {
+                name: "Payment Status",
+                selector: (row) => (
+                    <span>{`${row?.paymentStatus || "-"}`}</span>
+                ),
+                width: "150px"
             },
             {
                 name: "Product ",
@@ -857,7 +864,7 @@ export const SchedularHeader = (
                                 setShowVisitCoords(true);
                             }}
                         >
-                            Visit Route
+                            Visit Map
                         </Dropdown.Item>
 
                         {/* {DropDownItems?.map((item) => (

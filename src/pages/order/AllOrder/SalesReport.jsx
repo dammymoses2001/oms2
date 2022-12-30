@@ -75,6 +75,7 @@ export const SalesReport = () => {
         );
     };
 
+    // Prepare the sales report to be written in the .xlsx file.
     useEffect(() => {
         if (dataOrders?.order?.length > 0) {
             let totalAmount = dataOrders.order
@@ -93,21 +94,13 @@ export const SalesReport = () => {
                         "Payment Method": `${
                             o?.payments[0]?.paymentMethod || "N/A"
                         }`,
+                        "Payment Status": `${o?.paymentStatus || "N/A"}`,
                         Product: `${o?.orderItems[0]?.product?.productName}`,
                         "Prod Qty": o?.orderItems[0]?.quantity,
                         "Amount (₦)": formatMoney(o.total)
                     };
                 }
             );
-
-            _orderReport.push({
-                "No.": "",
-                "Order Date": "",
-                "Field Staff": "",
-                Customer: "",
-                "Prod Qty": "",
-                "Amount (₦)": formatMoney(totalAmount)
-            });
 
             setOrderReport(_orderReport);
         }

@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import Logo from "../../assets/images/logo-01.svg";
-import Logo2 from "../../assets/images/image1.jpg";
+import Logo2 from "../../assets/icons/pha.jpg";
 
 import { useAuth } from "../../hooks";
 import { defaultLogo } from "../../utils/datautils";
@@ -59,7 +59,7 @@ export const SideBar = () => {
                         <img
                             alt="Logo"
                             style={{ width: "100%" }}
-                            src={Logo2}
+                            src={companyLogo?.includes('Lounge')?Logo2:companyLogo}
                         />
                     </div>
                 )}

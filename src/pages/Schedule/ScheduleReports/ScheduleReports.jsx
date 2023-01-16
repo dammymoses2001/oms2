@@ -21,6 +21,8 @@ import styled from "styled-components";
 import { VisitationModal } from "../../../components/modules/visitationComp";
 import { VisitationMapModal } from "../../../components/modules/visitationMapComp";
 
+const locations = require("../../../components/map/location.json");
+
 export const ScheduleReports = () => {
     const navigate = useNavigate();
     const [page, setPage] = useState(0);
@@ -190,6 +192,7 @@ export const ScheduleReports = () => {
                     show={showVisitCoords}
                     visitCoords={visitCoords}
                     setShow={setShowVisitCoords}
+                    locations={locations}
                 />
             )}
         </AppLayout>

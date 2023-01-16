@@ -16,7 +16,7 @@ import SimpleMap1 from "../map/Map";
 import { TableCompData } from "../Table";
 import { TableComp } from "../TableComp";
 import { TopNav } from "../TopNav";
-const locations = require("../../components/map/location.json");
+const locations = require("../../components/map/location.json"); 
 
 export const DashboardDataComp = ({ DashboardData }) => {
     return (

@@ -79,10 +79,8 @@ export const DashboardDataComp = ({ DashboardData }) => {
                                         <div>
                                             <h4>
                                                 NGN{" "}
-                                                {
-                                                    DashboardData?.data
-                                                        ?.totalProductsSold||0
-                                                }
+                                                {DashboardData?.data
+                                                    ?.totalProductsSold || 0}
                                             </h4>
                                             <p className="d-flex align-items-center mb-0">
                                                 <span>
@@ -123,10 +121,8 @@ export const DashboardDataComp = ({ DashboardData }) => {
                                         <div>
                                             <h4>
                                                 NGN{" "}
-                                                {
-                                                    DashboardData?.data
-                                                        ?.totalAmountEarned||0
-                                                }
+                                                {DashboardData?.data
+                                                    ?.totalAmountEarned || 0}
                                             </h4>
                                             <p className="d-flex align-items-center mb-0">
                                                 <span>

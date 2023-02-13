@@ -23,7 +23,7 @@ export const Login = () => {
             value: ""
         },
         password: {
-            checks: "required|min:8",
+            checks: "required|min:6",
             value: ""
         }
     });

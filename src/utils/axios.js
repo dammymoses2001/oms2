@@ -4,7 +4,7 @@ import { getAuthToken } from "./helpers";
 const options = {
     baseURL:
         process.env.REACT_APP_API_BASE_URL ||
-        "http://52.15.81.143:5000/api/v1/",
+        "http://18.189.244.245:5000/api/v1/",
     headers: {
         Accept: "application/json,text/plain,*/*",
         "Content-Type": "application/json"

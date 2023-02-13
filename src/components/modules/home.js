@@ -12,6 +12,7 @@ import {
 } from "../../utils/datautils";
 import { CardComp } from "../cardComp";
 import { SimpleLineChart } from "../Charts";
+import { Loading } from "../Loading";
 import SimpleMap1 from "../map/Map";
 import { TableCompData } from "../Table";
 import { TableComp } from "../TableComp";
@@ -296,7 +297,8 @@ export const MapandTopAreas = () => {
     );
 };
 
-export const TopCustomerAndTopProduct = ({ bodyData, data }) => {
+export const TopCustomerAndTopProduct = ({ bodyData, data ,isLoading}) => {
+  
     return (
         <div className="mb-4">
             <div className="row">
@@ -318,12 +320,16 @@ export const TopCustomerAndTopProduct = ({ bodyData, data }) => {
                                     />
                                 </div>
                                 <div className="mb-5 Product">
-                                    <TableComp
-                                        TableHeader={topProductHeader}
-                                        TableBodyData={bodyData}
-                                        data={data?.products}
+                                    {isLoading?<Loading height={'30vh'}/> :
+                                    <TableCompData
+                                    marginBottom={'0px'}
+                                    columns={topProductHeader}
+                                        // TableHeader={topProductHeader}
+                                        // TableBodyData={bodyData}
+                                        data={data?.length>0?data?.slice(undefined,4):[]}
                                     />
-                                    <div className="text-center text-black">
+                        }
+                                    <div className="text-center text-black mt-3">
                                         <Link
                                             to="/product/all"
                                             className="text-black"

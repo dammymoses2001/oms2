@@ -79,7 +79,7 @@ const HomePage = () => {
         // refetchIntervalInBackground: true,
     });
 
-    const { data } = useQuery("get-products", getAllUserProduct);
+    const { data,isLoading:productLoading } = useQuery("get-products", getAllUserProduct);
 
     const [dSumData, setDSumData] = useState(dashboardSummaryData);
     const [timePeriodSelection, setTimePeriodSelection] = useState([
@@ -88,6 +88,8 @@ const HomePage = () => {
         "Month"
     ]);
 
+
+    // console.log(data,'datadatadata')
     // [sales, collected and growth]
     const [yesterdayMetrics, setYesterdayMetrics] = useState([0, 0, 0]);
     const [weekMetrics, setWeekMetrics] = useState([0, 0, 0]);
@@ -546,6 +548,7 @@ const HomePage = () => {
                             id={2}
                             bodyData={bodyData}
                             data={data}
+                            isLoading={productLoading}
                         />
                     </div>
                     <div>

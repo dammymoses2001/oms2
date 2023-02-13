@@ -35,7 +35,7 @@ const Style = styled.div`
             props?.RowPadding ? props?.RowPadding : "10px 0"};
     }
     .rdt_TableBody {
-        margin-bottom: 100px;
+        margin-bottom: ${props=>props?.marginBottom ?props?.marginBottom:'100px'};
     }
 `;
 
@@ -44,10 +44,11 @@ export const TableCompData = ({
     data = [],
     pagination,
     columns,
-    rowPadding
+    rowPadding,
+    marginBottom
 }) => {
     return (
-        <Style RowPadding={rowPadding}>
+        <Style RowPadding={rowPadding} marginBottom={marginBottom}>
             <Card>
                 <DataTable
                     responsive={true}

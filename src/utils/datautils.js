@@ -99,17 +99,29 @@ export const DashboardSummaryData = [
 
 export const topProductHeader = [
     {
-        name: "PRODUCT NAME"
+        name: "Product Name",
+        selector: (row) => (
+            <span>{row?.productName}</span>
+        ),
     },
 
     {
-        name: "Product SKU"
+        name: "Product SKU",
+        selector: (row) => (
+            <span>{row?.productSku}</span>
+        ),
     },
     {
-        name: "AVAILABILITY"
+        name: "Availability",
+        selector: (row) => (
+            <span>{row?.status}</span>
+        ),
     },
     {
-        name: "TOTAL"
+        name: "Price",
+        selector: (row) => (
+            <span>NGN {formatMoney(row?.costPerUnit)}</span>
+        ),
     }
 ];
 

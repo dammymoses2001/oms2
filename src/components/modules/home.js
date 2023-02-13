@@ -17,7 +17,7 @@ import SimpleMap1 from "../map/Map";
 import { TableCompData } from "../Table";
 import { TableComp } from "../TableComp";
 import { TopNav } from "../TopNav";
-const locations = require("../../components/map/location.json");
+const locations = require("../../components/map/location.json"); 
 
 export const DashboardDataComp = ({ DashboardData }) => {
     return (
@@ -80,10 +80,8 @@ export const DashboardDataComp = ({ DashboardData }) => {
                                         <div>
                                             <h4>
                                                 NGN{" "}
-                                                {
-                                                    DashboardData?.data
-                                                        ?.totalProductsSold||0
-                                                }
+                                                {DashboardData?.data
+                                                    ?.totalProductsSold || 0}
                                             </h4>
                                             <p className="d-flex align-items-center mb-0">
                                                 <span>
@@ -124,10 +122,8 @@ export const DashboardDataComp = ({ DashboardData }) => {
                                         <div>
                                             <h4>
                                                 NGN{" "}
-                                                {
-                                                    DashboardData?.data
-                                                        ?.totalAmountEarned||0
-                                                }
+                                                {DashboardData?.data
+                                                    ?.totalAmountEarned || 0}
                                             </h4>
                                             <p className="d-flex align-items-center mb-0">
                                                 <span>

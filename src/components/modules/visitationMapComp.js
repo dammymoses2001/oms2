@@ -86,7 +86,12 @@ class SimpleMap1 extends React.Component {
 
 export default SimpleMap1;
 
-export const VisitationMapModal = ({ show, visitCoords, setShow }) => {
+export const VisitationMapModal = ({
+    show,
+    visitCoords,
+    setShow,
+    locations
+}) => {
     return (
         <ModalComp
             size={"xl"}
@@ -96,7 +101,7 @@ export const VisitationMapModal = ({ show, visitCoords, setShow }) => {
             bodyText={
                 <>
                     {true ? (
-                        <SimpleMap1 />
+                        <SimpleMap1 locations={locations} />
                     ) : (
                         <div>
                             <div className="p-4 text-center">

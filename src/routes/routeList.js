@@ -21,7 +21,9 @@ import {
     ConfirmNewPassword,
     AdminConsole,
     ScheduleReports,
-    VisitTargets
+    VisitTargets,
+    Terms
+    
 } from "../pages";
 import IndividualActivityReport from "../pages/Schedule/ScheduleReports/IndividualActivityReport";
 
@@ -84,6 +86,23 @@ export const routeList = [
         component: Customer,
         exact: true,
         name: "Customer",
+        path: "/",
+        protected: true
+    },
+
+    {
+        children: [
+            {
+                component: Terms,
+                exact: true,
+                name: "Terms",
+                path: "terms",
+                protected: true
+            }
+        ],
+        component: Terms,
+        exact: true,
+        name: "Terms",
         path: "/",
         protected: true
     },

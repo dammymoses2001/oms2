@@ -90,6 +90,10 @@ export const SideBar = () => {
                         </div>
                     </div>
                 </Link>
+                
+              
+
+
                 {/* <Link to="/order/all">
                     <div className="d-flex align-items-center  pl-3  text-muted mb-5">
                         <div className="col-md-3">
@@ -297,7 +301,20 @@ export const SideBar = () => {
                             </div>
                         </>
                     )}
+
+                      <Link to="/terms">
+                    <div className="  pl-3 mt-5  text-muted   ">
+
+                        <div>
+                            {" "}
+                            <h6 className="mb-0 ">Terms & Condition</h6>
+                        </div>
+                    </div>
+                </Link>
+
                 </div>
+
+                
 
                 <div className="mb-5">
                     <button onClick={logout} className="border-0 px-3 py-2">

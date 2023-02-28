@@ -8,5 +8,6 @@ export * from "./Helpcenter";
 export * from "./adminComp";
 export * from "./Schedule";
 export * from "./order/AllOrder/SalesReport";
+export * from "./Terms";
 
 // export * from "./product/SupplierProduct";

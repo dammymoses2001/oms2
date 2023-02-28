@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { AppHeader } from "./Header";
 import { SideBar } from "../../../components";
 import { OffcanvasComp } from "../../offCanvas";
-//
+
 
 
 
@@ -25,7 +25,10 @@ export const AppLayout = ({ background, mode = "light", children }) => {
                 <div className="MainWrapper ">
                     <AppHeader mode={mode} handleShow={handleShow} />
                     <div className="px-3">{children}</div> 
+                    {/* <Footer/> */}
                 </div>
+
+              
             </div>
           
         </Style>

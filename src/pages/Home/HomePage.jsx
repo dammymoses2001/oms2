@@ -64,7 +64,8 @@ const HomePage = () => {
     const {
         state,
         AcceptOrderFunc,
-        RejectOrderFunc
+        RejectOrderFunc,
+        GetAllMetricsOrders
         // state: { data,dashboardMertics,MapMertics },
     } = useAuth();
     const [show, setShow] = useState(false);
@@ -393,6 +394,14 @@ const HomePage = () => {
     // }, [dataOrders]);
 
     //console.log(getUserProductList?.products,'MapMertics')
+
+    useEffect(() => {
+      GetAllMetricsOrders()
+    }, [GetAllMetricsOrders])
+
+    console.log(GetAllMetricsOrders, "opopop")
+    
+
     const bodyData = () => {
         return data?.products?.slice(0, 3)?.map((item, index) => {
             return (

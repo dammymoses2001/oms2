@@ -8,6 +8,7 @@ import { OffcanvasComp } from "../../offCanvas";
 
 
 
+
 export const AppLayout = ({ background, mode = "light", children }) => {
     const [show, setShow] = useState(false);
 
@@ -28,7 +29,7 @@ export const AppLayout = ({ background, mode = "light", children }) => {
                     {/* <Footer/> */}
                 </div>
 
-              
+                
             </div>
           
         </Style>

@@ -302,12 +302,12 @@ export const SideBar = () => {
                         </>
                     )}
 
-                      <Link to="/terms">
+                      <Link to="/Privacy">
                     <div className="  pl-3 mt-5  text-muted   ">
 
                         <div>
                             {" "}
-                            <h6 className="mb-0 ">Terms & Condition</h6>
+                            <h6 className="mb-0 ">Privacy & Policy</h6>
                         </div>
                     </div>
                 </Link>

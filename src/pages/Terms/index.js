@@ -1,7 +1,7 @@
 import React from 'react'
 import {AppLayout} from '../../components'
 import styled from "styled-components";
-
+import { Link } from "react-router-dom";
 
 const Style = styled.div `
 
@@ -13,13 +13,32 @@ const Style = styled.div `
         font-weight: 800;
         
     }
+
+      #btndv{
+          margin-left: auto;
+          margin-right: auto;
+          width: fit-content;
+    }
+
+    p{
+      margin-top: 2rem;
+    }
+
+    button {
+      width: fit-content;
+      background-color: #463c74;
+      color: white;
+      margin-bottom: 3rem;
+      
+      
+    }
 `
 
 export const Terms = () => {
   return (
-    <AppLayout> 
-      <Style> 
-        <div className='text-center'> 
+    
+      <Style className='px-5 pt-4 '> 
+        <div className='text-center '> 
              <h1 > SECURITY & COMPLIANCE </h1>
             <h2> How We Store, Process, and Secure Your Data </h2>
         </div>
@@ -95,7 +114,13 @@ export const Terms = () => {
 
              </p>
         </div>
+
+        <Link to="/"> 
+            <div id='btndv'> 
+                <button type="button" class="btn "> Home </button>
+              </div>
+        </Link>
       </Style>
-    </AppLayout>
+    
   )
 }

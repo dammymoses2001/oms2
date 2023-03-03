@@ -120,6 +120,11 @@ export const Login = () => {
                        </form>
                     </div>
                    </div>
+                  <Link to="/Privacy"> 
+                     <div> 
+                        <h1 id="privacy" className="text-center text-"> Privacy and Policy </h1>
+                    </div>
+                  </Link>
                 </div>
             </div>
           
@@ -156,6 +161,18 @@ input{
     // background:transparent;
     font-size:14px;
 }
+#privacy{
+    color: white;
+    font-size: 1rem;
+    padding-top: 1rem;
+    
+    :hover {
+        color: #463c74;
+    }
+    
+}
+
+
 .side1{
     background:#bdc4c4;
 }

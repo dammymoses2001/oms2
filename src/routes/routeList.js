@@ -95,16 +95,16 @@ export const routeList = [
             {
                 component: Terms,
                 exact: true,
-                name: "Terms",
-                path: "terms",
-                protected: true
+                name: "Privacy",
+                path: "Privacy",
+                protected: false
             }
         ],
         component: Terms,
         exact: true,
-        name: "Terms",
+        name: "Privacy",
         path: "/",
-        protected: true
+        protected: false
     },
 
     {

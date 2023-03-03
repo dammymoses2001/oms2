@@ -67,6 +67,7 @@ export const GET_MAP_METRICS_SUCCESS = "GET_MAP_METRICS_SUCCESS";
 export const GET_ALL_COMPANIES_SUCCESS = "GET_ALL_COMPANIES_SUCCESS";
 export const GET_ALL_REPS_SUCCESS = "GET_ALL_REPS_SUCCESS";
 export const GET_ALL_CUSTOMER_SUCCESS = "GET_ALL_CUSTOMER_SUCCESS";
+export const GET_ALL_METRICS_ORDERS = "GET_ALL_METRICS_ORDERS";
 export const GET_ORDER_INVOICE_SUCCESS = "GET_ORDER_INVOICE_SUCCESS";
 export const ACCEPT_ORDER__SUCCESS = "ACCEPT_ORDER__SUCCESS";
 export const GET_ORDER_INVOICE = "GET_ORDER_INVOICE";
@@ -454,6 +455,16 @@ export const authReducer = (state, action) => {
                 error: action.payload,
                 isLoading: false
             };
+
+
+        case GET_ALL_METRICS_ORDERS:
+            return {
+                ...state,
+                allMetricsOrder: action.payload,
+                error: action.payload,
+                isLoading: false
+            };
+            
         case DEFAULT_FAIL:
             return {
                 ...state,

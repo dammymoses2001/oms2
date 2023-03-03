@@ -76,6 +76,17 @@ export const getAllUserProduct = async () => {
     }
 };
 
+export const getAllMetricsOrders = async () => {
+    try {
+        const res = await request.get(`/metrics/orders`);
+        // console.log(res, "product all");
+        return res?.data?.data;
+    } catch (error) {
+        const err = error?.response?.data?.message || error?.message;
+        throw new Error(err);
+    }
+};
+
 export const getSuppliers = async () => {
     try {
         const res = await request.get("/supplier/all");
@@ -334,6 +345,18 @@ export const addRepresentatives = async (value) => {
 export const getAllCustomer = async (value) => {
     try {
         const res = await request.get(`/customer/all`);
+        // supplier/order/:orderId/reject-order
+        //  console.log(res?.data, "product all");
+        return res?.data;
+    } catch (error) {
+        const err = error?.response?.data?.message || error?.message;
+        throw new Error(err);
+    }
+};
+
+export const getMetricsOrders = async (value) => {
+    try {
+        const res = await request.get(`/metrics/orders`);
         // supplier/order/:orderId/reject-order
         //  console.log(res?.data, "product all");
         return res?.data;

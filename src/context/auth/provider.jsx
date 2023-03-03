@@ -173,6 +173,9 @@ export const AuthProvider = withRouter(({ children, navigate }) => {
         isLoading: true,
         product: []
     });
+
+
+
     // const [getPackagesData, setGetPackagesData] = useReducer(authReducer, {
     //     error: null,
     //     isLoading: true,
@@ -910,8 +913,9 @@ export const AuthProvider = withRouter(({ children, navigate }) => {
         try {
             dispatch({ type: AUTH_START });
             const data = await getAllMetricsOrders();
+            console.log(data,'GetAllMetricsOrders2')
             dispatch({
-                payload: data?.data,
+                payload: data,
                 type: GET_ALL_METRICS_ORDERS
             });
             //toast.success("Login successful");

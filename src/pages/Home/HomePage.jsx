@@ -399,7 +399,7 @@ const HomePage = () => {
       GetAllMetricsOrders()
     }, [GetAllMetricsOrders])
 
-    console.log(GetAllMetricsOrders, "opopop")
+    console.log(state?.allMetricsOrder, "GetAllMetricsOrders")
     
 
     const bodyData = () => {

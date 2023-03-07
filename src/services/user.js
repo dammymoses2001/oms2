@@ -76,9 +76,14 @@ export const getAllUserProduct = async () => {
     }
 };
 
+
+const startDate = '167308915';
+const endDate = '1678128831';
+
+
 export const getAllMetricsOrders = async () => {
     try {
-        const res = await request.get(`/metrics/orders`);
+        const res = await request.get(`/metrics/orders-range?startDate=${startDate}&endDate=${endDate}`);
         // console.log(res, "product all");
         return res?.data?.data;
     } catch (error) {
@@ -86,6 +91,22 @@ export const getAllMetricsOrders = async () => {
         throw new Error(err);
     }
 };
+
+
+
+export const getAllMetricsOrdersRange = async () => {
+    try {
+        const res = await request.get(`/metrics/orders-range?startDate=${startDate}&endDate=${endDate}`);
+        // console.log(res, "product all");
+        return res?.data?.data;
+    } catch (error) {
+        const err = error?.response?.data?.message || error?.message;
+        throw new Error(err);
+    }
+};
+
+
+
 
 export const getSuppliers = async () => {
     try {

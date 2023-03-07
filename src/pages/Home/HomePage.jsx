@@ -36,6 +36,7 @@ import { useState } from "react";
 import { BsCart3, BsThreeDots } from "react-icons/bs";
 import { GiSwapBag } from "react-icons/gi";
 import { FiTrendingUp } from "react-icons/fi";
+import {SiMattermost} from "react-icons/si"
 
 const dashboardSummaryData = [
     {
@@ -478,6 +479,20 @@ const HomePage = () => {
                                 click to copy your Link
                             </button> */}
                         </div>
+                        <form class=" mt-2 row ">
+                                <div class="col-auto">
+                                    <label  > Start Date</label>
+                                    <input type="date" class="form-control border" id="email"/>
+                                </div>
+                                <div class=" col-auto">
+                                    <label >End Date</label>
+                                    <input type="date"  class="form-control col-auto border " id="pwd"/>
+                                </div>
+                               
+                                <div className=" col-auto"> 
+                                        <button   type="submit" class="btn mt-4  btn-info">Submit</button>
+                                </div>
+                    </form>
                     </div>
                     {/* Chart Module */}
                     <div>
@@ -487,35 +502,17 @@ const HomePage = () => {
                                     <div
                                         
                                         className="col-md-6 col-lg-4"
-                                    >
+      >
                                         <CardComp
                                             bodyText={
                                                 <div>
-                                                    <TopNav
-                                                        changeTimePeriod={
-                                                            setTimePeriodSelection
-                                                        }
-                                                        timePeriodSelection={
-                                                            timePeriodSelection
-                                                        }
-                                                        //cardIdx={index}
-                                                        TextComp={
-                                                            <span className="fw-1">
-                                                                Top View
-                                                            </span>
-                                                        }
-                                                        DropDownText={
-                                                            <span>
-                                                                <span className=""></span>
-                                                                month
-                                                            </span>
-                                                        }
-                                                    />
+                                                   
+                                                    
                                                     <div>
-                                                        <div className="d-flex mt-1 align-items-center">
+                                                        <div className="d-flex mt-3 align-items-center">
                                                             <div className="me-3">
                                                                 <i className="iconWrapper">
-                                                                    <img src="./images/sales.png"  alt="sales"/>
+                                                                    <GiSwapBag className="h5 color-2 mb-0" />
                                                                 </i>
                                                             </div>
                                                             <div>
@@ -526,7 +523,7 @@ const HomePage = () => {
                                                                 </h6>
                                                                 <p className="mb-0 text-muted">
                                                                     
-                                                                 Total Sales Order
+                                                                 Total Sales Orders
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -540,36 +537,16 @@ const HomePage = () => {
 
                                     <div
                                         
-                                        className="col-md-6 col-lg-4"
-                                    >
+                                        className="col-md-6 col-lg-4" >
                                         <CardComp
                                             bodyText={
                                                 <div>
-                                                    <TopNav
-                                                        changeTimePeriod={
-                                                            setTimePeriodSelection
-                                                        }
-                                                        timePeriodSelection={
-                                                            timePeriodSelection
-                                                        }
-                                                        //cardIdx={index}
-                                                        TextComp={
-                                                            <span className="fw-1">
-                                                                Top View
-                                                            </span>
-                                                        }
-                                                        DropDownText={
-                                                            <span>
-                                                                <span className=""></span>
-                                                                month
-                                                            </span>
-                                                        }
-                                                    />
+                                                   
                                                     <div>
-                                                        <div className="d-flex mt-1 align-items-center">
+                                                        <div className="d-flex mt-3  align-items-center">
                                                             <div className="me-3">
                                                                 <i className="iconWrapper">
-                                                                    <img src="./images/paidd.png"  alt="sales"/>
+                                                                    <BsCart3 className="h5 color-2 mb-0" />
                                                                 </i>
                                                             </div>
                                                             <div>
@@ -580,7 +557,7 @@ const HomePage = () => {
                                                                 </h6>
                                                                 <p className="mb-0 text-muted">
                                                                     
-                                                                 Total Paid Orders
+                                                                 Total Sales Collections
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -594,47 +571,27 @@ const HomePage = () => {
 
                                      <div
                                         
-                                        className="col-md-6 col-lg-4"
-                                    >
+                                        className="col-md-6 col-lg-4" >
                                         <CardComp
                                             bodyText={
                                                 <div>
-                                                    <TopNav
-                                                        changeTimePeriod={
-                                                            setTimePeriodSelection
-                                                        }
-                                                        timePeriodSelection={
-                                                            timePeriodSelection
-                                                        }
-                                                        //cardIdx={index}
-                                                        TextComp={
-                                                            <span className="fw-1">
-                                                                Top View
-                                                            </span>
-                                                        }
-                                                        DropDownText={
-                                                            <span>
-                                                                <span className=""></span>
-                                                                month
-                                                            </span>
-                                                        }
-                                                    />
+                                                   
                                                     <div>
-                                                        <div className="d-flex mt-1 align-items-center">
+                                                        <div className="d-flex mt-3  align-items-center">
                                                             <div className="me-3">
                                                                 <i className="iconWrapper">
-                                                                    <img src="./images/growth.png"  alt="sales"/>
+                                                                    <SiMattermost className="h5 color-2 mb-0" />
                                                                 </i>
                                                             </div>
                                                             <div>
                                                                 <h6 className="mb-1">
-                                                                    {"NGN"}{" "} { 0}
+                                                                    {"NGN"}{" "} { formatMoney (state?.allMetricsOrder?.pay_later_orders?.total_amount )}
 
                                                                     
                                                                 </h6>
                                                                 <p className="mb-0 text-muted">
                                                                     
-                                                                 Growth
+                                                                 Total Debts
                                                                 </p>
                                                             </div>
                                                         </div>

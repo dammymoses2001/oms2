@@ -414,11 +414,32 @@ const HomePage = () => {
      const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [datas, setDatas] = useState([]);
+   const [startEpoch, setStartEpoch] = useState(0);
+  const [endEpoch, setEndEpoch] = useState(0);
+
+   const handleStartDateChange = (event) => {
+    const date = moment(event.target.value);
+    const epoch = date.getTime() / 1000;
+    setStartDate(event.target.value);
+    setStartEpoch(epoch);
+  };
+
+  const handleEndDateChange = (event) => {
+    const date = moment(event.target.value);
+    const epoch = date.getTime() / 1000;
+    setEndDate(event.target.value);
+    setEndEpoch(epoch);
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    
     const fetchedData = await GetAllMetricsOrders(startDate, endDate);
-    setDatas(fetchedData);
+    
+
+    if (startEpoch && endEpoch) {
+      setDatas(fetchedData);
+    }
   };
 
 
@@ -508,11 +529,13 @@ const HomePage = () => {
                         <form class=" mt-2 row"  onSubmit={handleSubmit}>
                                 <div class="col-auto">
                                     <label  > Start Date</label>
-                                    <input   class="form-control border" id="email" value={startDate} onChange={e => setStartDate(e.target.value)}/>
+                                     <input type="date" id="startDate" value={startDate} onChange={handleStartDateChange} />
+          {startEpoch > 0 && <span> ({startEpoch})</span>}
                                 </div>
                                 <div class=" col-auto">
                                     <label >End Date</label>
-                                    <input   class="form-control col-auto border " id="pwd"  value={endDate} onChange={e => setEndDate(e.target.value)}/>
+                                    <input type="date" id="endDate" value={endDate} onChange={handleEndDateChange} />
+          {endEpoch > 0 && <span> ({endEpoch})</span>}
                                 </div>
                                
                                 <div className=" col-auto"> 

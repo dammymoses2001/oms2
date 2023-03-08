@@ -909,12 +909,12 @@ export const AuthProvider = withRouter(({ children, navigate }) => {
 
     
 
-     const GetAllMetricsOrders = useCallback(async ( startEpoch, endEpoch) => {
+     const GetAllMetricsOrders = useCallback(async ( startDate, endDate) => {
         // console.log(id,"igettheid");
 
         try {
             dispatch({ type: AUTH_START });
-            const data = await getAllMetricsOrders(startEpoch, endEpoch);
+            const data = await getAllMetricsOrders(startDate, endDate);
             console.log(data,'GetAllMetricsOrders2')
             dispatch({
                 payload: data,

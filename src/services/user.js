@@ -80,9 +80,9 @@ export const getAllUserProduct = async () => {
 
 
 
-export const getAllMetricsOrders = async (startEpoch, endEpoch) => {
+export const getAllMetricsOrders = async (startDate, endDate) => {
     try {
-        const res = await request.get(`/metrics/orders-range?startEpoch=${startEpoch}&endEpoch=${endEpoch}`);
+        const res = await request.get(`/metrics/orders-range?startDate=${startDate}&endDate=${endDate}`);
         // console.log(res, "product all");
         return res?.data?.data;
     } catch (error) {

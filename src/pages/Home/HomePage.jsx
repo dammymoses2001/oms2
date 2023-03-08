@@ -419,14 +419,14 @@ const HomePage = () => {
 
    const handleStartDateChange = (event) => {
     const date = moment(event.target.value);
-    const epoch = date.getTime() / 1000;
+    const epoch = date.unix();
     setStartDate(event.target.value);
     setStartEpoch(epoch);
   };
 
   const handleEndDateChange = (event) => {
     const date = moment(event.target.value);
-    const epoch = date.getTime() / 1000;
+    const epoch = date.unix();
     setEndDate(event.target.value);
     setEndEpoch(epoch);
   };

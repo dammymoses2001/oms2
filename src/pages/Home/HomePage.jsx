@@ -31,7 +31,7 @@ import {
     ProductColumn
 } from "../../utils/datautils";
 
-import { DashboardMetrics, getAllUserProduct, getOrder } from "../../services";
+import { DashboardMetrics, getAllUserProduct, getMetricsOrders, getOrder } from "../../services";
 import { useState } from "react";
 import { BsCart3, BsThreeDots } from "react-icons/bs";
 import { GiSwapBag } from "react-icons/gi";
@@ -395,12 +395,25 @@ const HomePage = () => {
     // }, [dataOrders]);
 
     //console.log(getUserProductList?.products,'MapMertics')
+    
+// const startDate = '167308915';
+// const endDate = '1678128831';
+    const [startDate, setStartDate] = useState('1646611200');
+  const [endDate, setEndDate] = useState('1678147200');
+
+
+
+
 
     useEffect(() => {
-      GetAllMetricsOrders()
+        if ( startDate && endDate ) {
+             GetAllMetricsOrders(startDate, endDate)
+        }
     }, [GetAllMetricsOrders])
 
-    console.log(state?.allMetricsOrder, "GetAllMetricsOrders")
+   
+   
+    // console.log(state?.allMetricsOrder, "GetAllMetricsOrders")
     
 
     const bodyData = () => {
@@ -459,6 +472,8 @@ const HomePage = () => {
     //     ));
     // };
 
+   
+
     
 
     return (
@@ -482,15 +497,15 @@ const HomePage = () => {
                         <form class=" mt-2 row">
                                 <div class="col-auto">
                                     <label  > Start Date</label>
-                                    <input type="date" class="form-control border" id="email"/>
+                                    <input type="date"  class="form-control border" id="email" value={startDate} onChange={e => setStartDate(e.target.value)}/>
                                 </div>
                                 <div class=" col-auto">
                                     <label >End Date</label>
-                                    <input type="date"  class="form-control col-auto border " id="pwd"/>
+                                    <input type="date"  class="form-control col-auto border " id="pwd"  value={endDate} onChange={e => setEndDate(e.target.value)}/>
                                 </div>
                                
                                 <div className=" col-auto"> 
-                                        <button   type="submit" class="btn mt-4  btn-info">Submit</button>
+                                        <button    onClick={() => getMetricsOrders(startDate, endDate)} class="btn mt-4  btn-info">Submit</button>
                                 </div>
                     </form>
                     </div>

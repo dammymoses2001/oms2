@@ -907,10 +907,9 @@ export const AuthProvider = withRouter(({ children, navigate }) => {
         }
     }, []);
 
-
     
 
-     const GetAllMetricsOrders = useCallback(async (id, startDate, endDate) => {
+     const GetAllMetricsOrders = useCallback(async ( startDate, endDate) => {
         // console.log(id,"igettheid");
 
         try {

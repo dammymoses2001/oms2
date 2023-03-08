@@ -77,11 +77,10 @@ export const getAllUserProduct = async () => {
 };
 
 
-const startDate = '167308915';
-const endDate = '1678128831';
 
 
-export const getAllMetricsOrders = async () => {
+
+export const getAllMetricsOrders = async (startDate, endDate) => {
     try {
         const res = await request.get(`/metrics/orders-range?startDate=${startDate}&endDate=${endDate}`);
         // console.log(res, "product all");

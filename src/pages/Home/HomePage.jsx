@@ -413,9 +413,14 @@ const HomePage = () => {
 
      const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  
   const [datas, setDatas] = useState([]);
 
+
+
+  
   const handleSubmit = async (event) => {
+    
     event.preventDefault();
     const fetchedData = await GetAllMetricsOrders(startDate, endDate);
     setDatas(fetchedData);

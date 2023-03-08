@@ -398,18 +398,29 @@ const HomePage = () => {
     
 // const startDate = '167308915';
 // const endDate = '1678128831';
-    const [startDate, setStartDate] = useState('1646611200');
-  const [endDate, setEndDate] = useState('1678147200');
+//     const [startDate, setStartDate] = useState('1646611200');
+//   const [endDate, setEndDate] = useState('1678147200');
 
 
 
 
 
-    useEffect(() => {
-        if ( startDate && endDate ) {
-             GetAllMetricsOrders(startDate, endDate)
-        }
-    }, [GetAllMetricsOrders])
+    // useEffect(() => {
+    //     if ( startDate && endDate ) {
+    //          GetAllMetricsOrders(startDate, endDate)
+    //     }
+    // }, [GetAllMetricsOrders])
+
+     const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [datas, setDatas] = useState([]);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const fetchedData = await GetAllMetricsOrders(startDate, endDate);
+    setDatas(fetchedData);
+  };
+
 
    
    
@@ -494,18 +505,18 @@ const HomePage = () => {
                                 click to copy your Link
                             </button> */}
                         </div>
-                        <form class=" mt-2 row">
+                        <form class=" mt-2 row"  onSubmit={handleSubmit}>
                                 <div class="col-auto">
                                     <label  > Start Date</label>
-                                    <input type="date"  class="form-control border" id="email" value={startDate} onChange={e => setStartDate(e.target.value)}/>
+                                    <input   class="form-control border" id="email" value={startDate} onChange={e => setStartDate(e.target.value)}/>
                                 </div>
                                 <div class=" col-auto">
                                     <label >End Date</label>
-                                    <input type="date"  class="form-control col-auto border " id="pwd"  value={endDate} onChange={e => setEndDate(e.target.value)}/>
+                                    <input   class="form-control col-auto border " id="pwd"  value={endDate} onChange={e => setEndDate(e.target.value)}/>
                                 </div>
                                
                                 <div className=" col-auto"> 
-                                        <button    onClick={() => getMetricsOrders(startDate, endDate)} class="btn mt-4  btn-info">Submit</button>
+                                        <button     class="btn mt-4  btn-info">Submit</button>
                                 </div>
                     </form>
                     </div>

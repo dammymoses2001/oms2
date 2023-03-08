@@ -479,7 +479,7 @@ const HomePage = () => {
                                 click to copy your Link
                             </button> */}
                         </div>
-                        <form class=" mt-2 row ">
+                        <form class=" mt-2 row">
                                 <div class="col-auto">
                                     <label  > Start Date</label>
                                     <input type="date" class="form-control border" id="email"/>

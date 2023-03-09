@@ -405,14 +405,15 @@ const HomePage = () => {
 
 
 
-    // useEffect(() => {
-    //     if ( startDate && endDate ) {
-    //          GetAllMetricsOrders(startDate, endDate)
-    //     }
-    // }, [GetAllMetricsOrders])
+    useEffect(() => {
+        if ( startDate && endDate ) {
+             GetAllMetricsOrders(startDate, endDate)
+        }
+    }, [GetAllMetricsOrders])
 
-     const [startDate, setStartDate] = useState("1670504497");
-  const [endDate, setEndDate] = useState("1678128831");
+    const today = moment();
+     const [startDate, setStartDate] = useState('2022-01-01');
+  const [endDate, setEndDate] = useState( today.format('MM/DD/YYYY'));
   
   const [datas, setDatas] = useState([]);
 
@@ -427,7 +428,7 @@ const HomePage = () => {
   };
 
 
-   
+  
    
     // console.log(state?.allMetricsOrder, "GetAllMetricsOrders")
     
@@ -510,20 +511,22 @@ const HomePage = () => {
                                 click to copy your Link
                             </button> */}
                         </div>
-                        <form class=" mt-2 row"  onSubmit={handleSubmit}>
+                       <div id="formdiv"> 
+                                 <form id="sortform" class=" mt-1 row border p-2"  onSubmit={handleSubmit}>
                                 <div class="col-auto">
-                                    <label  > Start Date</label>
-                                    <input   class="form-control border" id="email" value={startDate} onChange={e => setStartDate(e.target.value)}/>
+                                    {/* <label  > Start Date</label> */}
+                                    <input type='date'  class="form-control border border-secondary mt-1" id="inpt" value={startDate} onChange={e => setStartDate(e.target.value)}/>
                                 </div>
                                 <div class=" col-auto">
-                                    <label >End Date</label>
-                                    <input   class="form-control col-auto border " id="pwd"  value={endDate} onChange={e => setEndDate(e.target.value)}/>
+                                    {/* <label >End Date</label> */}
+                                    <input placeholder="today" type='date'   class="form-control border-secondary col-auto border  mt-1" id="inpt"  value={endDate} onChange={e => setEndDate(e.target.value)}/>
                                 </div>
                                
                                 <div className=" col-auto"> 
-                                        <button     class="btn mt-4  btn-info">Submit</button>
+                                        <button  id="submitbtn"   class="btn mt-1 bg-color-2 "> Filter </button>
                                 </div>
                     </form>
+                            </div>
                     </div>
                     {/* Chart Module */}
                     <div>
@@ -548,7 +551,7 @@ const HomePage = () => {
                                                             </div>
                                                             <div>
                                                                 <h6 className="mb-1">
-                                                                    {"NGN"}{" "} { formatMoney (state?.allMetricsOrder?.total_orders_amount)}
+                                                                    {"NGN"}{" "} { (state?.allMetricsOrder?.total_orders_amount) > 0 ? ( <div> {formatMoney(state?.allMetricsOrder?.total_orders_amount)}</div> ) : (<div> 00.00 </div>)  } 
 
                                                                     
                                                                 </h6>
@@ -582,9 +585,9 @@ const HomePage = () => {
                                                             </div>
                                                             <div>
                                                                 <h6 className="mb-1">
-                                                                    {"NGN"}{" "} { formatMoney (state?.allMetricsOrder?.total_orders_amount - state?.allMetricsOrder?.pay_later_orders?.total_amount)}
+                                                                    {/* {"NGN"}{" "} { formatMoney (state?.allMetricsOrder?.total_orders_amount - state?.allMetricsOrder?.pay_later_orders?.total_amount)} */}
 
-                                                                    
+                                                                    {"NGN"}{" "} { (state?.allMetricsOrder?.total_orders_amount - state?.allMetricsOrder?.pay_later_orders?.total_amount) > 0 ? ( <div> {formatMoney((state?.allMetricsOrder?.total_orders_amount - state?.allMetricsOrder?.pay_later_orders?.total_amount))}</div> ) : (<div> 00.00 </div>)  } 
                                                                 </h6>
                                                                 <p className="mb-0 text-muted">
                                                                     
@@ -616,7 +619,10 @@ const HomePage = () => {
                                                             </div>
                                                             <div>
                                                                 <h6 className="mb-1">
-                                                                    {"NGN"}{" "} { formatMoney (state?.allMetricsOrder?.pay_later_orders?.total_amount )}
+                                                                    {/* {"NGN"}{" "} { formatMoney (state?.allMetricsOrder?.pay_later_orders?.total_amount )} */}
+
+
+                                                                    {"NGN"}{" "} { (state?.allMetricsOrder?.pay_later_orders?.total_amount ) > 0 ? ( <div> {formatMoney(state?.allMetricsOrder?.pay_later_orders?.total_amount )}</div> ) : (<div> 00.00 </div>)  } 
 
                                                                     
                                                                 </h6>
@@ -711,6 +717,8 @@ const Style = styled.div`
     .Product td {
         height: 80px;
     }
+
+    
     .productWrapper {
         width: 55px;
     }
@@ -727,6 +735,29 @@ const Style = styled.div`
         background: #e8e7ff;
     }
 
+    #sortform{
+        width: fit-content;
+        margin-left: auto;
+        border: 1rem;
+        border-radius: 1rem;
+        background-color: #dadbdd;
+        
+        
+        
+    }
+    #inpt{
+        border-radius:1rem;
+        border-color: black;
+    }
+    #submitbtn{
+       background-color:  #463c74;
+        color: white;
+        border-radius: 0.5rem;
+    }
+    #formdiv{
+        margin-right: 3rem;
+    }
+
     @media (max-width: 767px) {
         .homepage {
             padding-top: 14rem;
@@ -734,6 +765,15 @@ const Style = styled.div`
         .registering-cta {
             left: 0;
         }
+
+        #formdiv{
+        padding: 1rem;
+        margin-right: 0rem;
+        
+    }
+        
+        
+
     }
     @media (max-width: 480px) {
         .homepage {
@@ -742,6 +782,16 @@ const Style = styled.div`
         .start-by-registering {
             padding: 12em 5em;
         }
+
+        #formdiv{
+        padding: 1rem;
+        margin-right: 0rem;
+    }
+
+    
+
+
+       
     }
 `;
 

@@ -1,5 +1,6 @@
 /* eslint-disable sort-keys */
 import { request } from "../utils";
+import moment from 'moment';
 
 export const registerUser = async (value) => {
     try {
@@ -82,7 +83,7 @@ export const getAllUserProduct = async () => {
 
 export const getAllMetricsOrders = async (startDate, endDate) => {
     try {
-        const res = await request.get(`/metrics/orders-range?startDate=${startDate}&endDate=${endDate}`);
+        const res = await request.get(`/metrics/orders-range?startDate=${moment(startDate).valueOf()/1000}&endDate=${moment(endDate).valueOf()/1000}`);
         // console.log(res, "product all");
         return res?.data?.data;
     } catch (error) {

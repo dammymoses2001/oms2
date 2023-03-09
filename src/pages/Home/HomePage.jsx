@@ -512,7 +512,7 @@ const HomePage = () => {
                             </button> */}
                         </div>
                        <div id="formdiv"> 
-                                 <form id="sortform" class=" mt-1 row border p-2"  onSubmit={handleSubmit}>
+                                 <form id="sortform" class=" mt-1 row "  onSubmit={handleSubmit}>
                                 <div class="col-auto">
                                     {/* <label  > Start Date</label> */}
                                     <input type='date'  class="form-control border border-secondary mt-1" id="inpt" value={startDate} onChange={e => setStartDate(e.target.value)}/>
@@ -738,9 +738,9 @@ const Style = styled.div`
     #sortform{
         width: fit-content;
         margin-left: auto;
-        border: 1rem;
-        border-radius: 1rem;
-        background-color: #dadbdd;
+        /* border: 1rem;
+        border-radius: 1rem; */
+       
         
         
         
@@ -784,9 +784,20 @@ const Style = styled.div`
         }
 
         #formdiv{
-        padding: 1rem;
+        
         margin-right: 0rem;
+       
+       align-items: center;
     }
+
+     #submitbtn{
+       width: 100%;
+       margin: 0 auto;
+
+       
+    }
+
+   
 
     
 

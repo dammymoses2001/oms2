@@ -22,6 +22,7 @@ import {
     // GET_ALL_SUPPLIERS_PRODUCT_REQUEST,
     GET_ALL_SUPPLIERS_SUCCESS,
     GET_ALL_METRICS_ORDERS,
+    GET_ALL_LEADS_COMPANY,
     GET_PROFILE_SUCESS,
     GET_PROFILE_FAIL,
     LOGIN_FAIL,
@@ -97,7 +98,8 @@ import {
     getAllRepresentatives,
     getAllCustomer,
     getVisitationSchedules,
-    getAllMetricsOrders
+    getAllMetricsOrders,
+    getAllLeadsCompany
     // getPackages,
     // subscription,
     // completeSubscription,
@@ -909,6 +911,31 @@ export const AuthProvider = withRouter(({ children, navigate }) => {
 
     
 
+     const GetAllLeadsCompany= useCallback(async (id) => {
+        // console.log(id,"igettheid");
+
+        try {
+            dispatch({ type: AUTH_START });
+            const data = await getAllLeadsCompany();
+            console.log(data,'GetAllLeadscopmany')
+            dispatch({
+                payload: data,
+                type: GET_ALL_LEADS_COMPANY
+            });
+            //toast.success("Login successful");
+            // navigate("/");
+        } catch (error) {
+            // navigate("/");
+            const errorMessage =
+                error?.response?.data?.message || error.message;
+            dispatch({
+                payload: errorMessage,
+                type: DEFAULT_FAIL
+            });
+        }
+    }, []);
+
+    
      const GetAllMetricsOrders = useCallback(async ( startDate, endDate) => {
         // console.log(id,"igettheid");
 
@@ -1139,7 +1166,8 @@ export const AuthProvider = withRouter(({ children, navigate }) => {
                 GetAllCustomer,
                 AddCustomer,
                 getVisitationSchedulesFunc,
-                GetAllMetricsOrders
+                GetAllMetricsOrders,
+                GetAllLeadsCompany
             }}
         >
             {children}

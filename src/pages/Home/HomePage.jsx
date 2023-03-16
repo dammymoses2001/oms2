@@ -66,7 +66,8 @@ const HomePage = () => {
         state,
         AcceptOrderFunc,
         RejectOrderFunc,
-        GetAllMetricsOrders
+        GetAllMetricsOrders,
+        GetAllLeadsCompany,
         // state: { data,dashboardMertics,MapMertics },
     } = useAuth();
     const [show, setShow] = useState(false);
@@ -428,6 +429,11 @@ const HomePage = () => {
   };
 
 
+  useEffect(() => {
+    GetAllLeadsCompany()
+  },[])
+
+  console.log(GetAllLeadsCompany);
   
    
     // console.log(state?.allMetricsOrder, "GetAllMetricsOrders")

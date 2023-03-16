@@ -93,6 +93,18 @@ export const getAllMetricsOrders = async (startDate, endDate) => {
 };
 
 
+export const getAllLeadsCompany= async () => {
+    try {
+        const res = await request.get(`/leads/company`);
+        // console.log(res, "product all");
+        return res?.data?.data;
+    } catch (error) {
+        const err = error?.response?.data?.message || error?.message;
+        throw new Error(err);
+    }
+};
+
+
 
 // export const getAllMetricsOrdersRange = async () => {
 //     try {

@@ -4,7 +4,7 @@ import { getAuthToken } from "./helpers";
 const options = {
     baseURL:
         process.env.REACT_APP_API_BASE_URL ||
-        "https://backend.pharmaserv.ng/dev/api/v1/",
+        "https://backend.pharmaserv.ng/sandbox/api/v1/",
     headers: {
         Accept: "application/json,text/plain,*/*",
         "Content-Type": "application/json"

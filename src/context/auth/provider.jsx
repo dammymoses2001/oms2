@@ -56,7 +56,8 @@ import {
     GET_ALL_REPS_SUCCESS,
     GET_ALL_CUSTOMER_SUCCESS,
     GET_VISITATIONSCHEDULES_SUCCESS,
-    GET_VISITATIONSCHEDULES_FAIL
+    GET_VISITATIONSCHEDULES_FAIL,
+    GET_ALL_TOP_AREAS
     // GET_PACKAGES_FAIL,
     // GET_PACKAGES_SUCCESS,
     // GET_CART_SUCCESS,
@@ -101,7 +102,8 @@ import {
     getVisitationSchedules,
     getAllMetricsOrders,
     getAllLeadsCompany,
-    getAllTopCustomers
+    getAllTopCustomers,
+    getAllTopArea
     
     // getPackages,
     // subscription,
@@ -961,6 +963,29 @@ export const AuthProvider = withRouter(({ children, navigate }) => {
             });
         }
     }, []);
+     const GetAllTopArea= useCallback(async (id) => {
+        // console.log(id,"igettheid");
+
+        try {
+            dispatch({ type: AUTH_START });
+            const data = await getAllTopArea();
+            console.log(data,'GetAllTopArea')
+            dispatch({
+                payload: data,
+                type: GET_ALL_TOP_AREAS
+            });
+            //toast.success("Login successful");
+            // navigate("/");
+        } catch (error) {
+            // navigate("/");
+            const errorMessage =
+                error?.response?.data?.message || error.message;
+            dispatch({
+                payload: errorMessage,
+                type: DEFAULT_FAIL
+            });
+        }
+    }, []);
 
    
     
@@ -1197,6 +1222,7 @@ export const AuthProvider = withRouter(({ children, navigate }) => {
                 GetAllMetricsOrders,
                 GetAllLeadsCompany,
                 GetAllTopCustomers,
+                GetAllTopArea
             }}
         >
             {children}

@@ -114,6 +114,17 @@ export const getAllTopCustomers= async () => {
         throw new Error(err);
     }
 };
+export const getAllTopArea= async () => {
+    try {
+        const res = await request.get(`/metrics/top-areas
+        `);
+        // console.log(res, "product all");
+        return res?.data?.data;
+    } catch (error) {
+        const err = error?.response?.data?.message || error?.message;
+        throw new Error(err);
+    }
+};
 
 
 

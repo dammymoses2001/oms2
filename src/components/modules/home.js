@@ -5,6 +5,7 @@ import {
 } from "react-icons/hi";
 import { RiUserAddLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
+import { formatMoney } from "../../utils";
 import {
     HeaderOrder,
     SortOrder,
@@ -173,7 +174,7 @@ export const Chart = () => {
     );
 };
 
-export const MapandTopAreas = () => {
+export const MapandTopAreas = ({topArea}) => {
     return (
         <div>
             <div className="row ">
@@ -235,54 +236,22 @@ export const MapandTopAreas = () => {
                                 />
                                 {/* <div className="mb-3"><SVGOverlayExample/></div> */}
                                 <div className="mt-4">
-                                    <div className="d-flex justify-content-between align-items-center mb-3">
-                                        <div className="d-flex align-items-center">
-                                            <FiCircle
-                                                className="me-2"
-                                                color="#a3a1fb"
-                                            />{" "}
-                                            <p className="mb-0">Agege</p>
-                                        </div>{" "}
-                                        <div>
-                                            <p className="mb-0">NGN 300,000</p>
-                                        </div>
-                                    </div>
-                                    <div className="d-flex justify-content-between align-items-center mb-3">
-                                        <div className="d-flex align-items-center">
-                                            <FiCircle
-                                                className="me-2"
-                                                color="#a3a1fb"
-                                            />{" "}
-                                            <p className="mb-0">Apapa</p>
-                                        </div>{" "}
-                                        <div>
-                                            <p className="mb-0">NGN 300,000</p>
-                                        </div>
-                                    </div>
-                                    <div className="d-flex justify-content-between align-items-center mb-3">
-                                        <div className="d-flex align-items-center">
-                                            <FiCircle
-                                                className="me-2"
-                                                color="#a3a1fb"
-                                            />{" "}
-                                            <p className="mb-0">Ikorodu</p>
-                                        </div>{" "}
-                                        <div>
-                                            <p className="mb-0">NGN 300,000</p>
-                                        </div>
-                                    </div>
-                                    <div className="d-flex justify-content-between align-items-center mb-3">
-                                        <div className="d-flex align-items-center">
-                                            <FiCircle
-                                                className="me-2"
-                                                color="#a3a1fb"
-                                            />{" "}
-                                            <p className="mb-0">Lagos-Island</p>
-                                        </div>{" "}
-                                        <div>
-                                            <p className="mb-0">NGN 300,000</p>
-                                        </div>
-                                    </div>
+                                    {topArea?.slice(0,7)?.map(({totalAmount,lga},i)=>
+                                       <div className="d-flex justify-content-between align-items-center mb-3" key={i}>
+                                       <div className="d-flex align-items-center">
+                                           <FiCircle
+                                               className="me-2"
+                                               color="#a3a1fb"
+                                           />{" "}
+                                           <p className="mb-0">{lga}</p>
+                                       </div>{" "}
+                                       <div>
+                                           <p className="mb-0">N {formatMoney(totalAmount)}</p>
+                                       </div>
+                                   </div>
+                                    )}
+                                 
+                                    
                                 </div>
                             </div>
                         }
@@ -293,7 +262,7 @@ export const MapandTopAreas = () => {
     );
 };
 
-export const TopCustomerAndTopProduct = ({ bodyData, data ,isLoading}) => {
+export const TopCustomerAndTopProduct = ({ bodyData, data ,isLoading,topCustomer}) => {
   
     return (
         <div className="mb-4">
@@ -354,6 +323,7 @@ export const TopCustomerAndTopProduct = ({ bodyData, data ,isLoading}) => {
                                 <hr />
                                 {/* <div className="mb-3"><SVGOverlayExample/></div> */}
                                 <div>
+                                    {topCustomer?.slice(0,5)?.map(({totalAmount, businessName},i)=><div key={i}>
                                     <div className="d-flex justify-content-between align-items-center mb-3">
                                         <div className="d-flex align-items-center">
                                             <div className="iconwrapper">
@@ -368,111 +338,18 @@ export const TopCustomerAndTopProduct = ({ bodyData, data ,isLoading}) => {
                                                     color: "#4d4f5c"
                                                 }}
                                             >
-                                                Last 24 Hours
+                                                {businessName}
                                             </p>
                                         </div>{" "}
                                         <div>
                                             <p className="mb-0">
-                                                290 new customers
+                                                N{formatMoney(totalAmount)}
                                             </p>
                                         </div>
                                     </div>
                                     <hr />
-                                    <div className="d-flex justify-content-between align-items-center mb-3">
-                                        <div className="d-flex align-items-center">
-                                            <div className="iconwrapper">
-                                                <RiUserAddLine
-                                                    className=""
-                                                    color="#8280ff"
-                                                />{" "}
-                                            </div>
-                                            <p
-                                                className="mb-0 text-muted"
-                                                style={{
-                                                    color: "#4d4f5c"
-                                                }}
-                                            >
-                                                Last 24 Hours
-                                            </p>
-                                        </div>{" "}
-                                        <div>
-                                            <p className="mb-0">
-                                                290 new customers
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <hr />
-                                    <div className="d-flex justify-content-between align-items-center mb-3">
-                                        <div className="d-flex align-items-center">
-                                            <div className="iconwrapper">
-                                                <RiUserAddLine
-                                                    className=""
-                                                    color="#8280ff"
-                                                />{" "}
-                                            </div>
-                                            <p
-                                                className="mb-0 text-muted"
-                                                style={{
-                                                    color: "#4d4f5c"
-                                                }}
-                                            >
-                                                Last 24 Hours
-                                            </p>
-                                        </div>{" "}
-                                        <div>
-                                            <p className="mb-0">
-                                                290 new customers
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <hr />
-                                    <div className="d-flex justify-content-between align-items-center mb-3">
-                                        <div className="d-flex align-items-center">
-                                            <div className="iconwrapper">
-                                                <RiUserAddLine
-                                                    className=""
-                                                    color="#8280ff"
-                                                />{" "}
-                                            </div>
-                                            <p
-                                                className="mb-0 text-muted"
-                                                style={{
-                                                    color: "#4d4f5c"
-                                                }}
-                                            >
-                                                Last 24 Hours
-                                            </p>
-                                        </div>{" "}
-                                        <div>
-                                            <p className="mb-0">
-                                                290 new customers
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <hr />
-                                    <div className="d-flex justify-content-between align-items-center mb-3">
-                                        <div className="d-flex align-items-center">
-                                            <div className="iconwrapper">
-                                                <RiUserAddLine
-                                                    className=""
-                                                    color="#8280ff"
-                                                />{" "}
-                                            </div>
-                                            <p
-                                                className="mb-0 text-muted"
-                                                style={{
-                                                    color: "#4d4f5c"
-                                                }}
-                                            >
-                                                Last 24 Hours
-                                            </p>
-                                        </div>{" "}
-                                        <div>
-                                            <p className="mb-0">
-                                                290 new customers
-                                            </p>
-                                        </div>
-                                    </div>
+                                    </div>)}
+                                   
                                 </div>
                             </div>
                         }

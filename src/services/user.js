@@ -104,6 +104,19 @@ export const getAllLeadsCompany= async () => {
     }
 };
 
+export const getAllTopCustomers= async () => {
+    try {
+        const res = await request.get(`/metrics/top-customers`);
+        // console.log(res, "product all");
+        return res?.data?.data;
+    } catch (error) {
+        const err = error?.response?.data?.message || error?.message;
+        throw new Error(err);
+    }
+};
+
+
+
 
 
 // export const getAllMetricsOrdersRange = async () => {

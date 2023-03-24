@@ -67,6 +67,7 @@ const HomePage = () => {
         RejectOrderFunc,
         GetAllMetricsOrders,
         GetAllLeadsCompany,
+        GetAllTopCustomers,
         // state: { data,dashboardMertics,MapMertics },
     } = useAuth();
     const [show, setShow] = useState(false);
@@ -433,7 +434,14 @@ const HomePage = () => {
   },[])
 
   console.log(GetAllLeadsCompany);
+
+ 
+  useEffect(() => {
+    GetAllTopCustomers()
+  },[])
+ console.log(GetAllTopCustomers, "topcustomers");
   
+//   {GetAllTopCustomers.map()}
    
     // console.log(state?.allMetricsOrder, "GetAllMetricsOrders")
     

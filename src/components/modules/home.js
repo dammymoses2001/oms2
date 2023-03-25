@@ -227,12 +227,12 @@ export const MapandTopAreas = ({topArea}) => {
                             <div>
                                 <TopNav
                                     TextComp={"Top Areas"}
-                                    DropDownText={
-                                        <span>
-                                            <span className=""></span>
-                                            Month
-                                        </span>
-                                    }
+                                    // DropDownText={
+                                    //     <span>
+                                    //         <span className=""></span>
+                                    //         Month
+                                    //     </span>
+                                    // }
                                 />
                                 {/* <div className="mb-3"><SVGOverlayExample/></div> */}
                                 <div className="mt-4">
@@ -274,12 +274,12 @@ export const TopCustomerAndTopProduct = ({ bodyData, data ,isLoading,topCustomer
                                 <div className="mb-3">
                                     <TopNav
                                         TextComp={"Top Products"}
-                                        DropDownText={
-                                            <span>
-                                                <span className=""></span>
-                                                Month
-                                            </span>
-                                        }
+                                        // DropDownText={
+                                        //     <span>
+                                        //         <span className=""></span>
+                                        //         Month
+                                        //     </span>
+                                        // }
                                         // RightComp={<Link className="text-1 p" to='/product/all'>Show More</Link>}
                                         // DropDownText="Show More"
                                     />
@@ -313,12 +313,12 @@ export const TopCustomerAndTopProduct = ({ bodyData, data ,isLoading,topCustomer
                             <div>
                                 <TopNav
                                     TextComp={"Top Customers"}
-                                    DropDownText={
-                                        <span>
-                                            <span className=""></span>
-                                            Month
-                                        </span>
-                                    }
+                                    // DropDownText={
+                                    //     <span>
+                                    //         <span className=""></span>
+                                    //         Month
+                                    //     </span>
+                                    // }
                                 />
                                 <hr />
                                 {/* <div className="mb-3"><SVGOverlayExample/></div> */}

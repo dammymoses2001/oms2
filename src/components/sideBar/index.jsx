@@ -44,7 +44,7 @@ export const SideBar = () => {
         companyLogo = "logo" in data.company ? data.company.logo : null;
     }
 
-    console.log(data,'data')
+    //console.log(data,'data')
 
     return (
         <Style>
@@ -207,6 +207,15 @@ export const SideBar = () => {
                                     to={"/Visit-Targets"}
                                 >
                                     <h6>Visit targets </h6>
+                                </Link>
+                            </div>
+
+                            <div className="text-start ps-4 ps-lg-5 mb-4">
+                                <Link
+                                    className="text-black text-muted "
+                                    to={"/lead"}
+                                >
+                                    <h6>Leads </h6>
                                 </Link>
                             </div>
                         </>

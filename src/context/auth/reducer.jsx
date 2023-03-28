@@ -75,6 +75,8 @@ export const GET_ORDER_INVOICE_SUCCESS = "GET_ORDER_INVOICE_SUCCESS";
 export const ACCEPT_ORDER__SUCCESS = "ACCEPT_ORDER__SUCCESS";
 export const GET_ORDER_INVOICE = "GET_ORDER_INVOICE";
 export const DEFAULT_FAIL = "DEFAULT_FAIL";
+export const GET_ALL_LEADS = "GET_ALL_LEADS";
+export const GET_COMPANY_CHART = "GET_COMPANY_CHART";
 
 const handleSort = (orders = []) => {
     //  console.log(orders, "order");
@@ -195,7 +197,7 @@ export const authReducer = (state, action) => {
 
                 error: action.payload,
                 isLoading: false,
-                isLoggedIn: false
+                // isLoggedIn: false
             };
 
         case LOGOUT_FAIL:
@@ -213,6 +215,14 @@ export const authReducer = (state, action) => {
             return {
                 ...state,
                 user: action.payload,
+                // message: action.payload,
+                isLoading: false,
+                isLoggedIn: false
+            };
+        case GET_ALL_LEADS:
+            return {
+                ...state,
+                leads: action.payload,
                 // message: action.payload,
                 isLoading: false,
                 isLoggedIn: false
@@ -460,6 +470,13 @@ export const authReducer = (state, action) => {
             return {
                 ...state,
                 allCustomer: action.payload,
+                error: action.payload,
+                isLoading: false
+            };
+        case GET_COMPANY_CHART:
+            return {
+                ...state,
+                companyChart: action.payload,
                 error: action.payload,
                 isLoading: false
             };

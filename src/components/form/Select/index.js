@@ -26,7 +26,7 @@ export const SelectComp = ({
                 {...props}
             >
                 <option className="text-4">{selectOption}</option>
-                {options.map((item, index) => (
+                {options?.map((item, index) => (
                     <option value={input ? item[input] : item} key={index}>
                         {input ? item[input] : item}
                     </option>

@@ -13,51 +13,22 @@ import {
 } from "recharts";
 
 const data = [
-    {
-        name: "Jan",
-        Totalviews: 4000,
-        Productsold: 2400,
-        amt: 2400
-    },
-    {
-        name: "Feb",
-        Totalviews: 3000,
-        Productsold: 1398,
-        amt: 2210
-    },
-    {
-        name: "March",
-        Totalviews: 2000,
-        Productsold: 9800,
-        amt: 2290
-    },
-    {
-        name: "April",
-        Totalviews: 2780,
-        Productsold: 3908,
-        amt: 2000
-    },
-    {
-        name: "May",
-        Totalviews: 1890,
-        Productsold: 4800,
-        amt: 2181
-    },
-    {
-        name: "June",
-        Totalviews: 2390,
-        Productsold: 3800,
-        amt: 2500
-    },
-    {
-        name: "July",
-        Totalviews: 3490,
-        Productsold: 4300,
-        amt: 2100
-    }
+    { month: "Jan", totalAmount: 0, count: 0 },
+    { month: "feb", totalAmount: 0, count: 0 },
+    { month: "March", totalAmount: 0, count: 0 },
+    { month: "Apr", totalAmount: 0, count: 0 },
+    { month: "May", totalAmount: 0, count: 0 },
+    { month: "Jun", totalAmount: 0, count: 0 },
+    { month: "Jul", totalAmount: 0, count: 0 },
+    { month: "Aug", totalAmount: 0, count: 0 },
+    { month: "Sep", totalAmount: 0, count: 0 },
+    { month: "Oct", totalAmount: 0, count: 0 },
+    { month: "Nov", totalAmount: 3000, count: 0 },
+    { month: "Dec", totalAmount: 9000, count: 0 },
+  
 ];
 
-export const  SimpleLineChart = ()=>{
+export const  SimpleLineChart = ({newData=[]})=>{
 
     return (
         <div style={{ width: "100%" }}>
@@ -69,22 +40,22 @@ export const  SimpleLineChart = ()=>{
                 <AreaChart
                     width={500}
                     height={500}
-                    data={data}
+                    data={newData}
                     syncId="anyId"
                     margin={{
                         top: 10,
                         right: 30,
-                        left: 0,
+                        left: 50,
                         bottom: 0
                     }}
                 >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
+                    <CartesianGrid strokeDasharray="1 1" />
+                    <XAxis dataKey="month" />
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Area type="monotone" dataKey="Totalviews" stroke="#82ca9d" strokeDasharray="3 4 5 2" fill="#8884d8" />
-                    <Area type="monotone" dataKey="Productsold" stroke="#8884d8" strokeDasharray="5 5"  fill="#82ca9d" />
+                    <Area type="monotone" dataKey="totalAmount" stroke="#82ca9d" strokeDasharray="3 4 5 2" fill="#8884d8" />
+                    <Area type="monotone" dataKey="count" stroke="#8884d8" strokeDasharray="5 5"  fill="#82ca9d" />
                 </AreaChart>
             </ResponsiveContainer>
 

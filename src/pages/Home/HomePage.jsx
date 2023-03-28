@@ -73,7 +73,9 @@ const HomePage = () => {
         GetAllMetricsOrders,
         GetAllLeadsCompany,
         GetAllTopCustomers,
-        GetAllTopArea
+        GetAllTopArea,
+        GetCompanyChart,
+        getCompanyChartFuc:{companyChart,isLoading:chartLoader}
         // state: { data,dashboardMertics,MapMertics },
     } = useAuth();
     const [show, setShow] = useState(false);
@@ -157,7 +159,10 @@ const HomePage = () => {
 
     useEffect(() => {
         GetAllLeadsCompany();
-    }, []);
+    }, [GetAllLeadsCompany]);
+    useEffect(() => {
+        GetCompanyChart();
+    }, [GetCompanyChart]);
 
     console.log(GetAllLeadsCompany);
 
@@ -169,7 +174,7 @@ const HomePage = () => {
         GetAllTopArea();
     }, [GetAllTopArea]);
 
-    console.log(state?.allTopArea?.areas, "topcustomers");
+    console.log(companyChart, "getCompanyChartFuc");
 
     //   {GetAllTopCustomers.map()}
 
@@ -447,7 +452,7 @@ const HomePage = () => {
                     </div>
                     {/*  */}
                     <div>
-                        <Chart />
+                        <Chart data={companyChart}/>
                     </div>
                     <div>
                         <MapandTopAreas topArea={state?.allTopArea?.areas} />

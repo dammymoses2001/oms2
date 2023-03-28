@@ -13,28 +13,21 @@ import { FormInputValue, LeadsColumns } from "./Data";
 import useFormValidator from "use-form-input-validator";
 import { Select } from "../../../components/form/Input/Select";
 
-export default function VisitTargets() {
+export default function Leads() {
     const {
         GetLeads,
         AddLead,
         getLeadsFuc: { leads,isLoading:leadLoader},
-        state:{check,isLoading},
-        GetVisitation,
-        getVisitationFuc
+        state:{check,isLoading}
         
     } = useAuth();
     const [modal, setModal] = useState(false);
     const [searchField,setSearchField]=useState('')
-    console.log(getVisitationFuc, "getVisitationFuc");
-
-    useEffect(() => {
-      GetVisitation();
-    }, [GetVisitation]);
+    console.log(leads, "GetLeads");
 
     useEffect(() => {
         GetLeads();
     }, [GetLeads]);
-
     useEffect(() => {
       if(check){
         setModal(false)
@@ -80,13 +73,13 @@ export default function VisitTargets() {
             <section className="mt-3">
                 <section className="row justify-content-between align-items-center mb-3">
                     <div className="col-lg-4">
-                        <h5 className="color-1 ">Visit Targets </h5>
+                        <h5 className="color-1 ">Leads </h5>
                     </div>
                     <div className="col-lg-4">
                         <input
                         onChange={(e)=>setSearchField(e?.target?.value)}
                             className="w-100 border border-1 p-2 rounded"
-                            placeholder="search visit"
+                            placeholder="Search Leads"
                         />
                     </div>
                 </section>

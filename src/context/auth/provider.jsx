@@ -57,7 +57,9 @@ import {
     GET_ALL_CUSTOMER_SUCCESS,
     GET_VISITATIONSCHEDULES_SUCCESS,
     GET_VISITATIONSCHEDULES_FAIL,
-    GET_ALL_TOP_AREAS
+    GET_ALL_TOP_AREAS,
+    GET_ALL_LEADS,
+    GET_COMPANY_CHART
     // GET_PACKAGES_FAIL,
     // GET_PACKAGES_SUCCESS,
     // GET_CART_SUCCESS,
@@ -103,7 +105,11 @@ import {
     getAllMetricsOrders,
     getAllLeadsCompany,
     getAllTopCustomers,
-    getAllTopArea
+    getAllTopArea,
+    getLeads,
+    addLead,
+    getCompanyChart,
+    getVisitation
     
     // getPackages,
     // subscription,
@@ -180,6 +186,25 @@ export const AuthProvider = withRouter(({ children, navigate }) => {
         isLoading: true,
         product: []
     });
+
+
+    const [getLeadsFuc, setLeadsDispatch] = useReducer(authReducer, {
+        error: null,
+        isLoading: true,
+        leads: []
+    });
+    const [getCompanyChartFuc, getCompanyChartDispatch] = useReducer(authReducer, {
+        error: null,
+        isLoading: true,
+        companyChart: []
+    });
+    const [getVisitationFuc, getVisitationDispatch] = useReducer(authReducer, {
+        error: null,
+        isLoading: true,
+        visitation: []
+    });
+
+
 
 
 
@@ -1136,6 +1161,130 @@ export const AuthProvider = withRouter(({ children, navigate }) => {
         [navigate]
     );
 
+    const GetLeads = useCallback(
+        async () => {
+            // console.log(id,"igettheid");
+
+            try {
+                setLeadsDispatch({ type: AUTH_START });
+                const data = await getLeads();
+                console.log(data,'GetLeads');
+                setLeadsDispatch({
+                    payload: data?.data,
+                    type: GET_ALL_LEADS
+                });
+                //toast.success("Login successful");
+                // navigate("/");
+            } catch (error) {
+                navigate("/");
+                const errorMessage =
+                    error?.response?.data?.message || error.message;
+                    setLeadsDispatch({
+                    payload: errorMessage,
+                    type: DEFAULT_FAIL
+                });
+
+                //toast.error("Page not found");
+            }
+        },
+        [navigate]
+    );
+    const GetCompanyChart = useCallback(
+        async () => {
+            // console.log(id,"igettheid");
+
+            try {
+                getCompanyChartDispatch({ type: AUTH_START });
+                const data = await getCompanyChart();
+                console.log(data,'GetCompanyChart');
+                getCompanyChartDispatch({
+                    payload: data?.data,
+                    type: GET_COMPANY_CHART
+                });
+                //toast.success("Login successful");
+                // navigate("/");
+            } catch (error) {
+                navigate("/");
+                const errorMessage =
+                    error?.response?.data?.message || error.message;
+                    getCompanyChartDispatch({
+                    payload: errorMessage,
+                    type: DEFAULT_FAIL
+                });
+
+                //toast.error("Page not found");
+            }
+        },
+        [navigate]
+    );
+
+    const AddLead = async (token) => {
+        try {
+            dispatch({ type: AUTH_START });
+            const data = await addLead(token);
+            // console.log(data,"VerifyAccountFunc");
+            // setAuthToken(data.token);
+            dispatch({
+                payload: true,
+                type: DEFAULT_FAIL
+            });
+            toast.success("Lead added successful....");
+            GetLeads()
+            setTimeout(() => {
+                dispatch({
+                    payload: false,
+                    type: DEFAULT_FAIL
+                });
+            }, 1000);
+
+            // if(data?.data?.user?.isVerified === false) return navigate("/verify-account");
+            // if(data?.data?.user?.hasSubscribed  === false)return navigate("/choose-account");
+            //data?.user?.hasSubscribed ?navigate("/"):navigate("/choose-account");
+
+            // if(data?.user?.hasSubscribed){
+            //     navigate("/");
+            // }
+        } catch (error) {
+            const errorMessage =
+                error?.response?.data?.message || error.message;
+            dispatch({
+                payload: errorMessage,
+                type: LOGIN_FAIL
+            });
+            toast.error(errorMessage);
+        }
+    };
+
+    const GetVisitation = useCallback(
+        async () => {
+            // console.log(id,"igettheid");
+
+            try {
+                setLeadsDispatch({ type: AUTH_START });
+                const data = await getVisitation();
+                console.log(data,'GetLeads');
+                setLeadsDispatch({
+                    payload: data?.data,
+                    type: GET_ALL_LEADS
+                });
+                //toast.success("Login successful");
+                // navigate("/");
+            } catch (error) {
+                navigate("/");
+                const errorMessage =
+                    error?.response?.data?.message || error.message;
+                    setLeadsDispatch({
+                    payload: errorMessage,
+                    type: DEFAULT_FAIL
+                });
+
+                //toast.error("Page not found");
+            }
+        },
+        [navigate]
+    );
+
+
     useEffect(() => {
         const loadApp = async () => {
             setLoadingApp(true);
@@ -1222,7 +1371,14 @@ export const AuthProvider = withRouter(({ children, navigate }) => {
                 GetAllMetricsOrders,
                 GetAllLeadsCompany,
                 GetAllTopCustomers,
-                GetAllTopArea
+                GetAllTopArea,
+                GetLeads,
+                getLeadsFuc,
+                AddLead,
+                GetCompanyChart,
+                getCompanyChartFuc,
+                GetVisitation,
+                getVisitationFuc
             }}
         >
             {children}

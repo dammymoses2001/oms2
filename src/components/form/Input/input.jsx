@@ -38,7 +38,7 @@ export const Input2 = ({
             <input
                 name={name}
                 type={type}
-                placeholder={placeholder}
+                placeholder={placeholder||`Enter ${label||''}`}
                 disabled={isdisabled || isLoading}
                 id={name}
                 value={value}

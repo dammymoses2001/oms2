@@ -4,6 +4,7 @@
 import Card from "@material-ui/core/Card";
 import SortIcon from "@material-ui/icons/ArrowDownward";
 import React from "react";
+import { Spinner } from "react-bootstrap";
 import DataTable from "react-data-table-component";
 
 import styled from "styled-components";
@@ -45,7 +46,8 @@ export const TableCompData = ({
     pagination,
     columns,
     rowPadding,
-    marginBottom
+    marginBottom,
+    loader=false
 }) => {
     return (
         <Style RowPadding={rowPadding} marginBottom={marginBottom}>
@@ -58,7 +60,11 @@ export const TableCompData = ({
                     // defaultSortFieldId={1}
                     sortIcon={<SortIcon />}
                     pagination={pagination ? true : false}
-
+                    noHeader={false}
+                    progressPending={loader}
+                    progressComponent={   <Spinner className="my-5" animation="border" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                  </Spinner>}
                     // paginationRowsPerPageOptions={[5,10,15]}
 
                     // selectableRows

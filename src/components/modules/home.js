@@ -5,7 +5,7 @@ import {
 } from "react-icons/hi";
 import { RiUserAddLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
-import { formatMoney } from "../../utils";
+import { formatMoney, getYear, Months } from "../../utils";
 import {
     HeaderOrder,
     SortOrder,
@@ -147,7 +147,10 @@ export const DashboardDataComp = ({ DashboardData }) => {
     );
 };
 
-export const Chart = () => {
+export const Chart = ({data}) => {
+    const newArray=[];
+    data?.map((item)=>newArray.push({month:Months[item?.month-1],totalAmount:item?.orders?.totalAmount,count:item?.orders?.count}));
+   console.log(getYear(),data,'getYear')
     return (
         <div className="mb-4">
             <CardComp
@@ -165,7 +168,7 @@ export const Chart = () => {
                             />
                         </div>
                         <div>
-                            <SimpleLineChart />
+                            <SimpleLineChart newData={newArray} />
                         </div>
                     </div>
                 }

@@ -444,3 +444,47 @@ export const getVisitationSchedules = async (value) => {
         throw new Error(err);
     }
 };
+export const getLeads = async (value) => {
+    try {
+        const res = await request.get(
+            `/leads/company`
+        );
+        return res?.data;
+    } catch (error) {
+        const err = error?.response?.data?.message || error?.message;
+        throw new Error(err);
+    }
+};
+export const addLead = async (values) => {
+    try {
+        const res = await request.post(
+            `/leads/create`,values
+        );
+        return res?.data;
+    } catch (error) {
+        const err = error?.response?.data?.message || error?.message;
+        throw new Error(err);
+    }
+};
+export const getCompanyChart = async () => {
+    try {
+        const res = await request.get(
+            `/metrics/charts?year=2022`
+        );
+        return res?.data;
+    } catch (error) {
+        const err = error?.response?.data?.message || error?.message;
+        throw new Error(err);
+    }
+};
+export const getVisitation = async () => {
+    try {
+        const res = await request.get(
+            `/visitation?startDate=1640991600&endDate=1679958000`
+        );
+        return res?.data;
+    } catch (error) {
+        const err = error?.response?.data?.message || error?.message;
+        throw new Error(err);
+    }
+};

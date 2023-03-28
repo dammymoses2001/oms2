@@ -21,11 +21,12 @@ import {
     ConfirmNewPassword,
     AdminConsole,
     ScheduleReports,
-    VisitTargets,
     Terms
     
 } from "../pages";
+import Leads from "../pages/Schedule/Leads";
 import IndividualActivityReport from "../pages/Schedule/ScheduleReports/IndividualActivityReport";
+import VisitTargets from "../pages/Schedule/VisitTargets/VisitTargets";
 
 export const routeList = [
     {
@@ -240,6 +241,13 @@ export const routeList = [
                 exact: true,
                 name: "ScheduleReports",
                 path: "/reports",
+                protected: true
+            },
+            {
+                component: Leads,
+                exact: true,
+                name: "Leads",
+                path: "/lead",
                 protected: true
             }
         ],

@@ -466,10 +466,10 @@ export const addLead = async (values) => {
         throw new Error(err);
     }
 };
-export const getCompanyChart = async () => {
+export const getCompanyChart = async (year) => {
     try {
         const res = await request.get(
-            `/metrics/charts?year=2022`
+            `/metrics/charts?year=${year}`
         );
         return res?.data;
     } catch (error) {
@@ -477,10 +477,10 @@ export const getCompanyChart = async () => {
         throw new Error(err);
     }
 };
-export const getVisitation = async () => {
+export const getVisitation = async (startDate,endDate) => {
     try {
         const res = await request.get(
-            `/visitation?startDate=1640991600&endDate=1679958000`
+            `/visitation?startDate=${startDate}&endDate=${endDate}`
         );
         return res?.data;
     } catch (error) {

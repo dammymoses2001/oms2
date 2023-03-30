@@ -59,7 +59,8 @@ import {
     GET_VISITATIONSCHEDULES_FAIL,
     GET_ALL_TOP_AREAS,
     GET_ALL_LEADS,
-    GET_COMPANY_CHART
+    GET_COMPANY_CHART,
+    GET_ALL_VISITATION
     // GET_PACKAGES_FAIL,
     // GET_PACKAGES_SUCCESS,
     // GET_CART_SUCCESS,
@@ -201,7 +202,7 @@ export const AuthProvider = withRouter(({ children, navigate }) => {
     const [getVisitationFuc, getVisitationDispatch] = useReducer(authReducer, {
         error: null,
         isLoading: true,
-        visitation: []
+        allVisitation: []
     });
 
 
@@ -1190,13 +1191,13 @@ export const AuthProvider = withRouter(({ children, navigate }) => {
         [navigate]
     );
     const GetCompanyChart = useCallback(
-        async () => {
+        async (year) => {
             // console.log(id,"igettheid");
 
             try {
                 getCompanyChartDispatch({ type: AUTH_START });
-                const data = await getCompanyChart();
-                console.log(data,'GetCompanyChart');
+                const data = await getCompanyChart(year);
+                //console.log(data,'GetCompanyChart');
                 getCompanyChartDispatch({
                     payload: data?.data,
                     type: GET_COMPANY_CHART
@@ -1256,24 +1257,24 @@ export const AuthProvider = withRouter(({ children, navigate }) => {
     };
 
     const GetVisitation = useCallback(
-        async () => {
+        async (startDate,endDate) => {
             // console.log(id,"igettheid");
 
             try {
-                setLeadsDispatch({ type: AUTH_START });
-                const data = await getVisitation();
+                getVisitationDispatch({ type: AUTH_START });
+                const data = await getVisitation(startDate,endDate);
                 console.log(data,'GetLeads');
-                setLeadsDispatch({
+                getVisitationDispatch({
                     payload: data?.data,
-                    type: GET_ALL_LEADS
+                    type: GET_ALL_VISITATION
                 });
                 //toast.success("Login successful");
                 // navigate("/");
             } catch (error) {
-                navigate("/");
+                //navigate("/");
                 const errorMessage =
                     error?.response?.data?.message || error.message;
-                    setLeadsDispatch({
+                    getVisitationDispatch({
                     payload: errorMessage,
                     type: DEFAULT_FAIL
                 });
@@ -1281,7 +1282,7 @@ export const AuthProvider = withRouter(({ children, navigate }) => {
                 //toast.error("Page not found");
             }
         },
-        [navigate]
+        []
     );
 
 

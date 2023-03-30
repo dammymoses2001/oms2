@@ -1,3 +1,4 @@
+import { Dropdown } from "react-bootstrap";
 import { FiCircle } from "react-icons/fi";
 import {
     HiOutlineArrowNarrowDown,
@@ -147,10 +148,18 @@ export const DashboardDataComp = ({ DashboardData }) => {
     );
 };
 
-export const Chart = ({data}) => {
+export const Chart = ({data,getYearFun,setyearFun}) => {
     const newArray=[];
     data?.map((item)=>newArray.push({month:Months[item?.month-1],totalAmount:item?.orders?.totalAmount,count:item?.orders?.count}));
-   console.log(getYear(),data,'getYear')
+    function getYearsArray() {
+        const currentYear = new Date().getFullYear();
+        const yearsArray = [];
+        for (let year = 2022; year <= currentYear; year++) {
+          yearsArray.push(year);
+        }
+        return yearsArray;
+      }
+    console.log(getYearsArray(),'getYears')
     return (
         <div className="mb-4">
             <CardComp
@@ -159,11 +168,20 @@ export const Chart = ({data}) => {
                         <div className="mb-5">
                             <TopNav
                                 TextComp={"Statistics"}
-                                DropDownText={
-                                    <span>
-                                        <span className=""></span>
-                                        Month
-                                    </span>
+                                RightComp={
+                                    <Dropdown>
+                                    <Dropdown.Toggle variant="" id="dropdown-basic">
+                                      {getYearFun}
+                                    </Dropdown.Toggle>
+                              
+                                    <Dropdown.Menu>
+                                        {getYearsArray()?.map((item)=>
+                                         <Dropdown.Item onClick={()=>setyearFun(item)}>{item}</Dropdown.Item>
+
+                                        )}
+                                     
+                                    </Dropdown.Menu>
+                                  </Dropdown>
                                 }
                             />
                         </div>

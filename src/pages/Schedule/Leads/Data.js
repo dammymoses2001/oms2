@@ -1,14 +1,14 @@
 import moment from "moment";
 import { Dropdown } from "react-bootstrap";
 
-export const LeadsColumns = [
+export const LeadsColumns =(data=[])=>{ return [
     // {
     //     name: "#",
     //     selector: (row) => console.log(row.length, "row")
     // },
     {
         name: "Lead Id",
-        selector: (row, index) => <span>{row?.id}</span>,
+        selector: (row, index) => <span>{(data?.findIndex((item)=>item?.id === row?.id)+1)}</span>,
         // width: "80px"
     },
     {
@@ -64,7 +64,7 @@ export const LeadsColumns = [
             </Dropdown>
         )
     }
-];
+]}
 
 export const FormInputValue = [
     {

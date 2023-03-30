@@ -107,6 +107,8 @@ const HomePage = () => {
     const [yesterdayMetrics, setYesterdayMetrics] = useState([0, 0, 0]);
     const [weekMetrics, setWeekMetrics] = useState([0, 0, 0]);
     const [monthMetrics, setMonthMetrics] = useState([0, 0, 0]);
+    //
+    const [getYearFun,setyearFun] =useState('2023')
 
     useEffect(() => {
         const dSumData_clone = dSumData.map((i) => ({ ...i }));
@@ -161,8 +163,11 @@ const HomePage = () => {
         GetAllLeadsCompany();
     }, [GetAllLeadsCompany]);
     useEffect(() => {
-        GetCompanyChart();
-    }, [GetCompanyChart]);
+        if(getYearFun){
+            GetCompanyChart(getYearFun);
+        }
+        
+    }, [GetCompanyChart,getYearFun]);
 
     console.log(GetAllLeadsCompany);
 
@@ -452,7 +457,7 @@ const HomePage = () => {
                     </div>
                     {/*  */}
                     <div>
-                        <Chart data={companyChart}/>
+                        <Chart getYearFun={getYearFun} setyearFun={setyearFun} data={companyChart}/>
                     </div>
                     <div>
                         <MapandTopAreas topArea={state?.allTopArea?.areas} />

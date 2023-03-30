@@ -17,21 +17,20 @@ export default function Leads() {
     const {
         GetLeads,
         AddLead,
-        getLeadsFuc: { leads,isLoading:leadLoader},
-        state:{check,isLoading}
-        
+        getLeadsFuc: { leads, isLoading: leadLoader },
+        state: { check, isLoading }
     } = useAuth();
     const [modal, setModal] = useState(false);
-    const [searchField,setSearchField]=useState('')
+    const [searchField, setSearchField] = useState("");
     console.log(leads, "GetLeads");
 
     useEffect(() => {
         GetLeads();
     }, [GetLeads]);
     useEffect(() => {
-      if(check){
-        setModal(false)
-      }
+        if (check) {
+            setModal(false);
+        }
     }, [check]);
 
     const { values, errors, updateField, isAllFieldsValid } = useFormValidator({
@@ -57,8 +56,6 @@ export default function Leads() {
     //     contactedAt: { checks: "required|date", value: "" }
     // });
 
-
-
     const handleSubmitLead = (e) => {
         e.preventDefault();
         if (isAllFieldsValid()) {
@@ -67,7 +64,6 @@ export default function Leads() {
         console.log(errors);
     };
 
-  
     return (
         <AppLayout>
             <section className="mt-3">
@@ -77,7 +73,7 @@ export default function Leads() {
                     </div>
                     <div className="col-lg-4">
                         <input
-                        onChange={(e)=>setSearchField(e?.target?.value)}
+                            onChange={(e) => setSearchField(e?.target?.value)}
                             className="w-100 border border-1 p-2 rounded"
                             placeholder="Search Leads"
                         />
@@ -93,7 +89,16 @@ export default function Leads() {
                 </div>
                 {/*  */}
                 <section>
-                    <TableCompData loader={leadLoader} columns={LeadsColumns}  data={leads?.filter(robot => robot.name.toLowerCase().match(searchField?.toLowerCase()))}/>
+                    <TableCompData
+                        loader={leadLoader}
+                        columns={LeadsColumns(leads)}
+                        data={leads?.filter((robot) =>
+                            robot.name
+                                .toLowerCase()
+                                .match(searchField?.toLowerCase())
+                        )}
+                        pagination
+                    />
                 </section>
             </section>
             <ModalComp
@@ -114,8 +119,11 @@ export default function Leads() {
                                             onChange={updateField}
                                             isDisabled={false}
                                             label={item?.label}
-                                            options={["In Progress", "New","Open"]}
-                                            
+                                            options={[
+                                                "In Progress",
+                                                "New",
+                                                "Open"
+                                            ]}
                                         />
                                     </div>
                                 ) : (
@@ -137,7 +145,9 @@ export default function Leads() {
                             )}
 
                             <div className="mt-5 col-12 text-end">
-                                <button>{isLoading?'Loading...':'Add Leads'}</button>
+                                <button>
+                                    {isLoading ? "Loading..." : "Add Leads"}
+                                </button>
                             </div>
                         </div>
                     </form>

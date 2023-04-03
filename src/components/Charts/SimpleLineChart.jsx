@@ -11,6 +11,7 @@ import {
     XAxis,
     YAxis
 } from "recharts";
+import { formatNumber } from "../../utils";
 
 const data = [
     { month: "Jan", totalAmount: 0, count: 0 },
@@ -51,11 +52,11 @@ export const  SimpleLineChart = ({newData=[]})=>{
                 >
                     <CartesianGrid strokeDasharray="1 1" />
                     <XAxis dataKey="month" />
-                    <YAxis />
+                    <YAxis  tickFormatter={(data)=>formatNumber(data)}/>
                     <Tooltip />
                     <Legend />
-                    <Area type="monotone" dataKey="totalAmount" stroke="#82ca9d" strokeDasharray="3 4 5 2" fill="#8884d8" />
-                    <Area type="monotone" dataKey="count" stroke="#8884d8" strokeDasharray="5 5"  fill="#82ca9d" />
+                    <Area type="monotone" dataKey="totalAmount" stroke="#8884d8" strokeDasharray="3 4 5 2" fill="#8884d8" />
+                    <Area type="monotone" dataKey="count" stroke="#82ca9d" strokeDasharray="5 5"  fill="#82ca9d" />
                 </AreaChart>
             </ResponsiveContainer>
 

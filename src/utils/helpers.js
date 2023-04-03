@@ -26,3 +26,20 @@ for (let year = 2022; year <= currentYear; year++) {
 
 return years;
 }
+
+
+export function formatNumber(num) {
+    const suffixes = {
+      1000: 'k',
+      1000000: 'm'
+    };
+  
+    for (const [suffix, suffixStr] of Object.entries(suffixes)) {
+      if (Math.abs(num) >= suffix) {
+        const formattedNum = num / suffix;
+        return `${formattedNum.toFixed(1)}${suffixStr}`;
+      }
+    }
+  
+    return num.toString();
+  }

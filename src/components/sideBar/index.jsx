@@ -192,14 +192,14 @@ export const SideBar = () => {
                     </div>
                     {schedule && (
                         <>
-                            <div className="text-start ps-4 ps-lg-5 mb-4">
+                            {/* <div className="text-start ps-4 ps-lg-5 mb-4">
                                 <Link
                                     className="text-black text-muted "
                                     to={"/reports"}
                                 >
                                     <h6>Schedule Report </h6>
                                 </Link>
-                            </div>
+                            </div> */}
 
                             <div className="text-start ps-4 ps-lg-5 mb-4">
                                 <Link

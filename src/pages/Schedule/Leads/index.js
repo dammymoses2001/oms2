@@ -79,14 +79,14 @@ export default function Leads() {
                         />
                     </div>
                 </section>
-                <div className="text-end">
+                {/* <div className="text-end">
                     <button
                         onClick={() => setModal(true)}
                         className="btn me-2 bg bg-1 h6"
                     >
                         Add Leads
                     </button>
-                </div>
+                </div> */}
                 {/*  */}
                 <section>
                     <TableCompData

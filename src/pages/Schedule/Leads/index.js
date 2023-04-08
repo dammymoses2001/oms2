@@ -12,17 +12,23 @@ import { useAuth } from "../../../hooks";
 import { FormInputValue, LeadsColumns } from "./Data";
 import useFormValidator from "use-form-input-validator";
 import { Select } from "../../../components/form/Input/Select";
-
+import { v4 as uuidv4 } from 'uuid';
+import { convertDate } from "../../../utils";
+import EditLeads from "./modules/EditLeads";
 export default function Leads() {
     const {
         GetLeads,
         AddLead,
         getLeadsFuc: { leads, isLoading: leadLoader },
+        state:{isLoading:deleteLoader},
+        DeleteLead,
         state: { check, isLoading }
     } = useAuth();
+    const [userData,setUserData] =useState([]);
     const [modal, setModal] = useState(false);
+    const [pageName,setPageName] =useState("Delete Leads")
     const [searchField, setSearchField] = useState("");
-    console.log(leads, "GetLeads");
+    // console.log(leads, "GetLeads");
 
     useEffect(() => {
         GetLeads();
@@ -33,7 +39,7 @@ export default function Leads() {
         }
     }, [check]);
 
-    const { values, errors, updateField, isAllFieldsValid } = useFormValidator({
+    const { values, errors, updateField, isAllFieldsValid} = useFormValidator({
         name: { checks: "required", value: "" },
         email: { checks: "required|email", value: "" },
         address: { checks: "required|min:6", value: "" },
@@ -42,8 +48,13 @@ export default function Leads() {
         companyName: { checks: "required|min:3", value: "" },
         status: { checks: "required", value: "" },
         inputReason: { checks: "required|min:6", value: "" },
-        contactedAt: { checks: "required|date", value: "" }
-    });
+        contactedAt: { checks: "required|date", value: "" },
+     
+        
+    },);
+
+   
+    
     // const { values, errors, updateField, isAllFieldsValid } = useFormValidator({
     //     name: { checks: "required", value: "Bola" },
     //     email: { checks: "required|email", value: "sam@gmail.com" },
@@ -57,12 +68,82 @@ export default function Leads() {
     // });
 
     const handleSubmitLead = (e) => {
+        console.log(e,userData);
         e.preventDefault();
-        if (isAllFieldsValid()) {
-            AddLead(values);
-        }
-        console.log(errors);
+        
+        // if (isAllFieldsValid()) {
+            AddLead(userData);
+        // }
+     
     };
+
+    const UpdateField = (row) => {
+        setUserData(row)
+    }
+
+    const tableDropDowns =[
+        {
+            name:'Change leads Status',
+            action:(row)=>{
+                setModal(true);
+                UpdateField(row)
+                setPageName('Edit Lead Detail')
+            }
+        },
+        {
+            name:'Delete Leads',
+            action:(row)=>{
+                setModal(true);
+                UpdateField(row)
+                setPageName('Delete Leads')
+            }
+        }
+    ]
+
+    const handleOnchange = (e) =>{
+        const {value,name} =e.target;
+        setUserData({...userData,[name]:value})
+    }
+   
+
+    const newLead = leads?.map((item, index) => {
+        return { ...item, ids:leads?.length-index};
+      });
+
+      const modalPage =[
+        {
+            name:'Edit Lead Detail',
+            component:<EditLeads 
+            FormInputValue={FormInputValue}
+            errors={errors}
+            handleOnchange={handleOnchange}
+            handleSubmitLead={handleSubmitLead}
+            userData={userData}
+            isLoading={isLoading}
+            />
+        },
+        {
+            name:'Delete Leads',
+            component:<div className="text-center">
+                    <h3 className="text-center">Delete Lead</h3>
+                    <div>Are you sure you want to delete "{userData?.name}" lead?</div>
+                    <div className="mt-4 d-flex gap-4 justify-content-center">
+                    <button
+                        onClick={() => DeleteLead(userData)}
+                        className="btn me-2 bg bg-danger text-white h6"
+                    >
+                       {deleteLoader?"loading":"Delete"} 
+                    </button>
+                    <button
+                        onClick={() => setModal(false)}
+                        className="btn me-2 bg bg-1 h6"
+                    >
+                        Cancel
+                    </button>
+                    </div>
+            </div>
+        }
+      ]
 
     return (
         <AppLayout>
@@ -91,66 +172,24 @@ export default function Leads() {
                 <section>
                     <TableCompData
                         loader={leadLoader}
-                        columns={LeadsColumns(leads)}
-                        data={leads?.filter((robot) =>
+                        columns={LeadsColumns(leads,tableDropDowns)}
+                        data={newLead?.filter((robot) =>
                             robot.name
                                 .toLowerCase()
                                 .match(searchField?.toLowerCase())
-                        )}
+                        ).reverse()}
                         pagination
+
                     />
                 </section>
             </section>
             <ModalComp
+            size={pageName==="Delete Leads"?"md":"lg"}
                 show={modal}
                 handleClose={setModal}
-                title={<h4>Add Leads</h4>}
+                title={pageName==="Delete Leads"?false:<h4>Update Leads</h4>}
                 bodyText={
-                    <form onSubmit={handleSubmitLead}>
-                        <div className="row gx-5 gy-3">
-                            {FormInputValue?.map((item, i) =>
-                                item?.type === "select" ? (
-                                    <div className="col-lg-6">
-                                        <SelectComp
-                                            labelclassname="h6 fw-medium"
-                                            name={item?.name}
-                                            value={values[item?.name]}
-                                            error={errors[item?.name]}
-                                            onChange={updateField}
-                                            isDisabled={false}
-                                            label={item?.label}
-                                            options={[
-                                                "In Progress",
-                                                "New",
-                                                "Open"
-                                            ]}
-                                        />
-                                    </div>
-                                ) : (
-                                    <div className="col-lg-6">
-                                        <Input.Input2
-                                            required
-                                            name={item?.name}
-                                            label={item?.label}
-                                            labelclassname="h6 fw-medium"
-                                            onChange={updateField}
-                                            inputclassname="py-2 border px-2 text-black  "
-                                            value={values[item?.name]}
-                                            error={errors[item?.name]}
-                                            isDisabled={false}
-                                            type={item?.type}
-                                        />
-                                    </div>
-                                )
-                            )}
-
-                            <div className="mt-5 col-12 text-end">
-                                <button>
-                                    {isLoading ? "Loading..." : "Add Leads"}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                    modalPage?.find((item)=>item?.name === pageName)?.component
                 }
             />
         </AppLayout>

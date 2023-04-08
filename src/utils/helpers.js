@@ -31,7 +31,8 @@ return years;
 export function formatNumber(num) {
     const suffixes = {
       1000: 'k',
-      1000000: 'm'
+      1000000: 'm',
+      1000000000: 'b',
     };
   
     for (const [suffix, suffixStr] of Object.entries(suffixes)) {
@@ -42,4 +43,16 @@ export function formatNumber(num) {
     }
   
     return num.toString();
+  }
+
+
+  export const convertDate = (dateString) =>{
+    // const dateString = '2023-04-02T00:00:00.000Z';
+    const date = new Date(dateString);
+
+const isoDateString = date.toISOString();
+const formattedDate = isoDateString.substr(0, 10);
+
+// alert(formattedDate);
+return formattedDate;
   }

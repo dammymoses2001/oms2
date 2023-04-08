@@ -150,7 +150,7 @@ export const DashboardDataComp = ({ DashboardData }) => {
 
 export const Chart = ({data,getYearFun,setyearFun}) => {
     const newArray=[];
-    data?.map((item)=>newArray.push({month:Months[item?.month-1],totalAmount:item?.orders?.totalAmount,count:item?.orders?.count}));
+    data?.map((item)=>newArray.push({month:Months[item?.month-1],totalAmount:item?.orders?.totalAmount,totalSalesCollection:item?.orders?.totalSalesCollection}));
     function getYearsArray() {
         const currentYear = new Date().getFullYear();
         const yearsArray = [];
@@ -159,7 +159,7 @@ export const Chart = ({data,getYearFun,setyearFun}) => {
         }
         return yearsArray;
       }
-    console.log(getYearsArray(),'getYears')
+    //console.log(getYearsArray(),'getYears')
     return (
         <div className="mb-4">
             <CardComp
@@ -167,7 +167,7 @@ export const Chart = ({data,getYearFun,setyearFun}) => {
                     <div>
                         <div className="mb-5">
                             <TopNav
-                                TextComp={"Statistics"}
+                                TextComp={<h4>User Chart Board</h4>}
                                 RightComp={
                                     <Dropdown>
                                     <Dropdown.Toggle variant="" id="dropdown-basic">

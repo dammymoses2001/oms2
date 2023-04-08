@@ -457,8 +457,19 @@ export const getLeads = async (value) => {
 };
 export const addLead = async (values) => {
     try {
-        const res = await request.post(
-            `/leads/create`,values
+        const res = await request.patch(
+            `/leads/update/${values?.id}`,values
+        );
+        return res?.data;
+    } catch (error) {
+        const err = error?.response?.data?.message || error?.message;
+        throw new Error(err);
+    }
+};
+export const deleteLead = async (values) => {
+    try {
+        const res = await request.get(
+            `/leads/delete/${values?.id}`
         );
         return res?.data;
     } catch (error) {

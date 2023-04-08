@@ -92,6 +92,11 @@ export default function VisitTargets() {
         }
     }
 
+    const newAllVisitation = allVisitation?.map((item, index) => {
+        return { ...item, ids:allVisitation?.length-index};
+      });
+
+
     return (
         <AppLayout>
             <section className="mt-3">
@@ -148,7 +153,7 @@ export default function VisitTargets() {
                     <CardComp bodyText={<TableCompData
                         loader={visitaionLoading}
                         columns={LeadsColumns(allVisitation)}
-                        data={allVisitation?.filter(robot => robot?.user?.firstName.toLowerCase().match(searchField?.toLowerCase())||robot?.user?.lastName.toLowerCase().match(searchField?.toLowerCase())||robot?.customer?.businessName.toLowerCase().match(searchField?.toLowerCase()))}
+                        data={newAllVisitation?.filter(robot => robot?.user?.firstName.toLowerCase().match(searchField?.toLowerCase())||robot?.user?.lastName.toLowerCase().match(searchField?.toLowerCase())||robot?.customer?.businessName.toLowerCase().match(searchField?.toLowerCase())).reverse()}
                         pagination
                     />}/>
                     

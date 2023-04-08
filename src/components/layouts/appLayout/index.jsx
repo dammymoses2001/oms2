@@ -55,6 +55,7 @@ const Style = styled.div`
     bottom: 0;
     width: 220px;
     overflow-y: scroll;
+    scrollbar-width: thin;
 }
 img{
     width:80%;

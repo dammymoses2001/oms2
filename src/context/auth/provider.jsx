@@ -110,7 +110,8 @@ import {
     getLeads,
     addLead,
     getCompanyChart,
-    getVisitation
+    getVisitation,
+    deleteLead
     
     // getPackages,
     // subscription,
@@ -1256,6 +1257,43 @@ export const AuthProvider = withRouter(({ children, navigate }) => {
         }
     };
 
+    const DeleteLead = async (value) => {
+        try {
+            dispatch({ type: AUTH_START });
+            const data = await deleteLead(value);
+            // console.log(data,"VerifyAccountFunc");
+            // setAuthToken(data.token);
+            dispatch({
+                payload: true,
+                type: DEFAULT_FAIL
+            });
+            toast.success("Lead Deleted successful....");
+            GetLeads()
+            setTimeout(() => {
+                dispatch({
+                    payload: false,
+                    type: DEFAULT_FAIL
+                });
+            }, 1000);
+
+            // if(data?.data?.user?.isVerified === false) return navigate("/verify-account");
+            // if(data?.data?.user?.hasSubscribed  === false)return navigate("/choose-account");
+            //data?.user?.hasSubscribed ?navigate("/"):navigate("/choose-account");
+
+            // if(data?.user?.hasSubscribed){
+            //     navigate("/");
+            // }
+        } catch (error) {
+            const errorMessage =
+                error?.response?.data?.message || error.message;
+            dispatch({
+                payload: errorMessage,
+                type: LOGIN_FAIL
+            });
+            toast.error(errorMessage);
+        }
+    };
+
     const GetVisitation = useCallback(
         async (startDate,endDate) => {
             // console.log(id,"igettheid");
@@ -1379,7 +1417,8 @@ export const AuthProvider = withRouter(({ children, navigate }) => {
                 GetCompanyChart,
                 getCompanyChartFuc,
                 GetVisitation,
-                getVisitationFuc
+                getVisitationFuc,
+                DeleteLead
             }}
         >
             {children}

@@ -30,9 +30,22 @@ const data = [
 ];
 
 export const  SimpleLineChart = ({newData=[]})=>{
-
+    const CustomLegend = (props) => {
+        const { payload } = props;
+        
+        return (
+          <ul className="d-flex gap-5 justify-content-center">
+            {payload.map((entry, index) => (
+              <li key={`item-${index}`}>
+                <span style={{ color: entry.color }}>{entry.value === 'totalAmount' ? 'Total Amount' : 'Total Sales Collected'}</span>
+              </li>
+            ))}
+          </ul>
+        );
+      };
     return (
-        <div style={{ width: "100%" }}>
+       newData?.length>1 ?
+        <div className={`${newData?.length>1&&'animate__animated animate__fadeInUp'}`} style={{ width: "100%" }}>
            
 
            
@@ -46,7 +59,7 @@ export const  SimpleLineChart = ({newData=[]})=>{
                     margin={{
                         top: 10,
                         right: 30,
-                        left: 50,
+                        left: 40,
                         bottom: 0
                     }}
                 >
@@ -54,14 +67,15 @@ export const  SimpleLineChart = ({newData=[]})=>{
                     <XAxis dataKey="month" />
                     <YAxis  tickFormatter={(data)=>formatNumber(data)}/>
                     <Tooltip />
-                    <Legend />
+                    <Legend content={<CustomLegend/>} />
                     <Area type="monotone" dataKey="totalAmount" stroke="#8884d8" strokeDasharray="3 4 5 2" fill="#8884d8" />
-                    <Area type="monotone" dataKey="count" stroke="#82ca9d" strokeDasharray="5 5"  fill="#82ca9d" />
+                    <Area type="monotone" dataKey="totalSalesCollection" stroke="#82ca9d" strokeDasharray="3 4 5 2"  fill="#82ca9d" />
                 </AreaChart>
             </ResponsiveContainer>
 
             
-        </div>
+        </div>:
+        <div style={{height:'40vh'}}></div>
     );
   
 };

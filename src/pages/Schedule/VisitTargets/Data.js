@@ -5,7 +5,7 @@ export const LeadsColumns = (data=[])=> {
    return [
         {
             name: "S/N",
-            selector: (row,i) => (data?.findIndex((item)=>item?.id === row?.id)+1),
+            selector: (row,i) => (row?.ids),
             width:'70px'
         },
         {

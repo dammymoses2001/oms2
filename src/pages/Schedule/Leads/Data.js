@@ -1,14 +1,14 @@
 import moment from "moment";
 import { Dropdown } from "react-bootstrap";
 
-export const LeadsColumns =(data=[])=>{ return [
+export const LeadsColumns =(data=[],tableDropDowns=[])=>{ return [
     // {
     //     name: "#",
     //     selector: (row) => console.log(row.length, "row")
     // },
     {
         name: "Lead Id",
-        selector: (row, index) => <span>{(data?.findIndex((item)=>item?.id === row?.id)+1)}</span>,
+        selector: (row, index) => <span>{row?.ids}</span>,
         // width: "80px"
     },
     {
@@ -51,15 +51,15 @@ export const LeadsColumns =(data=[])=>{ return [
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
-                    {/* <Dropdown.Item
-                        onClick={() => {
-                           
-                        }}
+                    {tableDropDowns?.map(({name,action})=>
+                    
+                    <Dropdown.Item
+                        onClick={()=>action(row)}
                     >
-                        Edit
-                    </Dropdown.Item> */}
+                        {name}
+                    </Dropdown.Item> )}
+                    
 
-                    {/* <Dropdown.Item href="#/action-3">Something else</Dropdown.Item> */}
                 </Dropdown.Menu>
             </Dropdown>
         )

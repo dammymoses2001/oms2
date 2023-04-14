@@ -150,7 +150,7 @@ export const DashboardDataComp = ({ DashboardData }) => {
 
 export const Chart = ({data,getYearFun,setyearFun}) => {
     const newArray=[];
-    data?.map((item)=>newArray.push({month:Months[item?.month-1],totalAmount:item?.orders?.totalAmount,totalSalesCollection:item?.orders?.totalSalesCollection}));
+    data?.map((item)=>newArray.push({month:Months[item?.month-1],totalSalesOrders:item?.orders?.totalAmount,totalSalesCollection:item?.orders?.totalSalesCollection}));
     function getYearsArray() {
         const currentYear = new Date().getFullYear();
         const yearsArray = [];

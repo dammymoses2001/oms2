@@ -1,7 +1,7 @@
 import moment from "moment";
 import { Dropdown } from "react-bootstrap";
 
-export const LeadsColumns = (data=[])=> {
+export const LeadsColumns = (data=[],tableDropDowns)=> {
    return [
         {
             name: "S/N",
@@ -33,7 +33,7 @@ export const LeadsColumns = (data=[])=> {
         },
         {
             name: "Status",
-            selector: (row) => <span>{`-`}</span>
+            selector: (row) => <span>{row?.status}</span>
         },
         // {
         //     name: "Date Added",
@@ -49,22 +49,22 @@ export const LeadsColumns = (data=[])=> {
             selector: (row) => row.authorized,
             cell: (row) => (
                 <Dropdown>
-                    <Dropdown.Toggle className="dropdown-6 text-black border text-muted" >
-                        ...
-                    </Dropdown.Toggle>
-    
-                    <Dropdown.Menu>
-                        {/* <Dropdown.Item
-                            onClick={() => {
-                               
-                            }}
-                        >
-                            Edit
-                        </Dropdown.Item> */}
-    
-                        {/* <Dropdown.Item href="#/action-3">Something else</Dropdown.Item> */}
-                    </Dropdown.Menu>
-                </Dropdown>
+                <Dropdown.Toggle className="dropdown-6 text-black border text-muted" >
+                    ...
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                    {tableDropDowns?.map(({name,action})=>
+                    
+                    <Dropdown.Item
+                        onClick={()=>action(row)}
+                    >
+                        {name}
+                    </Dropdown.Item> )}
+                    
+
+                </Dropdown.Menu>
+            </Dropdown>
             )
         }
     

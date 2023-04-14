@@ -499,3 +499,14 @@ export const getVisitation = async (startDate,endDate) => {
         throw new Error(err);
     }
 };
+export const getVisitationLocations = async (id,startDate,endDate) => {
+    try {
+        const res = await request.get(
+            `visitation/sales-rep/check-in/${id}?startDate=${startDate}&endDate=${endDate}`
+        );
+        return res?.data;
+    } catch (error) {
+        const err = error?.response?.data?.message || error?.message;
+        throw new Error(err);
+    }
+};

@@ -25,8 +25,8 @@ export const LeadsColumns =(data=[],tableDropDowns=[])=>{ return [
         selector: (row) => <div className="border border-1 rounded-pill px-3">{`${row?.status}`}</div>
     },
     {
-        name: "Lead source",
-        selector: (row) => <span>{`-`}</span>
+        name: "Company Name",
+        selector: (row) => <span>{row?.companyName}</span>
     },
     {
         name: "Assigned Staff",

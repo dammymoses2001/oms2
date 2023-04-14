@@ -1,3 +1,5 @@
+// const BigInt = require("bigint");
+
 export const getAuthToken = () => {
     return localStorage.getItem("useroms:token");
 };
@@ -28,21 +30,21 @@ return years;
 }
 
 
-export function formatNumber(num) {
-    const suffixes = {
-      1000: 'k',
-      1000000: 'm',
-      1000000000: 'b',
-    };
-  
-    for (const [suffix, suffixStr] of Object.entries(suffixes)) {
-      if (Math.abs(num) >= suffix) {
-        const formattedNum = num / suffix;
-        return `${formattedNum.toFixed(1)}${suffixStr}`;
-      }
-    }
-  
-    return num.toString();
+export function formatNumber(number) {
+  const billion = 1000000000;
+  const million = 1000000;
+  const thousand = 1000;
+
+  if (number >= billion) {
+    return (number / billion).toFixed(1) + "b";
+  } else if (number >= million) {
+    return (number / million).toFixed(1) + "m";
+  } else if (number >= thousand) {
+    return (number / thousand).toFixed(1) + "k";
+  } else {
+    return number.toString();
+  }
+   
   }
 
 

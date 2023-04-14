@@ -60,7 +60,8 @@ import {
     GET_ALL_TOP_AREAS,
     GET_ALL_LEADS,
     GET_COMPANY_CHART,
-    GET_ALL_VISITATION
+    GET_ALL_VISITATION,
+    GET_ALL_VISITATION_LOCATION
     // GET_PACKAGES_FAIL,
     // GET_PACKAGES_SUCCESS,
     // GET_CART_SUCCESS,
@@ -111,7 +112,8 @@ import {
     addLead,
     getCompanyChart,
     getVisitation,
-    deleteLead
+    deleteLead,
+    getVisitationLocations
     
     // getPackages,
     // subscription,
@@ -204,6 +206,11 @@ export const AuthProvider = withRouter(({ children, navigate }) => {
         error: null,
         isLoading: true,
         allVisitation: []
+    });
+    const [getVisitationLocationFuc, getVisitationLocationDispatch] = useReducer(authReducer, {
+        error: null,
+        isLoading: true,
+        allVisitationLocation: []
     });
 
 
@@ -1322,6 +1329,34 @@ export const AuthProvider = withRouter(({ children, navigate }) => {
         },
         []
     );
+    const GetVisitationLocations = useCallback(
+        async (id,startDate,endDate) => {
+            // console.log(id,"igettheid");
+
+            try {
+                getVisitationLocationDispatch({ type: AUTH_START });
+                const data = await getVisitationLocations(id,startDate,endDate);
+                // console.log(data,'GetLeads');
+                getVisitationLocationDispatch({
+                    payload: data?.data,
+                    type: GET_ALL_VISITATION_LOCATION
+                });
+                //toast.success("Login successful");
+                // navigate("/");
+            } catch (error) {
+                //navigate("/");
+                const errorMessage =
+                    error?.response?.data?.message || error.message;
+                    getVisitationLocationDispatch({
+                    payload: errorMessage,
+                    type: DEFAULT_FAIL
+                });
+
+                //toast.error("Page not found");
+            }
+        },
+        []
+    );
 
 
     useEffect(() => {
@@ -1418,7 +1453,10 @@ export const AuthProvider = withRouter(({ children, navigate }) => {
                 getCompanyChartFuc,
                 GetVisitation,
                 getVisitationFuc,
-                DeleteLead
+                DeleteLead,
+                GetVisitationLocations,
+                getVisitationLocationFuc,
+                
             }}
         >
             {children}

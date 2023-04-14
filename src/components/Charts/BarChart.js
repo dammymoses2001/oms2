@@ -1,83 +1,49 @@
-import React from "react";
-import {
-    BarChart,
-    Bar,
-    XAxis,
-    YAxis,
-    CartesianGrid,
-    Tooltip,
-    Legend,
-    ReferenceLine
-} from "recharts";
+import React from 'react';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Legend, Tooltip } from 'recharts';
 
-const data = [
-    {
-        name: "Page A",
-        uv: 4000,
-        pv: 2400,
-        amt: 2400
-    },
-    {
-        name: "Page B",
-        uv: -3000,
-        pv: 1398,
-        amt: 2210
-    },
-    {
-        name: "Page C",
-        uv: -2000,
-        pv: -9800,
-        amt: 2290
-    },
-    {
-        name: "Page D",
-        uv: 2780,
-        pv: 3908,
-        amt: 2000
-    },
-    {
-        name: "Page E",
-        uv: -1890,
-        pv: 4800,
-        amt: 2181
-    },
-    {
-        name: "Page F",
-        uv: 2390,
-        pv: -3800,
-        amt: 2500
-    },
-    {
-        name: "Page G",
-        uv: 3490,
-        pv: 4300,
-        amt: 2100
-    }
-];
+const SimpleLineChart2 = () => {
+  const data = [
+    { name: 'Jan', line1: 1000000000, line2: 2000 },
+    { name: 'Feb', line1: 100000050, line2: 3000 },
+    { name: 'Mar', line1: 20000000000000000, line2: 4000 },
+    // ... more data
+  ];
 
-export const BarChartComp = () => {
-    return (
-        <div width="100%" height="100%">
-            <BarChart
-                width={500}
-                height={300}
-                data={data}
-                margin={{
-                    top: 5,
-                    right: 30,
-                    left: 20,
-                    bottom: 5
-                }}
-            >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <ReferenceLine y={0} stroke="#000" />
-                <Bar dataKey="pv" fill="#8884d8" />
-                <Bar dataKey="uv" fill="#82ca9d" />
-            </BarChart>
-        </div>
-    );
+  // Find the maximum value in the data for both lines
+  const maxLine1 = Math.max(...data.map(item => item.line1));
+  const maxLine2 = Math.max(...data.map(item => item.line2));
+
+  // Normalize the data for both lines by dividing by their respective maximum values
+  const normalizedData = data.map(item => ({
+    ...item,
+    line1Normalized: item.line1 / maxLine1,
+    line2Normalized: item.line2 / maxLine2,
+  }));
+
+  // Custom tooltip formatter to display original data values
+  const tooltipFormatter = (value, name, props) => {
+    const originalValue = props.payload[name] * (name === 'line1' ? maxLine1 : maxLine2);
+    return [originalValue.toLocaleString(), name];
+  };
+
+  console.log(normalizedData,data,'normalizedData')
+
+  // Custom tick formatter for YAxis to display original data
+  const yAxisTickFormatter = (value) => {
+    return value.toLocaleString(); // Customize the format as needed
+  };
+
+  return (
+    <LineChart width={500} height={300} data={normalizedData}>
+      <CartesianGrid strokeDasharray="3 3" />
+      <XAxis dataKey="name" />
+      <YAxis tickFormatter={yAxisTickFormatter} /> {/* Use custom tick formatter */}
+      <Tooltip formatter={tooltipFormatter} /> {/* Use custom tooltip formatter */}
+      <Legend />
+      <Line type="monotone" dataKey="line1" stroke="blue" strokeWidth={2} /> {/* Use original data key */}
+      <Line type="monotone" dataKey="line2" stroke="red" strokeWidth={2} /> {/* Use original data key */}
+    </LineChart>
+  );
 };
+
+export default SimpleLineChart2;

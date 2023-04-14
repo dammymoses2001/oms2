@@ -77,6 +77,7 @@ export const GET_ORDER_INVOICE = "GET_ORDER_INVOICE";
 export const DEFAULT_FAIL = "DEFAULT_FAIL";
 export const GET_ALL_LEADS = "GET_ALL_LEADS";
 export const GET_ALL_VISITATION = "GET_ALL_VISITATION";
+export const GET_ALL_VISITATION_LOCATION = "GET_ALL_VISITATION_LOCATION";
 export const GET_COMPANY_CHART = "GET_COMPANY_CHART";
 
 const handleSort = (orders = []) => {
@@ -497,14 +498,21 @@ export const authReducer = (state, action) => {
                 error: "",
                                 isLoading: false
             };
-              case GET_ALL_VISITATION:
-            return {
-                ...state,
-                allVisitation: action.payload,
-                error: "",
-                isLoading: false
-            };
-
+            
+            case GET_ALL_VISITATION:
+          return {
+              ...state,
+              allVisitation: action.payload,
+              error: "",
+              isLoading: false
+          };
+            case GET_ALL_VISITATION_LOCATION:
+          return {
+              ...state,
+              allVisitationLocation: action.payload,
+              error: "",
+              isLoading: false
+          };
             case GET_ALL_TOP_CUSTOMERS:
                  return {
                 ...state,

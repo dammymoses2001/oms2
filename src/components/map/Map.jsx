@@ -1,50 +1,54 @@
-/* eslint-disable array-callback-return */
-import React from "react";
-import GoogleMapReact from "google-map-react";
-import { Link } from "react-router-dom";
+import React, { useMemo } from "react";
+import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 
-const markerStyle = {
-  position: "absolute",
-  top: "100%",
-  left: "50%",
-  transform: "translate(-50%, -100%)"
-};
+const SimpleMap1 = ({ locationsArray = [] }) => {
+    const containerStyle = {
+        width: "100%",
+        height: "400px"
+    };
 
-class SimpleMap1 extends React.Component {
-  static defaultProps = {
-    center: {
-      lat: 6.5244,
-      lng: 3.3792
-    },
-    zoom: 11
-  };
+    const locations = [
+        { lat: 37, lng: -122 },
 
-  render() {
+        { lat: 37, lng: -122 },
+        { lat: 37, lng: -122 },
+        { lat: 37, lng: -122 },
+        { lat: 6, lng: 3 } // Chicago
+        // Add more locations as needed
+    ];
+
+    const expensiveResult = useMemo(() => {
+        const result = locationsArray?.map((item) => ({
+            lat: parseInt(item?.latitude),
+            lng: parseInt(item?.longitude)
+        }));
+        return result;
+    }, [locationsArray]);
+
+    console.log(expensiveResult, "expensiveResult");
+    //   latitude
+    // :
+    // "37.785834"
+    // longitude
+    // :
+    // "-122.406417"
+
     return (
-      // Important! Always set the container height explicitly
-      <div style={{ height: "50vh", width: "100%" }}>
-        <GoogleMapReact
-          bootstrapURLKeys={{
-            key: "AIzaSyA16d9FJFh__vK04jU1P64vnEpPc3jenec"
-          }}
-          defaultCenter={this.props.center}
-          defaultZoom={this.props.zoom}
-        >
-          {this.props.locations.map(item => {
-            if (item.address.length !== 0) {
-              return item.address.map(i => {
-                return (
-                  <Link to={"/" + item.name} key={i.id} lat={i.lat} lng={i.lng}>
-                    <img style={markerStyle} src={'/pin.png'} alt="pin" />
-                  </Link>
-                );
-              });
-            }
-          })}
-        </GoogleMapReact>
-      </div>
+        expensiveResult?.length > 1 && (
+            <LoadScript googleMapsApiKey="AIzaSyADb8PSKrM-CcKxd2iab2QIH4LTIjmI3aM">
+                <GoogleMap
+                    center={expensiveResult[2]} // Set initial map center
+                    zoom={4} // Set initial zoom level
+                    mapContainerStyle={{ height: "400px", width: "100%" }} // Set map container style
+                >
+                    {/* Render markers for each location */}
+                    {expensiveResult?.map((location, index) => (
+                        <Marker key={index} position={location} />
+                    ))}
+                </GoogleMap>
+            </LoadScript>
+        )
     );
-  }
-}
+};
 
 export default SimpleMap1;

@@ -10,6 +10,7 @@ import {
 import { useAuth } from "../../../hooks";
 import { FormInputValue, LeadsColumns } from "./Data";
 import useFormValidator from "use-form-input-validator";
+import SimpleMap1 from "../../../components/map/Map";
 
 export default function VisitTargets() {
     const {
@@ -18,21 +19,27 @@ export default function VisitTargets() {
         getLeadsFuc: { leads, isLoading: leadLoader },
         state: { check, isLoading },
         GetVisitation,
-        getVisitationFuc:{allVisitation,isLoading:visitaionLoading}
+        getVisitationFuc:{allVisitation,isLoading:visitaionLoading},
+        getVisitationLocationFuc:{allVisitationLocation,isLoading:allVisitationLocationLoader},
+        GetVisitationLocations
     } = useAuth();
     // const today = moment();
     const currentDate = new Date().toISOString().substr(0, 10);
 
-    const [modal, setModal] = useState(false);
+    console.log(allVisitationLocation,'getVisitationLocationFuc')
+
+    const [modal, setModal] = useState(true);
     const [searchField, setSearchField] = useState();
     const [startDate, setStartDate] = useState(subtractTenDays());
     const [endDate, setEndDate] = useState(currentDate);
+    //
+    const [pageName,setPageName] =useState("View Visitations")
 // alert(moment('MMMM Do YYYY').subtract(10, 'days').calendar())
     useEffect(() => {
         if(endDate && startDate){
             GetVisitation(startDate,endDate)
         }
-    }, [GetVisitation]);
+    }, [GetVisitation, endDate, startDate]);
     // alert(Date.parse(startDate) / 1000)
     function subtractTenDays() {
         // Get the current date
@@ -55,17 +62,26 @@ export default function VisitTargets() {
         }
     }, [check]);
 
-    // const { values, errors, updateField, isAllFieldsValid } = useFormValidator({
-    //     name: { checks: "required", value: "" },
-    //     email: { checks: "required|email", value: "" },
-    //     address: { checks: "required|min:6", value: "" },
-    //     // expiringDate: { checks: "required", value: "" },
-    //     phoneNumber: { checks: "required|min:6|num", value: "" },
-    //     companyName: { checks: "required|min:3", value: "" },
-    //     status: { checks: "required", value: "" },
-    //     inputReason: { checks: "required|min:6", value: "" },
-    //     contactedAt: { checks: "required|date", value: "" }
-    // });
+   
+    const tableDropDowns =[
+        {
+            name:'Change Staff Status',
+            action:(row)=>{
+                setModal(true);
+                // UpdateField(row)
+                // setPageName('Edit Lead Detail')
+            }
+        },
+        {
+            name:'See Staff Visitations',
+            action:(row)=>{
+                setModal(true);
+                startDate&&endDate&&GetVisitationLocations(row?.userId,startDate,endDate)
+                // UpdateField(row)
+                setPageName('View Visitations')
+            }
+        }
+    ]
     const { values, errors, updateField, isAllFieldsValid } = useFormValidator({
         name: { checks: "required", value: "Bola" },
         email: { checks: "required|email", value: "sam@gmail.com" },
@@ -86,6 +102,7 @@ export default function VisitTargets() {
         console.log(errors);
     };
 
+
     const handleSubmit = () =>{
         if(endDate && startDate){
             GetVisitation(startDate,endDate)
@@ -95,6 +112,15 @@ export default function VisitTargets() {
     const newAllVisitation = allVisitation?.map((item, index) => {
         return { ...item, ids:allVisitation?.length-index};
       });
+
+      const modalPage =[
+        {
+            name:'View Visitations',
+            component:<div>
+                    <SimpleMap1 locationsArray={allVisitationLocation}/>
+            </div>
+        }
+      ]
 
 
     return (
@@ -152,7 +178,7 @@ export default function VisitTargets() {
                 <section>
                     <CardComp bodyText={<TableCompData
                         loader={visitaionLoading}
-                        columns={LeadsColumns(allVisitation)}
+                        columns={LeadsColumns(allVisitation,tableDropDowns)}
                         data={newAllVisitation?.filter(robot => robot?.user?.firstName.toLowerCase().match(searchField?.toLowerCase())||robot?.user?.lastName.toLowerCase().match(searchField?.toLowerCase())||robot?.customer?.businessName.toLowerCase().match(searchField?.toLowerCase())).reverse()}
                         pagination
                     />}/>
@@ -160,58 +186,15 @@ export default function VisitTargets() {
                   
                 </section>
             </section>
-            {/* <ModalComp
+            <ModalComp
+            size={"lg"}
                 show={modal}
-                handleClose={setModal}
-                title={<h4>Add Leads</h4>}
+                handleClose={()=>setModal(false)}
+                title={pageName}
                 bodyText={
-                    <form onSubmit={handleSubmitLead}>
-                        <div className="row gx-5 gy-3">
-                            {FormInputValue?.map((item, i) =>
-                                item?.type === "select" ? (
-                                    <div className="col-lg-6">
-                                        <SelectComp
-                                            labelclassname="h6 fw-medium"
-                                            name={item?.name}
-                                            value={values[item?.name]}
-                                            error={errors[item?.name]}
-                                            onChange={updateField}
-                                            isDisabled={false}
-                                            label={item?.label}
-                                            options={[
-                                                "In Progress",
-                                                "New",
-                                                "Open"
-                                            ]}
-                                        />
-                                    </div>
-                                ) : (
-                                    <div className="col-lg-6">
-                                        <Input.Input2
-                                            required
-                                            name={item?.name}
-                                            label={item?.label}
-                                            labelclassname="h6 fw-medium"
-                                            onChange={updateField}
-                                            inputclassname="py-2 border px-2 text-black  "
-                                            value={values[item?.name]}
-                                            error={errors[item?.name]}
-                                            isDisabled={false}
-                                            type={item?.type}
-                                        />
-                                    </div>
-                                )
-                            )}
-
-                            <div className="mt-5 col-12 text-end">
-                                <button>
-                                    {isLoading ? "Loading..." : "Add Leads"}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                    modalPage?.find((item)=>item?.name === pageName)?.component
                 }
-            /> */}
+            />
         </AppLayout>
     );
 }

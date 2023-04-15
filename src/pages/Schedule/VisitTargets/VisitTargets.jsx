@@ -2,21 +2,20 @@ import React, { useEffect, useState } from "react";
 import {
     AppLayout,
     CardComp,
-    Input,
     ModalComp,
-    SelectComp,
     TableCompData
 } from "../../../components";
 import { useAuth } from "../../../hooks";
-import { FormInputValue, LeadsColumns } from "./Data";
+import {  FormInputValue, LeadsColumns } from "./Data";
 import useFormValidator from "use-form-input-validator";
 import SimpleMap1 from "../../../components/map/Map";
+import EditLeads from "./modules/EditLeads";
+import moment from "moment";
 
 export default function VisitTargets() {
     const {
-        GetLeads,
+        UpdateVisitation,
         AddLead,
-        getLeadsFuc: { leads, isLoading: leadLoader },
         state: { check, isLoading },
         GetVisitation,
         getVisitationFuc:{allVisitation,isLoading:visitaionLoading},
@@ -26,14 +25,14 @@ export default function VisitTargets() {
     // const today = moment();
     const currentDate = new Date().toISOString().substr(0, 10);
 
-    console.log(allVisitationLocation,'getVisitationLocationFuc')
 
     const [modal, setModal] = useState(true);
     const [searchField, setSearchField] = useState();
     const [startDate, setStartDate] = useState(subtractTenDays());
     const [endDate, setEndDate] = useState(currentDate);
     //
-    const [pageName,setPageName] =useState("View Visitations")
+    const [pageName,setPageName] =useState("View Visitations");
+    const [userData,setUserData] =useState([]);
 // alert(moment('MMMM Do YYYY').subtract(10, 'days').calendar())
     useEffect(() => {
         if(endDate && startDate){
@@ -52,24 +51,36 @@ export default function VisitTargets() {
         return tenDaysAgo.toISOString().split('T')[0];
       }
 
-    useEffect(() => {
-        GetLeads();
-    }, [GetLeads]);
+  
 
     useEffect(() => {
         if (check) {
             setModal(false);
+            if(endDate && startDate){
+                GetVisitation(startDate,endDate)
+            }
         }
-    }, [check]);
+    }, [GetVisitation, check, endDate, startDate]);
 
    
     const tableDropDowns =[
         {
-            name:'Change Staff Status',
+            name:'Change Staff Visitation Status',
             action:(row)=>{
                 setModal(true);
+                setUserData({
+                    id:row?.id,
+                    name:`${row?.user?.firstName} ${row?.user?.lastName}`,
+                    companyName:row?.customer?.businessName,
+                    visitationReason:row?.visitationReason,
+                    location:row?.customer?.lga,
+                    status:row?.status,
+                    scheduleDate:moment(row?.scheduleDate).format("MMM Do YY"),
+                    scheduleDateNormal:row?.scheduleDate
+                })
+                console.log(row)
                 // UpdateField(row)
-                // setPageName('Edit Lead Detail')
+                 setPageName('Edit Visitation Detail')
             }
         },
         {
@@ -83,25 +94,37 @@ export default function VisitTargets() {
         }
     ]
     const { values, errors, updateField, isAllFieldsValid } = useFormValidator({
-        name: { checks: "required", value: "Bola" },
-        email: { checks: "required|email", value: "sam@gmail.com" },
-        address: { checks: "required|min:6", value: "no 2 satola" },
+        name: { checks: "required", value: "" },
+        email: { checks: "required|email", value: "" },
+        address: { checks: "required|min:6", value: "" },
         // expiringDate: { checks: "required", value: "" },
-        phoneNumber: { checks: "required|min:6|num", value: "0803422915" },
-        companyName: { checks: "required|min:3", value: "test" },
-        status: { checks: "required", value: "New" },
-        inputReason: { checks: "required|min:6", value: "testing sake" },
+        phoneNumber: { checks: "required|min:6|num", value: "" },
+        companyName: { checks: "required|min:3", value: "" },
+        status: { checks: "required", value: "" },
+        inputReason: { checks: "required|min:6", value: "t" },
         contactedAt: { checks: "required|date", value: "" }
     });
 
-    const handleSubmitLead = (e) => {
+    const handleSubmitVisitation= (e) => {
         e.preventDefault();
-        if (isAllFieldsValid()) {
-            AddLead(values);
+        const payload ={
+            id:userData?.id,
+            "visitationReason":userData?.visitationReason,
+    "scheduleDate":userData?.scheduleDateNormal,
+    "status":userData?.status,
         }
-        console.log(errors);
-    };
+        console.log(payload,'handleSubmitVisitation')
 
+      UpdateVisitation(payload)
+        // if (isAllFieldsValid()) {
+        //     AddLead(values);
+        // }
+        // console.log(errors);
+    };
+    const handleOnchange = (e) =>{
+        const {value,name} =e.target;
+        setUserData({...userData,[name]:value})
+    }
 
     const handleSubmit = () =>{
         if(endDate && startDate){
@@ -117,8 +140,18 @@ export default function VisitTargets() {
         {
             name:'View Visitations',
             component:<div>
-                    <SimpleMap1 locationsArray={allVisitationLocation}/>
+                  <SimpleMap1 locationsArray={allVisitationLocation}/>
             </div>
+        },{
+            name:'Edit Visitation Detail',
+            component:<EditLeads  
+            FormInputValue={FormInputValue}
+            errors={errors}
+            handleOnchange={handleOnchange}
+            handleSubmitLead={handleSubmitVisitation}
+            userData={userData}
+            isLoading={isLoading}
+            />
         }
       ]
 
@@ -179,7 +212,7 @@ export default function VisitTargets() {
                     <CardComp bodyText={<TableCompData
                         loader={visitaionLoading}
                         columns={LeadsColumns(allVisitation,tableDropDowns)}
-                        data={newAllVisitation?.filter(robot => robot?.user?.firstName.toLowerCase().match(searchField?.toLowerCase())||robot?.user?.lastName.toLowerCase().match(searchField?.toLowerCase())||robot?.customer?.businessName.toLowerCase().match(searchField?.toLowerCase())).reverse()}
+                        data={newAllVisitation?.filter(robot => robot?.user?.firstName.toLowerCase().match(searchField?.toLowerCase())||robot?.user?.lastName.toLowerCase().match(searchField?.toLowerCase())||robot?.status.toLowerCase().match(searchField?.toLowerCase())||robot?.customer?.businessName.toLowerCase().match(searchField?.toLowerCase())).reverse()}
                         pagination
                     />}/>
                     

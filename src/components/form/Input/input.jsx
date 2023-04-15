@@ -39,7 +39,7 @@ export const Input2 = ({
                 name={name}
                 type={type}
                 placeholder={placeholder||`Enter ${label||''}`}
-                disabled={isdisabled || isLoading}
+                 disabled={isdisabled || isLoading}
                 id={name}
                 value={value}
                 onChange={onChange}
@@ -47,6 +47,7 @@ export const Input2 = ({
                 className={` w-100 ${size} ${inputclassname}`}
                 style={{ backgroundColor: bgColor, color }}
                 {...props}
+               
             />
             {hint && (
                 <p

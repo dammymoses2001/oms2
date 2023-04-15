@@ -74,36 +74,34 @@ export const LeadsColumns = (data=[],tableDropDowns)=> {
 export const FormInputValue = [
     {
         name: "name",
-        label: "Name"
-    },
-    {
-        name: "email",
-        label: "Email"
-    },
-    {
-        name: "address",
-        label: "Address"
-    },
-    {
-        name: "phoneNumber",
-        label: "Phone Number"
+        label: "Field Rep Name",
+        disabled:true
     },
     {
         name: "companyName",
-        label: "Company Name"
+        label: "Customer/Company",
+        disabled:true
+    },
+    {
+        name: "location",
+        label: "Location",
+        disabled:true
     },
     {
         name: "status",
         label: "Status",
-        type:'select'
+        type:'select',
+    
     },
     {
-        name: "inputReason",
-        label: "Input Reason"
+        name: "visitationReason",
+        label: "Input Reason",
+        disabled:true
     },
     {
-        name: "contactedAt",
-        label: "contacted At",
-        type:'date'
-    }
+        name: "scheduleDate",
+        label: "schedule Date",
+        disabled:true
+    },
+    
 ];

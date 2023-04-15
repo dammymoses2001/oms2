@@ -2,10 +2,7 @@ import React, { useMemo } from "react";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 
 const SimpleMap1 = ({ locationsArray = [] }) => {
-    const containerStyle = {
-        width: "100%",
-        height: "400px"
-    };
+   
 
     const locations = [
         { lat: 37, lng: -122 },
@@ -20,12 +17,13 @@ const SimpleMap1 = ({ locationsArray = [] }) => {
     const expensiveResult = useMemo(() => {
         const result = locationsArray?.map((item) => ({
             lat: parseInt(item?.latitude),
-            lng: parseInt(item?.longitude)
+            lng: parseInt(item?.longitude),
+            color:item?.status==="Arrived"?'green':'red'
         }));
         return result;
     }, [locationsArray]);
 
-    console.log(expensiveResult, "expensiveResult");
+    // console.log(expensiveResult, "locationsArray");
     //   latitude
     // :
     // "37.785834"
@@ -34,20 +32,36 @@ const SimpleMap1 = ({ locationsArray = [] }) => {
     // "-122.406417"
 
     return (
-        expensiveResult?.length > 1 && (
+        expensiveResult?.length > 1 ? (
             <LoadScript googleMapsApiKey="AIzaSyADb8PSKrM-CcKxd2iab2QIH4LTIjmI3aM">
                 <GoogleMap
-                    center={expensiveResult[2]} // Set initial map center
+                    center={expensiveResult[2]||locations[2]} // Set initial map center
                     zoom={4} // Set initial zoom level
                     mapContainerStyle={{ height: "400px", width: "100%" }} // Set map container style
                 >
                     {/* Render markers for each location */}
                     {expensiveResult?.map((location, index) => (
-                        <Marker key={index} position={location} />
+                        <Marker key={index} position={location}
+                        icon={{
+                            url: `https://maps.google.com/mapfiles/ms/icons/${location.color}-dot.png`,
+                          }}
+                        />
                     ))}
                 </GoogleMap>
-            </LoadScript>
-        )
+            </LoadScript>):
+            <LoadScript googleMapsApiKey="AIzaSyADb8PSKrM-CcKxd2iab2QIH4LTIjmI3aM">
+            <GoogleMap
+                center={locations[2]} // Set initial map center
+                zoom={4} // Set initial zoom level
+                mapContainerStyle={{ height: "400px", width: "100%" }} // Set map container style
+            >
+                {/* Render markers for each location */}
+                {locations?.map((location, index) => (
+                    <Marker key={index} position={location} />
+                ))}
+            </GoogleMap>
+        </LoadScript>
+        
     );
 };
 

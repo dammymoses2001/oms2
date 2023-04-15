@@ -510,3 +510,14 @@ export const getVisitationLocations = async (id,startDate,endDate) => {
         throw new Error(err);
     }
 };
+export const updateVisitation = async (values) => {
+    try {
+        const res = await request.patch(
+            `visitation/update/${values?.id}`,values
+        );
+        return res?.data;
+    } catch (error) {
+        const err = error?.response?.data?.message || error?.message;
+        throw new Error(err);
+    }
+};

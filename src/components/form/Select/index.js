@@ -24,6 +24,7 @@ export const SelectComp = ({
                 aria-label="Default select example"
                 className={className}
                 {...props}
+                disabled={props?.disabled}
             >
                 <option className="text-4">{selectOption}</option>
                 {options?.map((item, index) => (
